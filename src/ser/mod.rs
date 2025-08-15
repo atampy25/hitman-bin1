@@ -1,0 +1,243 @@
+use std::{
+	collections::HashMap,
+	fmt::Debug,
+	io::{Cursor, Seek, SeekFrom}
+};
+
+use byteorder::{LittleEndian, ReadBytesExt};
+use hitman_commons::metadata::RuntimeID;
+use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
+use thiserror::Error;
+use tryvial::try_fn;
+
+pub mod impls;
+
+#[derive(Error, Debug)]
+pub enum SerializeError {
+	#[error("I/O error: {0}")]
+	Io(#[from] std::io::Error)
+}
+
+pub trait Aligned {
+	const ALIGNMENT: usize;
+}
+
+pub trait Bin1Serialize {
+	fn alignment(&self) -> usize;
+
+	fn write(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError>;
+
+	fn write_aligned(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
+		ser.align_to(self.alignment());
+		self.write(ser)?;
+		ser.align_to(self.alignment());
+		Ok(())
+	}
+
+	#[allow(unused)]
+	fn resolve(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
+		Ok(())
+	}
+}
+
+pub struct Bin1Serializer {
+	buffer: Vec<u8>,
+
+	/// Map of pointer IDs to where their data has been written.
+	offsets: HashMap<u64, u64>,
+
+	/// Offsets to pointers that need to be patched.
+	pointers: Vec<u32>,
+
+	/// Offsets to ZRuntimeResourceIDs
+	runtime_resource_ids: Vec<u32>,
+
+	/// Offsets to STypeIDs
+	type_ids: Vec<u32>,
+	type_names: Vec<DefaultSymbol>,
+
+	interner: StringInterner<BucketBackend>
+}
+
+impl Default for Bin1Serializer {
+	fn default() -> Self {
+		Self {
+			buffer: vec![],
+			offsets: HashMap::new(),
+			pointers: vec![],
+			runtime_resource_ids: vec![],
+			type_ids: vec![],
+			type_names: vec![],
+			interner: StringInterner::new()
+		}
+	}
+}
+
+impl Bin1Serializer {
+	pub fn new() -> Self {
+		Default::default()
+	}
+
+	pub fn interner(&mut self) -> &mut StringInterner<BucketBackend> {
+		&mut self.interner
+	}
+
+	pub fn align_to(&mut self, alignment: usize) {
+		let current_len = self.buffer.len();
+		let padding = alignment - (current_len % alignment);
+		if padding < alignment {
+			self.buffer.extend(vec![0; padding]);
+		}
+	}
+
+	pub fn write_unaligned(&mut self, data: &[u8]) {
+		self.buffer.extend_from_slice(data);
+	}
+
+	pub fn write_aligned(&mut self, data: &[u8], alignment: usize) {
+		self.align_to(alignment);
+		self.buffer.extend_from_slice(data);
+		self.align_to(alignment);
+	}
+
+	pub fn write_pointer(&mut self, pointer_id: u64) {
+		self.align_to(8);
+		self.pointers.push(self.buffer.len() as u32);
+		self.buffer.extend_from_slice(&pointer_id.to_le_bytes());
+	}
+
+	pub fn write_pointee<T: Bin1Serialize + ?Sized>(
+		&mut self,
+		pointer_id: u64,
+		data: &T
+	) -> Result<(), SerializeError> {
+		if self.offsets.contains_key(&pointer_id) {
+			return Ok(());
+		}
+
+		self.align_to(data.alignment());
+		self.register_pointee(pointer_id);
+		data.write(self)?;
+		data.resolve(self)?;
+
+		Ok(())
+	}
+
+	/// Register a pointer as referring to the current location in the serialisation buffer.
+	pub fn register_pointee(&mut self, pointer_id: u64) {
+		self.offsets.insert(pointer_id, self.buffer.len() as u64);
+	}
+
+	pub fn write_type(&mut self, type_name: DefaultSymbol) {
+		self.type_ids.push(self.buffer.len() as u32);
+
+		if let Some(existing) = self.type_names.iter().position(|&name| name == type_name) {
+			self.buffer.extend_from_slice(&(existing as u64).to_le_bytes());
+		} else {
+			self.buffer
+				.extend_from_slice(&(self.type_names.len() as u64).to_le_bytes());
+			self.type_names.push(type_name);
+		}
+	}
+
+	pub fn write_runtimeid(&mut self, id: RuntimeID) {
+		self.runtime_resource_ids.push(self.buffer.len() as u32);
+		self.write_unaligned(&u64::from(id).to_le_bytes());
+	}
+
+	#[try_fn]
+	pub fn finalise(mut self) -> Result<Vec<u8>, SerializeError> {
+		self.align_to(4);
+
+		let mut cursor = Cursor::new(self.buffer);
+
+		let mut segments: Vec<(u32, Vec<u8>)> = vec![];
+
+		// Rebased pointers segment
+		if !self.pointers.is_empty() {
+			let mut segment = (self.pointers.len() as u32).to_le_bytes().to_vec();
+
+			for offset in &self.pointers {
+				segment.extend_from_slice(&offset.to_le_bytes());
+			}
+
+			segments.push((0x12EBA5ED, segment));
+		}
+
+		// STypeIDs segment
+		if !self.type_ids.is_empty() {
+			let mut segment = (self.type_ids.len() as u32).to_le_bytes().to_vec();
+
+			for offset in self.type_ids {
+				segment.extend_from_slice(&offset.to_le_bytes());
+			}
+
+			segment.extend_from_slice(&(self.type_names.len() as u32).to_le_bytes());
+
+			for (idx, name) in self.type_names.into_iter().enumerate() {
+				let padding = 4 - (segment.len() % 4);
+				if padding < 4 {
+					segment.extend(vec![0; padding]);
+				}
+
+				segment.extend_from_slice(&(idx as u32).to_le_bytes());
+				segment.extend_from_slice(&u32::MAX.to_le_bytes());
+
+				let name = self.interner.resolve(name).unwrap();
+				segment.extend_from_slice(&(name.len() as u32 + 1).to_le_bytes());
+				segment.extend_from_slice(name.as_bytes());
+				segment.push(0);
+			}
+
+			segments.push((0x3989BF9F, segment));
+		}
+
+		// RuntimeResourceIDs segment
+		if !self.runtime_resource_ids.is_empty() {
+			let mut segment = (self.runtime_resource_ids.len() as u32).to_le_bytes().to_vec();
+
+			for offset in self.runtime_resource_ids {
+				segment.extend_from_slice(&offset.to_le_bytes());
+			}
+
+			segments.push((0x578FBCEE, segment));
+		}
+
+		for offset in self.pointers.drain(..) {
+			cursor.seek(SeekFrom::Start(offset as u64))?;
+			let pointer_id = cursor.read_u64::<LittleEndian>()?;
+			if pointer_id != u64::MAX {
+				cursor.get_mut()[offset as usize..offset as usize + 8]
+					.copy_from_slice(&self.offsets[&pointer_id].to_le_bytes());
+			}
+		}
+
+		let buffer = cursor.into_inner();
+
+		let mut data = vec![];
+		data.extend_from_slice(b"1NIB");
+		data.push(0); // padding
+		data.push(4); // alignment
+		data.push(segments.len() as u8);
+		data.push(0);
+		data.extend_from_slice(&(buffer.len() as u32).to_be_bytes());
+		data.extend_from_slice(&0u32.to_le_bytes());
+
+		data.extend_from_slice(&buffer);
+
+		for segment in segments {
+			data.extend_from_slice(&segment.0.to_le_bytes());
+			data.extend_from_slice(&(segment.1.len() as u32).to_le_bytes());
+			data.extend_from_slice(&segment.1);
+		}
+
+		data
+	}
+}
+
+pub fn serialize<T: Bin1Serialize>(data: &T) -> Result<Vec<u8>, SerializeError> {
+	let mut serializer = Bin1Serializer::new();
+	data.write(&mut serializer)?;
+	data.resolve(&mut serializer)?;
+	serializer.finalise()
+}

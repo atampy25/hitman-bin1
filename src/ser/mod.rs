@@ -5,12 +5,13 @@ use std::{
 };
 
 use byteorder::{LittleEndian, ReadBytesExt};
-use hitman_commons::metadata::RuntimeID;
 use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
 use thiserror::Error;
 use tryvial::try_fn;
 
 pub mod impls;
+
+pub use hitman_bin1_derive::Bin1Serialize;
 
 #[derive(Error, Debug)]
 pub enum SerializeError {
@@ -129,6 +130,7 @@ impl Bin1Serializer {
 	}
 
 	pub fn write_type(&mut self, type_name: DefaultSymbol) {
+		self.align_to(8);
 		self.type_ids.push(self.buffer.len() as u32);
 
 		if let Some(existing) = self.type_names.iter().position(|&name| name == type_name) {
@@ -140,9 +142,10 @@ impl Bin1Serializer {
 		}
 	}
 
-	pub fn write_runtimeid(&mut self, id: RuntimeID) {
+	pub fn write_runtime_resource_id(&mut self, high: u32, low: u32) {
 		self.runtime_resource_ids.push(self.buffer.len() as u32);
-		self.write_unaligned(&u64::from(id).to_le_bytes());
+		self.write_unaligned(&high.to_le_bytes());
+		self.write_unaligned(&low.to_le_bytes());
 	}
 
 	#[try_fn]

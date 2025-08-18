@@ -14,9 +14,16 @@ pub struct XYZ {
 }
 
 fn main() -> Result<(), SerializeError> {
+	let variant = serde_json::from_str::<ZVariant>(
+		r#"{"$type":"TArray<ZRuntimeResourceID>","$val":[{ "m_IDHigh": 1, "m_IDLow": 2 }]}"#
+	)
+	.unwrap();
+	println!("{:?}", variant);
+	println!("{}", serde_json::to_string(&variant).unwrap());
+
 	let mut val = XYZ {
 		value: vec![],
-		value2: Box::new(vec![2u8, 4, 6])
+		value2: ZVariant::new(vec![2u8, 4, 6])
 	};
 
 	val.value.push(Owned::new("Hello world!".into()));

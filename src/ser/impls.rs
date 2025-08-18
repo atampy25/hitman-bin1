@@ -1,31 +1,11 @@
 use std::sync::{Arc, Weak};
 
-use hitman_commons::metadata::RuntimeID;
-use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
-
-use crate::{
-	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError},
-	types::variant::{StaticVariant, Variant}
-};
+use crate::ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError};
 
 macro_rules! impl_primitive {
 	($ty:ty, $alignment:literal, $type_id:literal) => {
 		impl Aligned for $ty {
 			const ALIGNMENT: usize = $alignment;
-		}
-
-		impl StaticVariant for $ty {
-			const TYPE_ID: &'static str = $type_id;
-		}
-
-		impl Variant for $ty {
-			fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
-				interner.get_or_intern(Self::TYPE_ID)
-			}
-
-			fn to_serde(&self) -> serde_json::Value {
-				serde_json::to_value(self).unwrap()
-			}
 		}
 
 		impl Bin1Serialize for $ty {
@@ -75,20 +55,6 @@ impl_primitive!(f64, 8, "float64");
 
 impl Aligned for bool {
 	const ALIGNMENT: usize = 1;
-}
-
-impl StaticVariant for bool {
-	const TYPE_ID: &'static str = "bool";
-}
-
-impl Variant for bool {
-	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
-		interner.get_or_intern(Self::TYPE_ID)
-	}
-
-	fn to_serde(&self) -> serde_json::Value {
-		serde_json::to_value(self).unwrap()
-	}
 }
 
 impl Bin1Serialize for bool {
@@ -173,31 +139,34 @@ impl<T: Bin1Serialize> Bin1Serialize for Weak<T> {
 	}
 }
 
-impl Aligned for RuntimeID {
-	const ALIGNMENT: usize = u64::ALIGNMENT;
+impl<T: Aligned, U> Aligned for (T, U) {
+	const ALIGNMENT: usize = T::ALIGNMENT;
 }
 
-impl StaticVariant for RuntimeID {
-	const TYPE_ID: &'static str = "ZRuntimeResourceID";
-}
-
-impl Variant for RuntimeID {
-	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
-		interner.get_or_intern(Self::TYPE_ID)
-	}
-
-	fn to_serde(&self) -> serde_json::Value {
-		serde_json::to_value(self).unwrap()
-	}
-}
-
-impl Bin1Serialize for RuntimeID {
+impl<T: Bin1Serialize, U: Bin1Serialize> Bin1Serialize for (T, U) {
 	fn alignment(&self) -> usize {
-		Self::ALIGNMENT
+		self.0.alignment()
 	}
 
 	fn write(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
-		ser.write_runtimeid(*self);
+		self.0.write(ser)?;
+		self.1.write_aligned(ser)?;
+		Ok(())
+	}
+
+	fn resolve(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
+		self.0.resolve(ser)?;
+		self.1.resolve(ser)?;
+		Ok(())
+	}
+}
+
+impl Bin1Serialize for () {
+	fn alignment(&self) -> usize {
+		1
+	}
+
+	fn write(&self, _ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
 		Ok(())
 	}
 }

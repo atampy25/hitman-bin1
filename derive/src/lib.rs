@@ -7,7 +7,9 @@ use syn::{PathArguments, Type};
 #[darling(default, derive_syn_parse)]
 struct Bin1Attrs {
 	#[darling(rename = "as")]
-	as_type: Option<syn::Type>
+	as_type: Option<syn::Type>,
+
+	pad: Option<usize>
 }
 
 #[proc_macro_derive(Bin1Serialize, attributes(bin1))]
@@ -31,7 +33,7 @@ pub fn derive_serialize(input: TokenStream) -> TokenStream {
 					attr.meta
 						.path()
 						.is_ident("bin1")
-						.then_some(attr.parse_args::<Bin1Attrs>().unwrap())
+						.then(|| attr.parse_args::<Bin1Attrs>().unwrap())
 				})
 				.unwrap_or_default()
 				.as_type
@@ -96,19 +98,30 @@ pub fn derive_serialize(input: TokenStream) -> TokenStream {
 		let options: Bin1Attrs = f
 			.attrs
 			.iter()
-			.find_map(|attr| attr.meta.path().is_ident("bin1").then_some(attr.parse_args().unwrap()))
+			.find_map(|attr| attr.meta.path().is_ident("bin1").then(|| attr.parse_args().unwrap()))
 			.unwrap_or_default();
+
+		let padding = options
+			.pad
+			.map(|padding| {
+				quote! {
+					ser.write_unaligned(&[0u8; #padding]);
+				}
+			})
+			.unwrap_or(quote! {});
 
 		if options.as_type.is_some() {
 			let as_type = &field_types[idx];
 			quote! {
 				#acc
-				#as_type::from(self.#field.as_ref()).write_aligned(ser)?;
+				#padding
+				#as_type::from(self.#field.as_ref()).write(ser)?;
 			}
 		} else {
 			quote! {
 				#acc
-				self.#field.write_aligned(ser)?;
+				#padding
+				self.#field.write(ser)?;
 			}
 		}
 	});
@@ -119,7 +132,7 @@ pub fn derive_serialize(input: TokenStream) -> TokenStream {
 		let options: Bin1Attrs = f
 			.attrs
 			.iter()
-			.find_map(|attr| attr.meta.path().is_ident("bin1").then_some(attr.parse_args().unwrap()))
+			.find_map(|attr| attr.meta.path().is_ident("bin1").then(|| attr.parse_args().unwrap()))
 			.unwrap_or_default();
 
 		if options.as_type.is_some() {

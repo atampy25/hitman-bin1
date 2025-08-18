@@ -1,17 +1,11 @@
-use serde::Serialize;
-use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
+use crate::ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError};
 
-use crate::{
-	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError},
-	types::variant::{StaticVariant, Variant}
-};
-
-impl<T: Bin1Serialize + Aligned> Aligned for &[T] {
-	const ALIGNMENT: usize = T::ALIGNMENT;
+impl<T: Bin1Serialize> Aligned for &[T] {
+	const ALIGNMENT: usize = 1;
 }
 
 /// Direct serialisation of slices as arrays with no length value.
-impl<T: Bin1Serialize + Aligned> Bin1Serialize for &[T] {
+impl<T: Bin1Serialize> Bin1Serialize for &[T] {
 	fn alignment(&self) -> usize {
 		Self::ALIGNMENT
 	}
@@ -37,18 +31,8 @@ impl<T: Bin1Serialize> Aligned for Vec<T> {
 	const ALIGNMENT: usize = 4;
 }
 
-impl<T: Bin1Serialize + Serialize + StaticVariant + Aligned> Variant for Vec<T> {
-	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
-		interner.get_or_intern(format!("TArray<{}>", T::TYPE_ID))
-	}
-
-	fn to_serde(&self) -> serde_json::Value {
-		serde_json::to_value(self).unwrap()
-	}
-}
-
 /// Serialisation of Vec<T> in TArray format, with pointers and length.
-impl<T: Bin1Serialize + Aligned> Bin1Serialize for Vec<T> {
+impl<T: Bin1Serialize> Bin1Serialize for Vec<T> {
 	fn alignment(&self) -> usize {
 		Self::ALIGNMENT
 	}
@@ -97,7 +81,7 @@ pub mod TArrayRef {
 		const ALIGNMENT: usize = 4;
 	}
 
-	impl<'a, T: Bin1Serialize + Aligned> Bin1Serialize for Ser<'a, T> {
+	impl<'a, T: Bin1Serialize> Bin1Serialize for Ser<'a, T> {
 		fn alignment(&self) -> usize {
 			Self::ALIGNMENT
 		}

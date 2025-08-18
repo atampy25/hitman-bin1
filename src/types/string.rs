@@ -1,24 +1,6 @@
 use ecow::EcoString;
-use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
 
-use crate::{
-	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError},
-	types::variant::{StaticVariant, Variant}
-};
-
-impl StaticVariant for EcoString {
-	const TYPE_ID: &'static str = "ZString";
-}
-
-impl Variant for EcoString {
-	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
-		interner.get_or_intern(Self::TYPE_ID)
-	}
-
-	fn to_serde(&self) -> serde_json::Value {
-		serde_json::Value::String(self.into())
-	}
-}
+use crate::ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError};
 
 impl Aligned for EcoString {
 	const ALIGNMENT: usize = 4;

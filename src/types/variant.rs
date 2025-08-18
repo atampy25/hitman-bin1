@@ -188,7 +188,7 @@ impl<'de> Deserialize<'de> for ZVariant {
 				.map_err(serde::de::Error::custom)?
 				.into())
 		} else {
-			Err(serde::de::Error::custom(format!("Unknown type ID: {}", type_id)))
+			Err(serde::de::Error::custom(format!("unknown type ID: {}", type_id)))
 		}
 	}
 }

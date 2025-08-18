@@ -1,7 +1,7 @@
 #![feature(trim_prefix_suffix)]
 
 use std::{
-	collections::VecDeque,
+	collections::{HashMap, VecDeque},
 	env, fs,
 	path::PathBuf
 };
@@ -65,7 +65,14 @@ fn parse_enums(classes: &str, enums: &str) -> Vec<(String, String, usize, Vec<(S
 		.collect()
 }
 
-fn parse_classes(classes: &str) -> Vec<(String, Vec<Member>)> {
+fn parse_classes(classes: &str, types: &str) -> Vec<(String, String, Vec<Member>)> {
+	let types = types
+		.lines()
+		.filter(|x| x.trim().starts_with("ZHMTypeInfo "))
+		.map(|x| regex_captures!(r#" (.*?)::TypeInfo = ZHMTypeInfo\("(.*)?","#, x).unwrap())
+		.map(|(_, x, y)| (x, y))
+		.collect::<HashMap<_, _>>();
+
 	let classes = classes.replace('\r', "");
 	let classes = classes.split_once("#pragma pack(push, 1)\n\n").unwrap().1;
 	classes
@@ -193,7 +200,11 @@ fn parse_classes(classes: &str) -> Vec<(String, Vec<Member>)> {
 					})
 					.collect::<Vec<_>>();
 
-				Some((name.to_owned(), members))
+				Some((
+					name.to_owned(),
+					(*types.get(name.as_str()).unwrap()).to_owned(),
+					members
+				))
 			} else {
 				None
 			}
@@ -201,7 +212,7 @@ fn parse_classes(classes: &str) -> Vec<(String, Vec<Member>)> {
 		.collect()
 }
 
-fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
+fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code: &str) {
 	scope.import("crate::ser", "Aligned");
 	scope.import("crate::ser", "Bin1Serialize");
 	scope.import("crate::ser", "Bin1Serializer");
@@ -212,7 +223,7 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
 	scope.import("crate::types::variant", "DeserializeVariant");
 	scope.raw("use crate as hitman_bin1;");
 
-	let mut classes = parse_classes(classes_code);
+	let mut classes = parse_classes(classes_code, types_code);
 
 	// Special cased
 	classes.remove(classes.iter().position(|x| x.0 == "ZRuntimeResourceID").unwrap());
@@ -237,12 +248,24 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
 		"SCCEffectSet",
 		"SSCCuriousConfiguration",
 		"ZCurve",
-		"SMapMarkerData"
+		"SMapMarkerData",
+		"ZHUDOccluderTriggerEntity_SBoneTestSetup",
+		"SGaitTransitionEntry",
+		"SClothVertex",
+		"ZSharedSensorDef_SVisibilitySetting",
+		"SFontLibraryDefinition",
+		"SCamBone",
+		"SConversationPart",
+		"AI_SFirePattern01",
+		"STargetableBoneConfiguration",
+		"ZSecuritySystemCameraConfiguration_SHitmanVisibleEscalationRule",
+		"AI_SFirePattern02",
+		"ZSecuritySystemCameraConfiguration_SDeadBodyVisibleEscalationRule"
 	] {
 		class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == ty).unwrap()));
 	}
 
-	while let Some((name, members)) = class_queue.pop_front() {
+	while let Some((name, type_id, members)) = class_queue.pop_front() {
 		for member in &members {
 			if let Member::Field(_, _, ty) = member {
 				if ty == "EcoString" {
@@ -313,19 +336,19 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
 		scope.new_impl(&name).impl_trait("StaticVariant").associate_const(
 			"TYPE_ID",
 			"&str",
-			format!(r#""{name}""#),
+			format!(r#""{type_id}""#),
 			""
 		);
 
 		scope
 			.new_impl(&format!("Vec<{name}>"))
 			.impl_trait("StaticVariant")
-			.associate_const("TYPE_ID", "&str", format!(r#""TArray<{name}>""#), "");
+			.associate_const("TYPE_ID", "&str", format!(r#""TArray<{type_id}>""#), "");
 
 		scope
 			.new_impl(&format!("Vec<Vec<{name}>>"))
 			.impl_trait("StaticVariant")
-			.associate_const("TYPE_ID", "&str", format!(r#""TArray<TArray<{name}>>""#), "");
+			.associate_const("TYPE_ID", "&str", format!(r#""TArray<TArray<{type_id}>>""#), "");
 
 		let variant_impl = scope.new_impl(&name).impl_trait("Variant");
 
@@ -337,7 +360,7 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
 				"&mut string_interner::StringInterner<string_interner::backend::BucketBackend>"
 			)
 			.ret("string_interner::DefaultSymbol")
-			.line(format!(r#"interner.get_or_intern_static("{name}")"#));
+			.line(format!(r#"interner.get_or_intern_static("{type_id}")"#));
 
 		variant_impl
 			.new_fn("to_serde")
@@ -357,10 +380,6 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
 	}
 
 	for (name, type_id, size, members) in parse_enums(classes_code, enums_code) {
-		if members.is_empty() {
-			continue;
-		}
-
 		let item = scope
 			.new_enum(&name)
 			.derive("Debug")
@@ -370,8 +389,13 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
 			.derive("serde::Deserialize")
 			.vis("pub");
 
-		for (variant_name, _) in &members {
-			item.new_variant(variant_name);
+		if members.is_empty() {
+			// ZST
+			item.new_variant("Value").annotation(r#"#[serde(rename = "")]"#);
+		} else {
+			for (variant_name, _) in &members {
+				item.new_variant(variant_name);
+			}
 		}
 
 		let size_ty = match size {
@@ -410,8 +434,12 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
 			.ret("Result<(), SerializeError>")
 			.push_block({
 				let mut block = Block::new("ser.write_unaligned(&match self");
-				for (variant_name, variant_value) in &members {
-					block.line(format!("Self::{variant_name} => {variant_value}{signed_size_ty},"));
+				if members.is_empty() {
+					block.line(format!("Self::Value => 0{signed_size_ty}"));
+				} else {
+					for (variant_name, variant_value) in &members {
+						block.line(format!("Self::{variant_name} => {variant_value}{signed_size_ty},"));
+					}
 				}
 				block.after(".to_le_bytes());");
 				block
@@ -473,13 +501,11 @@ pub fn main() -> Result<()> {
 	generate(
 		&mut h3,
 		&fs::read_to_string("h3.txt")?,
-		&fs::read_to_string("h3-enums.txt")?
+		&fs::read_to_string("h3-enums.txt")?,
+		&fs::read_to_string("h3-types.txt")?
 	);
 
-	fs::write(
-		out_dir.join("h3.rs"),
-		h3.to_string()
-	)?;
+	fs::write(out_dir.join("h3.rs"), h3.to_string())?;
 
 	fs::write(
 		out_dir.join("properties-crc32.txt"),
@@ -493,6 +519,7 @@ pub fn main() -> Result<()> {
 	println!("cargo::rerun-if-changed=build.rs");
 	println!("cargo::rerun-if-changed=h3.txt");
 	println!("cargo::rerun-if-changed=h3-enums.txt");
+	println!("cargo::rerun-if-changed=h3-types.txt");
 	println!("cargo::rerun-if-changed=properties.txt");
 
 	Ok(())

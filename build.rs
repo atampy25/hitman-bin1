@@ -190,6 +190,10 @@ fn generate(scope: &mut Scope, code: &str) {
 
 	let mut classes = parse_classes(code);
 
+	// Special cased
+	classes.remove(classes.iter().position(|x| x.0 == "ZRuntimeResourceID").unwrap());
+	classes.remove(classes.iter().position(|x| x.0 == "SEntityTemplateProperty").unwrap());
+
 	let mut class_queue = VecDeque::new();
 	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "STemplateEntityFactory").unwrap()));
 	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "STemplateEntityBlueprint").unwrap()));
@@ -197,12 +201,17 @@ fn generate(scope: &mut Scope, code: &str) {
 	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "SColorRGB").unwrap()));
 	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "SColorRGBA").unwrap()));
 	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "ZGameTime").unwrap()));
+	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "SMatrix43").unwrap()));
 
 	while let Some((name, members)) = class_queue.pop_front() {
 		for member in &members {
 			if let Member::Field(_, _, ty) = member {
 				if ty == "EcoString" {
 					scope.import("ecow", "EcoString");
+				} else if ty == "ZRuntimeResourceID" {
+					scope.import("crate::types::resource", "ZRuntimeResourceID");
+				} else if ty == "SEntityTemplateProperty" {
+					scope.import("crate::types::property", "SEntityTemplateProperty");
 				} else if ty == "ZVariant" {
 					scope.import("crate::types::variant", "ZVariant");
 				} else {
@@ -428,6 +437,15 @@ pub fn main() -> Result<()> {
 	)?;
 
 	fs::write("src/generated/mod.rs", r"pub mod h3;")?;
+
+	fs::write(
+		"properties-crc32.txt",
+		fs::read_to_string("properties.txt")?
+			.lines()
+			.map(|x| crc32fast::hash(x.trim().as_bytes()).to_string())
+			.collect::<Vec<_>>()
+			.join("\n")
+	)?;
 
 	Ok(())
 }

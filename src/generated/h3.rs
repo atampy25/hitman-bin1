@@ -3,6 +3,7 @@
 use crate::ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError};
 use crate::types::variant::{StaticVariant, Variant, VariantDeserializer, DeserializeVariant, ZVariant};
 use ecow::EcoString;
+use crate::types::property::SEntityTemplateProperty;
 
 use crate as hitman_bin1;
 
@@ -256,6 +257,46 @@ inventory::submit!(&VariantDeserializer::<Vec<ZGameTime>>::new() as &dyn Deseria
 inventory::submit!(&VariantDeserializer::<Vec<Vec<ZGameTime>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SMatrix43 {
+    #[serde(rename = "XAxis")]
+    pub x_axis: SVector3,
+    #[serde(rename = "YAxis")]
+    pub y_axis: SVector3,
+    #[serde(rename = "ZAxis")]
+    pub z_axis: SVector3,
+    #[serde(rename = "Trans")]
+    pub trans: SVector3,
+}
+
+impl StaticVariant for SMatrix43 {
+     const TYPE_ID: &str = "SMatrix43";
+}
+
+impl StaticVariant for Vec<SMatrix43> {
+     const TYPE_ID: &str = "TArray<SMatrix43>";
+}
+
+impl StaticVariant for Vec<Vec<SMatrix43>> {
+     const TYPE_ID: &str = "TArray<TArray<SMatrix43>>";
+}
+
+impl Variant for SMatrix43 {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SMatrix43")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SMatrix43>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SMatrix43>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SMatrix43>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
 pub struct STemplateFactorySubEntity {
     #[serde(rename = "logicalParent")]
     pub logical_parent: SEntityTemplateReference,
@@ -471,29 +512,30 @@ inventory::submit!(&VariantDeserializer::<Vec<SExternalEntityTemplatePinConnecti
 inventory::submit!(&VariantDeserializer::<Vec<Vec<SExternalEntityTemplatePinConnection>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
-pub struct SEntityTemplateProperty {
-    #[serde(rename = "nPropertyID")]
-    pub property_id: u32,
-    #[serde(rename = "value")]
-    #[bin1(pad = 4)]
-    pub value: ZVariant,
+pub struct SVector3 {
+    #[serde(rename = "x")]
+    pub x: f32,
+    #[serde(rename = "y")]
+    pub y: f32,
+    #[serde(rename = "z")]
+    pub z: f32,
 }
 
-impl StaticVariant for SEntityTemplateProperty {
-     const TYPE_ID: &str = "SEntityTemplateProperty";
+impl StaticVariant for SVector3 {
+     const TYPE_ID: &str = "SVector3";
 }
 
-impl StaticVariant for Vec<SEntityTemplateProperty> {
-     const TYPE_ID: &str = "TArray<SEntityTemplateProperty>";
+impl StaticVariant for Vec<SVector3> {
+     const TYPE_ID: &str = "TArray<SVector3>";
 }
 
-impl StaticVariant for Vec<Vec<SEntityTemplateProperty>> {
-     const TYPE_ID: &str = "TArray<TArray<SEntityTemplateProperty>>";
+impl StaticVariant for Vec<Vec<SVector3>> {
+     const TYPE_ID: &str = "TArray<TArray<SVector3>>";
 }
 
-impl Variant for SEntityTemplateProperty {
+impl Variant for SVector3 {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("SEntityTemplateProperty")
+        interner.get_or_intern_static("SVector3")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
@@ -501,11 +543,11 @@ impl Variant for SEntityTemplateProperty {
     }
 }
 
-inventory::submit!(&VariantDeserializer::<SEntityTemplateProperty>::new() as &dyn DeserializeVariant);
+inventory::submit!(&VariantDeserializer::<SVector3>::new() as &dyn DeserializeVariant);
 
-inventory::submit!(&VariantDeserializer::<Vec<SEntityTemplateProperty>>::new() as &dyn DeserializeVariant);
+inventory::submit!(&VariantDeserializer::<Vec<SVector3>>::new() as &dyn DeserializeVariant);
 
-inventory::submit!(&VariantDeserializer::<Vec<Vec<SEntityTemplateProperty>>>::new() as &dyn DeserializeVariant);
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SVector3>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
 pub struct SEntityTemplatePlatformSpecificProperty {

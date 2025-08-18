@@ -56,6 +56,6 @@ impl<T: Bin1Serialize> Bin1Serialize for Owned<T> {
 	}
 
 	fn resolve(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
-		ser.write_pointee(self.identity, &self.value)
+		ser.write_pointee(self.identity, None, &self.value)
 	}
 }

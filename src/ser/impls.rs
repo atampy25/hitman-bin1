@@ -85,7 +85,7 @@ impl<T: Bin1Serialize> Bin1Serialize for Arc<T> {
 
 	fn resolve(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
 		let pointer_id = Arc::as_ptr(self) as u64;
-		ser.write_pointee(pointer_id, self.as_ref())
+		ser.write_pointee(pointer_id, None, self.as_ref())
 	}
 }
 
@@ -159,6 +159,10 @@ impl<T: Bin1Serialize, U: Bin1Serialize> Bin1Serialize for (T, U) {
 		self.1.resolve(ser)?;
 		Ok(())
 	}
+}
+
+impl Aligned for () {
+	const ALIGNMENT: usize = 1;
 }
 
 impl Bin1Serialize for () {

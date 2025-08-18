@@ -2,6 +2,7 @@ use std::fs;
 
 use ecow::EcoString;
 use hitman_bin1::{
+	generated::h3::STemplateEntityFactory,
 	ser::{SerializeError, serialize},
 	types::{pointers::Owned, variant::ZVariant}
 };
@@ -14,25 +15,18 @@ pub struct XYZ {
 }
 
 fn main() -> Result<(), SerializeError> {
-	let variant = serde_json::from_str::<ZVariant>(
-		r#"{"$type":"TArray<ZRuntimeResourceID>","$val":[{ "m_IDHigh": 1, "m_IDLow": 2 }]}"#
+	let value: STemplateEntityFactory =
+		serde_json::from_slice(&fs::read("00D52B924A8450DC.TEMP.json").unwrap()).unwrap();
+
+	dbg!(&value);
+
+	fs::write(
+		"00D52B924A8450DC-roundtrip.TEMP.json",
+		serde_json::to_vec(&value).unwrap()
 	)
 	.unwrap();
-	println!("{:?}", variant);
-	println!("{}", serde_json::to_string(&variant).unwrap());
 
-	let mut val = XYZ {
-		value: vec![],
-		value2: ZVariant::new(vec![2u8, 4, 6])
-	};
-
-	val.value.push(Owned::new("Hello world!".into()));
-	let abc: EcoString = "Long string!!!!!!!".into();
-	val.value.push(Owned::new(abc.clone()));
-	val.value.push(Owned::new(abc));
-	val.value.push(Owned::new("Something else".into()));
-
-	fs::write("ser.bin", serialize(&val)?)?;
+	fs::write("00D52B924A8450DC-roundtrip.TEMP", serialize(&value)?).unwrap();
 
 	Ok(())
 }

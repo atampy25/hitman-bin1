@@ -110,6 +110,7 @@ impl Bin1Serializer {
 	pub fn write_pointee<T: Bin1Serialize + ?Sized>(
 		&mut self,
 		pointer_id: u64,
+		end_pointer_id: Option<u64>,
 		data: &T
 	) -> Result<(), SerializeError> {
 		if self.offsets.contains_key(&pointer_id) {
@@ -118,7 +119,13 @@ impl Bin1Serializer {
 
 		self.align_to(data.alignment());
 		self.register_pointee(pointer_id);
+
 		data.write(self)?;
+		if let Some(end_pointer_id) = end_pointer_id {
+			// Register the end pointer as here, at the end of the pointee data
+			self.register_pointee(end_pointer_id);
+		}
+
 		data.resolve(self)?;
 
 		Ok(())
@@ -150,7 +157,7 @@ impl Bin1Serializer {
 
 	#[try_fn]
 	pub fn finalise(mut self) -> Result<Vec<u8>, SerializeError> {
-		self.align_to(4);
+		self.align_to(8);
 
 		let mut cursor = Cursor::new(self.buffer);
 
@@ -218,9 +225,9 @@ impl Bin1Serializer {
 		let buffer = cursor.into_inner();
 
 		let mut data = vec![];
-		data.extend_from_slice(b"1NIB");
+		data.extend_from_slice(b"BIN1");
 		data.push(0); // padding
-		data.push(4); // alignment
+		data.push(8); // alignment
 		data.push(segments.len() as u8);
 		data.push(0);
 		data.extend_from_slice(&(buffer.len() as u32).to_be_bytes());

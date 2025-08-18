@@ -1,6 +1,6 @@
 use std::{
 	collections::HashMap,
-	fmt::Debug,
+	fmt::{self, Debug},
 	ops::{Deref, DerefMut}
 };
 
@@ -64,7 +64,7 @@ static DESERIALIZERS: HashMap<&'static str, &'static dyn DeserializeVariant> =
 		.map(|&x| (x.type_id(), x))
 		.collect();
 
-#[derive(Debug, Clone, dynex::PartialEqFix)]
+#[derive(Clone, dynex::PartialEqFix)]
 pub struct ZVariant {
 	value: Box<dyn Variant>
 }
@@ -95,6 +95,12 @@ impl ZVariant {
 	}
 }
 
+impl Debug for ZVariant {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		f.debug_tuple("ZVariant").field(&self.value).finish()
+	}
+}
+
 impl Aligned for ZVariant {
 	const ALIGNMENT: usize = 8;
 }
@@ -121,7 +127,7 @@ impl Bin1Serialize for ZVariant {
 	fn resolve(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
 		if Variant::type_id(&*self.value, ser.interner()) != ser.interner().get_or_intern_static("void") {
 			let pointer_id = (&*self.value) as *const _ as *const () as u64 | 0xBEEF000000000000;
-			ser.write_pointee(pointer_id, &*self.value)?;
+			ser.write_pointee(pointer_id, None, &*self.value)?;
 		}
 
 		Ok(())
@@ -256,7 +262,7 @@ inventory::submit!(&VariantDeserializer::<()>::new() as &dyn DeserializeVariant)
 inventory::submit!(&VariantDeserializer::<Vec<()>>::new() as &dyn DeserializeVariant);
 inventory::submit!(&VariantDeserializer::<Vec<Vec<()>>>::new() as &dyn DeserializeVariant);
 
-impl<T: Bin1Serialize + Serialize + StaticVariant + Send + Sync + Clone + Debug + PartialEq + 'static> Variant
+impl<T: Bin1Serialize + Aligned + Serialize + StaticVariant + Send + Sync + Clone + Debug + PartialEq + 'static> Variant
 	for Vec<T>
 {
 	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {

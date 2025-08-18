@@ -18,7 +18,7 @@ use crate as hitman_bin1;
 static PROPERTIES: BiMap<&'static str, u32> = include_str!("../../properties.txt")
 	.lines()
 	.zip(
-		include_str!("../../properties-crc32.txt")
+		include_str!(concat!(env!("OUT_DIR"), "/properties-crc32.txt"))
 			.lines()
 			.map(|x| x.parse().unwrap())
 	)

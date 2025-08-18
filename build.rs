@@ -1,6 +1,10 @@
 #![feature(trim_prefix_suffix)]
 
-use std::{collections::VecDeque, fs};
+use std::{
+	collections::VecDeque,
+	env, fs,
+	path::PathBuf
+};
 
 use anyhow::Result;
 use codegen::{Block, Scope};
@@ -51,10 +55,7 @@ fn parse_enums(classes: &str, enums: &str) -> Vec<(String, String, usize, Vec<(S
 					})
 					.collect();
 
-				let enum_name = *enums
-					.par_iter()
-					.min_by_key(|x| edit_distance(name, x))
-					.unwrap_or(&name);
+				let enum_name = *enums.par_iter().min_by_key(|x| edit_distance(name, x)).unwrap_or(&name);
 
 				Some((name.to_owned(), enum_name.to_owned(), size, members))
 			} else {
@@ -465,6 +466,8 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
 }
 
 pub fn main() -> Result<()> {
+	let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+
 	let mut h3 = Scope::new();
 
 	generate(
@@ -474,20 +477,23 @@ pub fn main() -> Result<()> {
 	);
 
 	fs::write(
-		"src/generated/h3.rs",
-		format!("#![allow(non_camel_case_types, non_snake_case)]\n\n{}", h3.to_string(),)
+		out_dir.join("h3.rs"),
+		h3.to_string()
 	)?;
 
-	fs::write("src/generated/mod.rs", r"pub mod h3;")?;
-
 	fs::write(
-		"properties-crc32.txt",
+		out_dir.join("properties-crc32.txt"),
 		fs::read_to_string("properties.txt")?
 			.lines()
 			.map(|x| crc32fast::hash(x.trim().as_bytes()).to_string())
 			.collect::<Vec<_>>()
 			.join("\n")
 	)?;
+
+	println!("cargo::rerun-if-changed=build.rs");
+	println!("cargo::rerun-if-changed=h3.txt");
+	println!("cargo::rerun-if-changed=h3-enums.txt");
+	println!("cargo::rerun-if-changed=properties.txt");
 
 	Ok(())
 }

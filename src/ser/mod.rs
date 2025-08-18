@@ -117,6 +117,7 @@ impl Bin1Serializer {
 			return Ok(());
 		}
 
+		self.align_to(8); // align to "serializer alignment"
 		self.align_to(data.alignment());
 		self.register_pointee(pointer_id);
 

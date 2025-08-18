@@ -3,7 +3,7 @@ use ecow::EcoString;
 use crate::ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError};
 
 impl Aligned for EcoString {
-	const ALIGNMENT: usize = 4;
+	const ALIGNMENT: usize = 8;
 }
 
 impl Bin1Serialize for EcoString {

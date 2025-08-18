@@ -2,8 +2,8 @@
 
 use crate::ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError};
 use crate::types::variant::{StaticVariant, Variant, VariantDeserializer, DeserializeVariant, ZVariant};
-use ecow::EcoString;
 use crate::types::property::SEntityTemplateProperty;
+use ecow::EcoString;
 
 use crate as hitman_bin1;
 
@@ -105,46 +105,6 @@ inventory::submit!(&VariantDeserializer::<Vec<STemplateEntityBlueprint>>::new() 
 inventory::submit!(&VariantDeserializer::<Vec<Vec<STemplateEntityBlueprint>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
-pub struct SEntityTemplateReference {
-    #[serde(rename = "entityID")]
-    pub entity_id: u64,
-    #[serde(rename = "externalSceneIndex")]
-    pub external_scene_index: i32,
-    #[serde(rename = "entityIndex")]
-    pub entity_index: i32,
-    #[serde(rename = "exposedEntity")]
-    pub exposed_entity: EcoString,
-}
-
-impl StaticVariant for SEntityTemplateReference {
-     const TYPE_ID: &str = "SEntityTemplateReference";
-}
-
-impl StaticVariant for Vec<SEntityTemplateReference> {
-     const TYPE_ID: &str = "TArray<SEntityTemplateReference>";
-}
-
-impl StaticVariant for Vec<Vec<SEntityTemplateReference>> {
-     const TYPE_ID: &str = "TArray<TArray<SEntityTemplateReference>>";
-}
-
-impl Variant for SEntityTemplateReference {
-    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("SEntityTemplateReference")
-    }
-
-    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        serde_json::to_value(self)
-    }
-}
-
-inventory::submit!(&VariantDeserializer::<SEntityTemplateReference>::new() as &dyn DeserializeVariant);
-
-inventory::submit!(&VariantDeserializer::<Vec<SEntityTemplateReference>>::new() as &dyn DeserializeVariant);
-
-inventory::submit!(&VariantDeserializer::<Vec<Vec<SEntityTemplateReference>>>::new() as &dyn DeserializeVariant);
-
-#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
 pub struct SColorRGB {
     #[serde(rename = "r")]
     pub r: f32,
@@ -223,6 +183,60 @@ inventory::submit!(&VariantDeserializer::<Vec<SColorRGBA>>::new() as &dyn Deseri
 inventory::submit!(&VariantDeserializer::<Vec<Vec<SColorRGBA>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct ZGuid {
+    #[serde(rename = "_a")]
+    pub _a: u32,
+    #[serde(rename = "_b")]
+    pub _b: u16,
+    #[serde(rename = "_c")]
+    pub _c: u16,
+    #[serde(rename = "_d")]
+    pub _d: u8,
+    #[serde(rename = "_e")]
+    pub _e: u8,
+    #[serde(rename = "_f")]
+    pub _f: u8,
+    #[serde(rename = "_g")]
+    pub _g: u8,
+    #[serde(rename = "_h")]
+    pub _h: u8,
+    #[serde(rename = "_i")]
+    pub _i: u8,
+    #[serde(rename = "_j")]
+    pub _j: u8,
+    #[serde(rename = "_k")]
+    pub _k: u8,
+}
+
+impl StaticVariant for ZGuid {
+     const TYPE_ID: &str = "ZGuid";
+}
+
+impl StaticVariant for Vec<ZGuid> {
+     const TYPE_ID: &str = "TArray<ZGuid>";
+}
+
+impl StaticVariant for Vec<Vec<ZGuid>> {
+     const TYPE_ID: &str = "TArray<TArray<ZGuid>>";
+}
+
+impl Variant for ZGuid {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("ZGuid")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<ZGuid>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<ZGuid>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<ZGuid>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
 pub struct ZGameTime {
     #[serde(rename = "m_nTicks")]
     pub ticks: i64,
@@ -255,6 +269,120 @@ inventory::submit!(&VariantDeserializer::<ZGameTime>::new() as &dyn DeserializeV
 inventory::submit!(&VariantDeserializer::<Vec<ZGameTime>>::new() as &dyn DeserializeVariant);
 
 inventory::submit!(&VariantDeserializer::<Vec<Vec<ZGameTime>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SVector2 {
+    #[serde(rename = "x")]
+    pub x: f32,
+    #[serde(rename = "y")]
+    pub y: f32,
+}
+
+impl StaticVariant for SVector2 {
+     const TYPE_ID: &str = "SVector2";
+}
+
+impl StaticVariant for Vec<SVector2> {
+     const TYPE_ID: &str = "TArray<SVector2>";
+}
+
+impl StaticVariant for Vec<Vec<SVector2>> {
+     const TYPE_ID: &str = "TArray<TArray<SVector2>>";
+}
+
+impl Variant for SVector2 {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SVector2")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SVector2>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SVector2>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SVector2>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SVector3 {
+    #[serde(rename = "x")]
+    pub x: f32,
+    #[serde(rename = "y")]
+    pub y: f32,
+    #[serde(rename = "z")]
+    pub z: f32,
+}
+
+impl StaticVariant for SVector3 {
+     const TYPE_ID: &str = "SVector3";
+}
+
+impl StaticVariant for Vec<SVector3> {
+     const TYPE_ID: &str = "TArray<SVector3>";
+}
+
+impl StaticVariant for Vec<Vec<SVector3>> {
+     const TYPE_ID: &str = "TArray<TArray<SVector3>>";
+}
+
+impl Variant for SVector3 {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SVector3")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SVector3>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SVector3>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SVector3>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SVector4 {
+    #[serde(rename = "x")]
+    pub x: f32,
+    #[serde(rename = "y")]
+    pub y: f32,
+    #[serde(rename = "z")]
+    pub z: f32,
+    #[serde(rename = "w")]
+    pub w: f32,
+}
+
+impl StaticVariant for SVector4 {
+     const TYPE_ID: &str = "SVector4";
+}
+
+impl StaticVariant for Vec<SVector4> {
+     const TYPE_ID: &str = "TArray<SVector4>";
+}
+
+impl StaticVariant for Vec<Vec<SVector4>> {
+     const TYPE_ID: &str = "TArray<TArray<SVector4>>";
+}
+
+impl Variant for SVector4 {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SVector4")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SVector4>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SVector4>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SVector4>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
 pub struct SMatrix43 {
@@ -295,6 +423,326 @@ inventory::submit!(&VariantDeserializer::<SMatrix43>::new() as &dyn DeserializeV
 inventory::submit!(&VariantDeserializer::<Vec<SMatrix43>>::new() as &dyn DeserializeVariant);
 
 inventory::submit!(&VariantDeserializer::<Vec<Vec<SMatrix43>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SWorldSpaceSettings {
+    #[serde(rename = "fCloseupDistance")]
+    pub closeup_distance: f32,
+    #[serde(rename = "fScale")]
+    pub scale: f32,
+    #[serde(rename = "bDynamicScale")]
+    pub dynamic_scale: bool,
+    #[serde(rename = "fDynamicScaleAlpha")]
+    #[bin1(pad = 3)]
+    pub dynamic_scale_alpha: f32,
+    #[serde(rename = "fDynamicScaleNearDistance")]
+    pub dynamic_scale_near_distance: f32,
+    #[serde(rename = "fDynamicScaleBlendRange")]
+    pub dynamic_scale_blend_range: f32,
+}
+
+impl StaticVariant for SWorldSpaceSettings {
+     const TYPE_ID: &str = "SWorldSpaceSettings";
+}
+
+impl StaticVariant for Vec<SWorldSpaceSettings> {
+     const TYPE_ID: &str = "TArray<SWorldSpaceSettings>";
+}
+
+impl StaticVariant for Vec<Vec<SWorldSpaceSettings>> {
+     const TYPE_ID: &str = "TArray<TArray<SWorldSpaceSettings>>";
+}
+
+impl Variant for SWorldSpaceSettings {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SWorldSpaceSettings")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SWorldSpaceSettings>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SWorldSpaceSettings>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SWorldSpaceSettings>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct S25DProjectionSettings {
+    #[serde(rename = "fNearDistance")]
+    pub near_distance: f32,
+    #[serde(rename = "fFarDistance")]
+    pub far_distance: f32,
+    #[serde(rename = "fNearScale")]
+    pub near_scale: f32,
+    #[serde(rename = "fFarScale")]
+    pub far_scale: f32,
+    #[serde(rename = "fNearFov")]
+    pub near_fov: f32,
+    #[serde(rename = "fFarFov")]
+    pub far_fov: f32,
+    #[serde(rename = "fNearScaleFov")]
+    pub near_scale_fov: f32,
+    #[serde(rename = "fFarScaleFov")]
+    pub far_scale_fov: f32,
+    #[serde(rename = "enableWorldSizeScaling")]
+    pub enable_world_size_scaling: bool,
+    #[serde(rename = "fWorldSizeScalingBaseDistance")]
+    #[bin1(pad = 3)]
+    pub world_size_scaling_base_distance: f32,
+    #[serde(rename = "fWorldSizeScalingFactorMax")]
+    pub world_size_scaling_factor_max: f32,
+    #[serde(rename = "fWorldSizeScalingFactorMin")]
+    pub world_size_scaling_factor_min: f32,
+    #[serde(rename = "fScaleFactor")]
+    pub scale_factor: f32,
+    #[serde(rename = "fNearAlpha")]
+    pub near_alpha: f32,
+    #[serde(rename = "fFarAlpha")]
+    pub far_alpha: f32,
+    #[serde(rename = "fAlphaFactor")]
+    pub alpha_factor: f32,
+    #[serde(rename = "aScaleCurve")]
+    pub scale_curve: Vec<S25DProjectionSettingsCurveEntry>,
+    #[serde(rename = "aAlphaCurve")]
+    pub alpha_curve: Vec<S25DProjectionSettingsCurveEntry>,
+    #[serde(rename = "eViewportLock")]
+    pub viewport_lock: EViewportLock,
+    #[serde(rename = "fViewportGutter")]
+    pub viewport_gutter: f32,
+    #[serde(rename = "sWorldSpaceSettings")]
+    pub world_space_settings: SWorldSpaceSettings,
+}
+
+impl StaticVariant for S25DProjectionSettings {
+     const TYPE_ID: &str = "S25DProjectionSettings";
+}
+
+impl StaticVariant for Vec<S25DProjectionSettings> {
+     const TYPE_ID: &str = "TArray<S25DProjectionSettings>";
+}
+
+impl StaticVariant for Vec<Vec<S25DProjectionSettings>> {
+     const TYPE_ID: &str = "TArray<TArray<S25DProjectionSettings>>";
+}
+
+impl Variant for S25DProjectionSettings {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("S25DProjectionSettings")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<S25DProjectionSettings>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<S25DProjectionSettings>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<S25DProjectionSettings>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SBodyPartDamageMultipliers {
+    #[serde(rename = "m_fHeadDamageMultiplier")]
+    pub head_damage_multiplier: f32,
+    #[serde(rename = "m_fFaceDamageMultiplier")]
+    pub face_damage_multiplier: f32,
+    #[serde(rename = "m_fArmDamageMultiplier")]
+    pub arm_damage_multiplier: f32,
+    #[serde(rename = "m_fLArmDamageScalar")]
+    pub l_arm_damage_scalar: f32,
+    #[serde(rename = "m_fRArmDamageScalar")]
+    pub r_arm_damage_scalar: f32,
+    #[serde(rename = "m_fHandDamageMultiplier")]
+    pub hand_damage_multiplier: f32,
+    #[serde(rename = "m_fLHandDamageScalar")]
+    pub l_hand_damage_scalar: f32,
+    #[serde(rename = "m_fRHandDamageScalar")]
+    pub r_hand_damage_scalar: f32,
+    #[serde(rename = "m_fLegDamageMultiplier")]
+    pub leg_damage_multiplier: f32,
+    #[serde(rename = "m_fLLegDamageScalar")]
+    pub l_leg_damage_scalar: f32,
+    #[serde(rename = "m_fRLegDamageScalar")]
+    pub r_leg_damage_scalar: f32,
+    #[serde(rename = "m_fTorsoDamageMultiplier")]
+    pub torso_damage_multiplier: f32,
+    #[serde(rename = "m_bApplyLeftRightScalars")]
+    pub apply_left_right_scalars: bool,
+}
+
+impl StaticVariant for SBodyPartDamageMultipliers {
+     const TYPE_ID: &str = "SBodyPartDamageMultipliers";
+}
+
+impl StaticVariant for Vec<SBodyPartDamageMultipliers> {
+     const TYPE_ID: &str = "TArray<SBodyPartDamageMultipliers>";
+}
+
+impl StaticVariant for Vec<Vec<SBodyPartDamageMultipliers>> {
+     const TYPE_ID: &str = "TArray<TArray<SBodyPartDamageMultipliers>>";
+}
+
+impl Variant for SBodyPartDamageMultipliers {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SBodyPartDamageMultipliers")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SBodyPartDamageMultipliers>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SBodyPartDamageMultipliers>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SBodyPartDamageMultipliers>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SCCEffectSet {
+    #[serde(rename = "m_eDecalEffect")]
+    pub decal_effect: ECCDecalEffect,
+    #[serde(rename = "m_eEmitterEffect")]
+    pub emitter_effect: ECCEmitterEffect,
+}
+
+impl StaticVariant for SCCEffectSet {
+     const TYPE_ID: &str = "SCCEffectSet";
+}
+
+impl StaticVariant for Vec<SCCEffectSet> {
+     const TYPE_ID: &str = "TArray<SCCEffectSet>";
+}
+
+impl StaticVariant for Vec<Vec<SCCEffectSet>> {
+     const TYPE_ID: &str = "TArray<TArray<SCCEffectSet>>";
+}
+
+impl Variant for SCCEffectSet {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SCCEffectSet")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SCCEffectSet>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SCCEffectSet>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SCCEffectSet>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SSCCuriousConfiguration {
+    #[serde(rename = "m_CanGuardsInvestigate")]
+    pub can_guards_investigate: bool,
+    #[serde(rename = "m_CanCiviliansInvestigate")]
+    pub can_civilians_investigate: bool,
+    #[serde(rename = "m_CanVIPsInvestigate")]
+    pub can_vi_ps_investigate: bool,
+}
+
+impl StaticVariant for SSCCuriousConfiguration {
+     const TYPE_ID: &str = "SSCCuriousConfiguration";
+}
+
+impl StaticVariant for Vec<SSCCuriousConfiguration> {
+     const TYPE_ID: &str = "TArray<SSCCuriousConfiguration>";
+}
+
+impl StaticVariant for Vec<Vec<SSCCuriousConfiguration>> {
+     const TYPE_ID: &str = "TArray<TArray<SSCCuriousConfiguration>>";
+}
+
+impl Variant for SSCCuriousConfiguration {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SSCCuriousConfiguration")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SSCCuriousConfiguration>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SSCCuriousConfiguration>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SSCCuriousConfiguration>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct ZCurve {
+    #[serde(rename = "data")]
+    pub data: Vec<[f32; 8]>,
+}
+
+impl StaticVariant for ZCurve {
+     const TYPE_ID: &str = "ZCurve";
+}
+
+impl StaticVariant for Vec<ZCurve> {
+     const TYPE_ID: &str = "TArray<ZCurve>";
+}
+
+impl StaticVariant for Vec<Vec<ZCurve>> {
+     const TYPE_ID: &str = "TArray<TArray<ZCurve>>";
+}
+
+impl Variant for ZCurve {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("ZCurve")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<ZCurve>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<ZCurve>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<ZCurve>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SMapMarkerData {
+    #[serde(rename = "pathPoints")]
+    pub path_points: Vec<SVector2>,
+}
+
+impl StaticVariant for SMapMarkerData {
+     const TYPE_ID: &str = "SMapMarkerData";
+}
+
+impl StaticVariant for Vec<SMapMarkerData> {
+     const TYPE_ID: &str = "TArray<SMapMarkerData>";
+}
+
+impl StaticVariant for Vec<Vec<SMapMarkerData>> {
+     const TYPE_ID: &str = "TArray<TArray<SMapMarkerData>>";
+}
+
+impl Variant for SMapMarkerData {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SMapMarkerData")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SMapMarkerData>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SMapMarkerData>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SMapMarkerData>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
 pub struct STemplateFactorySubEntity {
@@ -470,6 +918,46 @@ inventory::submit!(&VariantDeserializer::<Vec<SEntityTemplatePinConnection>>::ne
 inventory::submit!(&VariantDeserializer::<Vec<Vec<SEntityTemplatePinConnection>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
+pub struct SEntityTemplateReference {
+    #[serde(rename = "entityID")]
+    pub entity_id: u64,
+    #[serde(rename = "externalSceneIndex")]
+    pub external_scene_index: i32,
+    #[serde(rename = "entityIndex")]
+    pub entity_index: i32,
+    #[serde(rename = "exposedEntity")]
+    pub exposed_entity: EcoString,
+}
+
+impl StaticVariant for SEntityTemplateReference {
+     const TYPE_ID: &str = "SEntityTemplateReference";
+}
+
+impl StaticVariant for Vec<SEntityTemplateReference> {
+     const TYPE_ID: &str = "TArray<SEntityTemplateReference>";
+}
+
+impl StaticVariant for Vec<Vec<SEntityTemplateReference>> {
+     const TYPE_ID: &str = "TArray<TArray<SEntityTemplateReference>>";
+}
+
+impl Variant for SEntityTemplateReference {
+    fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
+        interner.get_or_intern_static("SEntityTemplateReference")
+    }
+
+    fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+        serde_json::to_value(self)
+    }
+}
+
+inventory::submit!(&VariantDeserializer::<SEntityTemplateReference>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<SEntityTemplateReference>>::new() as &dyn DeserializeVariant);
+
+inventory::submit!(&VariantDeserializer::<Vec<Vec<SEntityTemplateReference>>>::new() as &dyn DeserializeVariant);
+
+#[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
 pub struct SExternalEntityTemplatePinConnection {
     #[serde(rename = "fromEntity")]
     pub from_entity: SEntityTemplateReference,
@@ -512,30 +1000,28 @@ inventory::submit!(&VariantDeserializer::<Vec<SExternalEntityTemplatePinConnecti
 inventory::submit!(&VariantDeserializer::<Vec<Vec<SExternalEntityTemplatePinConnection>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
-pub struct SVector3 {
-    #[serde(rename = "x")]
-    pub x: f32,
-    #[serde(rename = "y")]
-    pub y: f32,
-    #[serde(rename = "z")]
-    pub z: f32,
+pub struct S25DProjectionSettingsCurveEntry {
+    #[serde(rename = "fDistance")]
+    pub distance: f32,
+    #[serde(rename = "fValue")]
+    pub value: f32,
 }
 
-impl StaticVariant for SVector3 {
-     const TYPE_ID: &str = "SVector3";
+impl StaticVariant for S25DProjectionSettingsCurveEntry {
+     const TYPE_ID: &str = "S25DProjectionSettingsCurveEntry";
 }
 
-impl StaticVariant for Vec<SVector3> {
-     const TYPE_ID: &str = "TArray<SVector3>";
+impl StaticVariant for Vec<S25DProjectionSettingsCurveEntry> {
+     const TYPE_ID: &str = "TArray<S25DProjectionSettingsCurveEntry>";
 }
 
-impl StaticVariant for Vec<Vec<SVector3>> {
-     const TYPE_ID: &str = "TArray<TArray<SVector3>>";
+impl StaticVariant for Vec<Vec<S25DProjectionSettingsCurveEntry>> {
+     const TYPE_ID: &str = "TArray<TArray<S25DProjectionSettingsCurveEntry>>";
 }
 
-impl Variant for SVector3 {
+impl Variant for S25DProjectionSettingsCurveEntry {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("SVector3")
+        interner.get_or_intern_static("S25DProjectionSettingsCurveEntry")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
@@ -543,11 +1029,11 @@ impl Variant for SVector3 {
     }
 }
 
-inventory::submit!(&VariantDeserializer::<SVector3>::new() as &dyn DeserializeVariant);
+inventory::submit!(&VariantDeserializer::<S25DProjectionSettingsCurveEntry>::new() as &dyn DeserializeVariant);
 
-inventory::submit!(&VariantDeserializer::<Vec<SVector3>>::new() as &dyn DeserializeVariant);
+inventory::submit!(&VariantDeserializer::<Vec<S25DProjectionSettingsCurveEntry>>::new() as &dyn DeserializeVariant);
 
-inventory::submit!(&VariantDeserializer::<Vec<Vec<SVector3>>>::new() as &dyn DeserializeVariant);
+inventory::submit!(&VariantDeserializer::<Vec<Vec<S25DProjectionSettingsCurveEntry>>>::new() as &dyn DeserializeVariant);
 
 #[derive(Debug, Clone, PartialEq, Bin1Serialize, serde::Serialize, serde::Deserialize)]
 pub struct SEntityTemplatePlatformSpecificProperty {
@@ -1194,7 +1680,7 @@ impl Variant for EAIEventType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAIEventType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -1265,7 +1751,7 @@ impl Variant for AudioCurve {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("AudioCurve".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -1322,7 +1808,7 @@ impl Variant for AudioEventCullingBehavior {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("AudioEventCullingBehavior".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -1644,24 +2130,24 @@ impl Bin1Serialize for BoneId_Enum {
 }
 
 impl StaticVariant for BoneId_Enum {
-     const TYPE_ID: &str = "BoneId_Enum";
+     const TYPE_ID: &str = "BoneId.Enum";
 }
 
 impl StaticVariant for Vec<BoneId_Enum> {
-     const TYPE_ID: &str = "TArray<BoneId_Enum>";
+     const TYPE_ID: &str = "TArray<BoneId.Enum>";
 }
 
 impl StaticVariant for Vec<Vec<BoneId_Enum>> {
-     const TYPE_ID: &str = "TArray<TArray<BoneId_Enum>>";
+     const TYPE_ID: &str = "TArray<TArray<BoneId.Enum>>";
 }
 
 impl Variant for BoneId_Enum {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("BoneId_Enum")
+        interner.get_or_intern_static("BoneId.Enum")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("BoneId_Enum".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -1709,24 +2195,24 @@ impl Bin1Serialize for CrowdMapImpl_CellFlags {
 }
 
 impl StaticVariant for CrowdMapImpl_CellFlags {
-     const TYPE_ID: &str = "CrowdMapImpl_CellFlags";
+     const TYPE_ID: &str = "CrowdMapImpl.CellFlags";
 }
 
 impl StaticVariant for Vec<CrowdMapImpl_CellFlags> {
-     const TYPE_ID: &str = "TArray<CrowdMapImpl_CellFlags>";
+     const TYPE_ID: &str = "TArray<CrowdMapImpl.CellFlags>";
 }
 
 impl StaticVariant for Vec<Vec<CrowdMapImpl_CellFlags>> {
-     const TYPE_ID: &str = "TArray<TArray<CrowdMapImpl_CellFlags>>";
+     const TYPE_ID: &str = "TArray<TArray<CrowdMapImpl.CellFlags>>";
 }
 
 impl Variant for CrowdMapImpl_CellFlags {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("CrowdMapImpl_CellFlags")
+        interner.get_or_intern_static("CrowdMapImpl.CellFlags")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdMapImpl_CellFlags".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -1785,7 +2271,7 @@ impl Variant for CrowdReactionAIEventType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdReactionAIEventType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -1854,7 +2340,7 @@ impl Variant for CrowdRegionType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdRegionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -1900,24 +2386,24 @@ impl Bin1Serialize for CrowdUtil_ECrowdActorMood {
 }
 
 impl StaticVariant for CrowdUtil_ECrowdActorMood {
-     const TYPE_ID: &str = "CrowdUtil_ECrowdActorMood";
+     const TYPE_ID: &str = "CrowdUtil.ECrowdActorMood";
 }
 
 impl StaticVariant for Vec<CrowdUtil_ECrowdActorMood> {
-     const TYPE_ID: &str = "TArray<CrowdUtil_ECrowdActorMood>";
+     const TYPE_ID: &str = "TArray<CrowdUtil.ECrowdActorMood>";
 }
 
 impl StaticVariant for Vec<Vec<CrowdUtil_ECrowdActorMood>> {
-     const TYPE_ID: &str = "TArray<TArray<CrowdUtil_ECrowdActorMood>>";
+     const TYPE_ID: &str = "TArray<TArray<CrowdUtil.ECrowdActorMood>>";
 }
 
 impl Variant for CrowdUtil_ECrowdActorMood {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("CrowdUtil_ECrowdActorMood")
+        interner.get_or_intern_static("CrowdUtil.ECrowdActorMood")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdUtil_ECrowdActorMood".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -1957,24 +2443,24 @@ impl Bin1Serialize for CrowdUtil_ECrowdDirection {
 }
 
 impl StaticVariant for CrowdUtil_ECrowdDirection {
-     const TYPE_ID: &str = "CrowdUtil_ECrowdDirection";
+     const TYPE_ID: &str = "CrowdUtil.ECrowdDirection";
 }
 
 impl StaticVariant for Vec<CrowdUtil_ECrowdDirection> {
-     const TYPE_ID: &str = "TArray<CrowdUtil_ECrowdDirection>";
+     const TYPE_ID: &str = "TArray<CrowdUtil.ECrowdDirection>";
 }
 
 impl StaticVariant for Vec<Vec<CrowdUtil_ECrowdDirection>> {
-     const TYPE_ID: &str = "TArray<TArray<CrowdUtil_ECrowdDirection>>";
+     const TYPE_ID: &str = "TArray<TArray<CrowdUtil.ECrowdDirection>>";
 }
 
 impl Variant for CrowdUtil_ECrowdDirection {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("CrowdUtil_ECrowdDirection")
+        interner.get_or_intern_static("CrowdUtil.ECrowdDirection")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdUtil_ECrowdDirection".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2010,24 +2496,24 @@ impl Bin1Serialize for CrowdUtil_ECrowdFacing {
 }
 
 impl StaticVariant for CrowdUtil_ECrowdFacing {
-     const TYPE_ID: &str = "CrowdUtil_ECrowdFacing";
+     const TYPE_ID: &str = "CrowdUtil.ECrowdFacing";
 }
 
 impl StaticVariant for Vec<CrowdUtil_ECrowdFacing> {
-     const TYPE_ID: &str = "TArray<CrowdUtil_ECrowdFacing>";
+     const TYPE_ID: &str = "TArray<CrowdUtil.ECrowdFacing>";
 }
 
 impl StaticVariant for Vec<Vec<CrowdUtil_ECrowdFacing>> {
-     const TYPE_ID: &str = "TArray<TArray<CrowdUtil_ECrowdFacing>>";
+     const TYPE_ID: &str = "TArray<TArray<CrowdUtil.ECrowdFacing>>";
 }
 
 impl Variant for CrowdUtil_ECrowdFacing {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("CrowdUtil_ECrowdFacing")
+        interner.get_or_intern_static("CrowdUtil.ECrowdFacing")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdUtil_ECrowdFacing".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2063,24 +2549,24 @@ impl Bin1Serialize for CrowdUtil_ECrowdSide {
 }
 
 impl StaticVariant for CrowdUtil_ECrowdSide {
-     const TYPE_ID: &str = "CrowdUtil_ECrowdSide";
+     const TYPE_ID: &str = "CrowdUtil.ECrowdSide";
 }
 
 impl StaticVariant for Vec<CrowdUtil_ECrowdSide> {
-     const TYPE_ID: &str = "TArray<CrowdUtil_ECrowdSide>";
+     const TYPE_ID: &str = "TArray<CrowdUtil.ECrowdSide>";
 }
 
 impl StaticVariant for Vec<Vec<CrowdUtil_ECrowdSide>> {
-     const TYPE_ID: &str = "TArray<TArray<CrowdUtil_ECrowdSide>>";
+     const TYPE_ID: &str = "TArray<TArray<CrowdUtil.ECrowdSide>>";
 }
 
 impl Variant for CrowdUtil_ECrowdSide {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("CrowdUtil_ECrowdSide")
+        interner.get_or_intern_static("CrowdUtil.ECrowdSide")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdUtil_ECrowdSide".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2128,24 +2614,24 @@ impl Bin1Serialize for CrowdUtil_ECrowdStandingPush {
 }
 
 impl StaticVariant for CrowdUtil_ECrowdStandingPush {
-     const TYPE_ID: &str = "CrowdUtil_ECrowdStandingPush";
+     const TYPE_ID: &str = "CrowdUtil.ECrowdStandingPush";
 }
 
 impl StaticVariant for Vec<CrowdUtil_ECrowdStandingPush> {
-     const TYPE_ID: &str = "TArray<CrowdUtil_ECrowdStandingPush>";
+     const TYPE_ID: &str = "TArray<CrowdUtil.ECrowdStandingPush>";
 }
 
 impl StaticVariant for Vec<Vec<CrowdUtil_ECrowdStandingPush>> {
-     const TYPE_ID: &str = "TArray<TArray<CrowdUtil_ECrowdStandingPush>>";
+     const TYPE_ID: &str = "TArray<TArray<CrowdUtil.ECrowdStandingPush>>";
 }
 
 impl Variant for CrowdUtil_ECrowdStandingPush {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("CrowdUtil_ECrowdStandingPush")
+        interner.get_or_intern_static("CrowdUtil.ECrowdStandingPush")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdUtil_ECrowdStandingPush".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2201,24 +2687,24 @@ impl Bin1Serialize for CrowdUtil_EDefaultStateTypes {
 }
 
 impl StaticVariant for CrowdUtil_EDefaultStateTypes {
-     const TYPE_ID: &str = "CrowdUtil_EDefaultStateTypes";
+     const TYPE_ID: &str = "CrowdUtil.EDefaultStateTypes";
 }
 
 impl StaticVariant for Vec<CrowdUtil_EDefaultStateTypes> {
-     const TYPE_ID: &str = "TArray<CrowdUtil_EDefaultStateTypes>";
+     const TYPE_ID: &str = "TArray<CrowdUtil.EDefaultStateTypes>";
 }
 
 impl StaticVariant for Vec<Vec<CrowdUtil_EDefaultStateTypes>> {
-     const TYPE_ID: &str = "TArray<TArray<CrowdUtil_EDefaultStateTypes>>";
+     const TYPE_ID: &str = "TArray<TArray<CrowdUtil.EDefaultStateTypes>>";
 }
 
 impl Variant for CrowdUtil_EDefaultStateTypes {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("CrowdUtil_EDefaultStateTypes")
+        interner.get_or_intern_static("CrowdUtil.EDefaultStateTypes")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdUtil_EDefaultStateTypes".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2256,24 +2742,24 @@ impl Bin1Serialize for CrowdUtil_EGenderReq {
 }
 
 impl StaticVariant for CrowdUtil_EGenderReq {
-     const TYPE_ID: &str = "CrowdUtil_EGenderReq";
+     const TYPE_ID: &str = "CrowdUtil.EGenderReq";
 }
 
 impl StaticVariant for Vec<CrowdUtil_EGenderReq> {
-     const TYPE_ID: &str = "TArray<CrowdUtil_EGenderReq>";
+     const TYPE_ID: &str = "TArray<CrowdUtil.EGenderReq>";
 }
 
 impl StaticVariant for Vec<Vec<CrowdUtil_EGenderReq>> {
-     const TYPE_ID: &str = "TArray<TArray<CrowdUtil_EGenderReq>>";
+     const TYPE_ID: &str = "TArray<TArray<CrowdUtil.EGenderReq>>";
 }
 
 impl Variant for CrowdUtil_EGenderReq {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("CrowdUtil_EGenderReq")
+        interner.get_or_intern_static("CrowdUtil.EGenderReq")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("CrowdUtil_EGenderReq".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2328,7 +2814,7 @@ impl Variant for EAIFormationMemberSpeed {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAIFormationMemberSpeed".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2449,7 +2935,7 @@ impl Variant for EAIGoal {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAIGoal".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2510,7 +2996,7 @@ impl Variant for EAILegalType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAILegalType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2575,7 +3061,7 @@ impl Variant for EAIModifierScope {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAIModifierScope".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -2686,7 +3172,7 @@ impl Variant for EAIModifiers {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAIModifiers".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -3597,7 +4083,7 @@ impl Variant for EAISharedEventType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAISharedEventType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -3706,7 +4192,7 @@ impl Variant for EAISituation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAISituation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -3763,7 +4249,7 @@ impl Variant for EAISituationEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAISituationEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -3820,7 +4306,7 @@ impl Variant for EAccidentDeathContext {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAccidentDeathContext".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -3875,7 +4361,7 @@ impl Variant for EAccidentScaleContext {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAccidentScaleContext".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -3930,7 +4416,7 @@ impl Variant for EActBodyType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActBodyType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -3987,7 +4473,7 @@ impl Variant for EActionPromptState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActionPromptState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4072,7 +4558,7 @@ impl Variant for EActionRadialArcIconType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActionRadialArcIconType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4183,7 +4669,7 @@ impl Variant for EActionType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4310,7 +4796,7 @@ impl Variant for EActivationPriority {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActivationPriority".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4381,7 +4867,7 @@ impl Variant for EActorAIDot {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorAIDot".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4458,7 +4944,7 @@ impl Variant for EActorAIState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorAIState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4531,7 +5017,7 @@ impl Variant for EActorAnimationOrder {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorAnimationOrder".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4586,7 +5072,7 @@ impl Variant for EActorBumpType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorBumpType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4649,7 +5135,7 @@ impl Variant for EActorCCPreset {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorCCPreset".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4710,7 +5196,7 @@ impl Variant for EActorEmotionState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorEmotionState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4785,7 +5271,7 @@ impl Variant for EActorEventTypes {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorEventTypes".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4870,7 +5356,7 @@ impl Variant for EActorFaction {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorFaction".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4929,7 +5415,7 @@ impl Variant for EActorGroup {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorGroup".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -4994,7 +5480,7 @@ impl Variant for EActorLookAtPriority {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorLookAtPriority".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -5063,7 +5549,7 @@ impl Variant for EActorLookAtStopReason {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorLookAtStopReason".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -5126,7 +5612,7 @@ impl Variant for EActorLookAtTargetType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorLookAtTargetType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -5187,7 +5673,7 @@ impl Variant for EActorObstacleBlockage {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorObstacleBlockage".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -5252,7 +5738,7 @@ impl Variant for EActorPerceptionSensitivity {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorPerceptionSensitivity".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -5309,7 +5795,7 @@ impl Variant for EActorRank {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorRank".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -5364,7 +5850,7 @@ impl Variant for EActorRole {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorRole".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -5423,7 +5909,7 @@ impl Variant for EActorSecondaryIconState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorSecondaryIconState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -6322,7 +6808,7 @@ impl Variant for EActorSoundDefs {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorSoundDefs".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -6381,7 +6867,7 @@ impl Variant for EActorState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -6438,7 +6924,7 @@ impl Variant for EActorType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -7659,7 +8145,7 @@ impl Variant for EActorVoiceVariation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EActorVoiceVariation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -7780,7 +8266,7 @@ impl Variant for EAgilityState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAgilityState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -7837,7 +8323,7 @@ impl Variant for EAimAssistActivationState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAimAssistActivationState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -7892,7 +8378,7 @@ impl Variant for EAmmoBehaviourConfigType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAmmoBehaviourConfigType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -7949,7 +8435,7 @@ impl Variant for EAnimBlendMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAnimBlendMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8014,7 +8500,7 @@ impl Variant for EAnimSetState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAnimSetState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8123,7 +8609,7 @@ impl Variant for EAnimSetType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAnimSetType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8188,7 +8674,7 @@ impl Variant for EAnimationPose {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAnimationPose".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8243,7 +8729,7 @@ impl Variant for EAsyncRaycastsGroup {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAsyncRaycastsGroup".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8306,7 +8792,7 @@ impl Variant for EAttachLocation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAttachLocation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8361,7 +8847,7 @@ impl Variant for EAudioVolumetricMixingMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAudioVolumetricMixingMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8414,7 +8900,7 @@ impl Variant for EAutoScanMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EAutoScanMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8475,7 +8961,7 @@ impl Variant for EBIEventTypes {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EBIEventTypes".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8604,7 +9090,7 @@ impl Variant for EBaseMovementType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EBaseMovementType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8663,7 +9149,7 @@ impl Variant for EBehaviorTreeVariableType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EBehaviorTreeVariableType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8718,7 +9204,7 @@ impl Variant for EBoolCheckType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EBoolCheckType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8773,7 +9259,7 @@ impl Variant for EBoolStateRequirement {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EBoolStateRequirement".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8828,7 +9314,7 @@ impl Variant for EBooleanOption {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EBooleanOption".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -8895,7 +9381,7 @@ impl Variant for EBulletType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EBulletType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9092,7 +9578,7 @@ impl Variant for EButtonDisplay {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EButtonDisplay".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9153,7 +9639,7 @@ impl Variant for EButtonPressType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EButtonPressType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9212,7 +9698,7 @@ impl Variant for EButtonState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EButtonState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9265,7 +9751,7 @@ impl Variant for EBystanderPointType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EBystanderPointType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9320,7 +9806,7 @@ impl Variant for ECCDUsage {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECCDUsage".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9393,7 +9879,7 @@ impl Variant for ECCDecalEffect {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECCDecalEffect".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9466,7 +9952,7 @@ impl Variant for ECCEmitterEffect {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECCEmitterEffect".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9535,7 +10021,7 @@ impl Variant for ECCNodeSubtype {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECCNodeSubtype".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9646,7 +10132,7 @@ impl Variant for ECCNodeType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECCNodeType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9721,7 +10207,7 @@ impl Variant for ECCWeaponAnimSet {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECCWeaponAnimSet".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9774,7 +10260,7 @@ impl Variant for ECOMUsage {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECOMUsage".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9829,7 +10315,7 @@ impl Variant for ECameraAssistanceMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECameraAssistanceMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9886,7 +10372,7 @@ impl Variant for ECameraCollisionMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECameraCollisionMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9939,7 +10425,7 @@ impl Variant for ECameraControls {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECameraControls".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -9994,7 +10480,7 @@ impl Variant for ECameraOffset_old {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECameraOffset_old".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10055,7 +10541,7 @@ impl Variant for ECameraShakerChannel {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECameraShakerChannel".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10224,7 +10710,7 @@ impl Variant for ECameraState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECameraState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10281,7 +10767,7 @@ impl Variant for ECausalGraphTraversal {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECausalGraphTraversal".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10352,7 +10838,7 @@ impl Variant for ECautiousDisturbanceState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECautiousDisturbanceState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10407,7 +10893,7 @@ impl Variant for ECharSetCharacterType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharSetCharacterType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10532,7 +11018,7 @@ impl Variant for ECharacterActionRequests {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterActionRequests".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10587,7 +11073,7 @@ impl Variant for ECharacterActionSyncRequests {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterActionSyncRequests".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10648,7 +11134,7 @@ impl Variant for ECharacterAnimChildNetworkSlot {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterAnimChildNetworkSlot".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10777,7 +11263,7 @@ impl Variant for ECharacterAnimEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterAnimEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10834,7 +11320,7 @@ impl Variant for ECharacterAnimEventState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterAnimEventState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10891,7 +11377,7 @@ impl Variant for ECharacterBodyType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterBodyType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -10950,7 +11436,7 @@ impl Variant for ECharacterCollidableLayer {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterCollidableLayer".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11031,7 +11517,7 @@ impl Variant for ECharacterEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11100,7 +11586,7 @@ impl Variant for ECharacterFullBodyStateType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterFullBodyStateType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11153,7 +11639,7 @@ impl Variant for ECharacterIdleHandlerFullbodyType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterIdleHandlerFullbodyType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11210,7 +11696,7 @@ impl Variant for ECharacterIdleHandlerUpperBodyType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterIdleHandlerUpperBodyType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11281,7 +11767,7 @@ impl Variant for ECharacterIdlePriority {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterIdlePriority".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11338,7 +11824,7 @@ impl Variant for ECharacterResourceType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterResourceType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11425,7 +11911,7 @@ impl Variant for ECharacterStateTags {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterStateTags".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11484,7 +11970,7 @@ impl Variant for ECharacterStateTransitionAttempt {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterStateTransitionAttempt".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11585,7 +12071,7 @@ impl Variant for ECharacterSubcontrollerType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterSubcontrollerType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11672,7 +12158,7 @@ impl Variant for ECharacterUpperBodyStateType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECharacterUpperBodyStateType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11737,7 +12223,7 @@ impl Variant for ECheatGroup {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECheatGroup".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11798,7 +12284,7 @@ impl Variant for EClipSpawnAxis {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EClipSpawnAxis".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11851,7 +12337,7 @@ impl Variant for EClothBendConstrainType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EClothBendConstrainType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11906,7 +12392,7 @@ impl Variant for EClothColliderFilter {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EClothColliderFilter".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -11961,7 +12447,7 @@ impl Variant for EClothStretchConstrainType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EClothStretchConstrainType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -12072,7 +12558,7 @@ impl Variant for ECollidableLayer {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECollidableLayer".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -12127,7 +12613,7 @@ impl Variant for ECollidableShape {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECollidableShape".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -12182,7 +12668,7 @@ impl Variant for ECollidablesType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECollidablesType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -12241,7 +12727,7 @@ impl Variant for ECollisionNotifyGroup {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECollisionNotifyGroup".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -12298,7 +12784,7 @@ impl Variant for ECollisionPriority {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECollisionPriority".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -12355,7 +12841,7 @@ impl Variant for ECollisionResponse {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECollisionResponse".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -12410,7 +12896,7 @@ impl Variant for ECombatZoneState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECombatZoneState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -12505,7 +12991,7 @@ impl Variant for ECommunicationBarMessage {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECommunicationBarMessage".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -12574,7 +13060,7 @@ impl Variant for ECommunicationBarState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECommunicationBarState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -13009,7 +13495,7 @@ impl Variant for ECompiledBehaviorType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECompiledBehaviorType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -13376,7 +13862,7 @@ impl Variant for ECompiledConditionType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECompiledConditionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -13437,7 +13923,7 @@ impl Variant for EConstraintType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EConstraintType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -13492,7 +13978,7 @@ impl Variant for EContinuity {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EContinuity".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -13621,7 +14107,7 @@ impl Variant for EControlButtonName {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EControlButtonName".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -13722,7 +14208,7 @@ impl Variant for EControllerButton {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EControllerButton".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -13843,7 +14329,7 @@ impl Variant for EConversationID {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EConversationID".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -13896,7 +14382,7 @@ impl Variant for EConversationRole {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EConversationRole".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -13955,7 +14441,7 @@ impl Variant for ECoordinateSpace {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECoordinateSpace".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14012,7 +14498,7 @@ impl Variant for ECoverPosition {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECoverPosition".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14071,7 +14557,7 @@ impl Variant for ECppTypeFlags {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECppTypeFlags".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14148,7 +14634,7 @@ impl Variant for ECrossHairType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECrossHairType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14203,7 +14689,7 @@ impl Variant for ECrowdFlowCandidates {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECrowdFlowCandidates".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14258,7 +14744,7 @@ impl Variant for ECustomSoundDefType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ECustomSoundDefType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14345,7 +14831,7 @@ impl Variant for EDamageEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDamageEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14404,7 +14890,7 @@ impl Variant for EDamageResponse {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDamageResponse".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14463,7 +14949,7 @@ impl Variant for EDeathAnimationType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDeathAnimationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14520,7 +15006,7 @@ impl Variant for EDeathBehavior {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDeathBehavior".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14579,7 +15065,7 @@ impl Variant for EDeathContext {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDeathContext".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14640,7 +15126,7 @@ impl Variant for EDeathType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDeathType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14695,7 +15181,7 @@ impl Variant for EDebugExclusionLayerState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDebugExclusionLayerState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14750,7 +15236,7 @@ impl Variant for EDebugSpatialInfoVerbosity {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDebugSpatialInfoVerbosity".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14819,7 +15305,7 @@ impl Variant for EDefaultCollidableLayer {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDefaultCollidableLayer".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14880,7 +15366,7 @@ impl Variant for EDestructibleInteractionType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDestructibleInteractionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14935,7 +15421,7 @@ impl Variant for EDetachUsage {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDetachUsage".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -14992,7 +15478,7 @@ impl Variant for EDetectedNatType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDetectedNatType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -15045,7 +15531,7 @@ impl Variant for EDialogEventEndReason {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDialogEventEndReason".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -15104,7 +15590,7 @@ impl Variant for EDialogEventItemType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDialogEventItemType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -15197,7 +15683,7 @@ impl Variant for EDialogueLine {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDialogueLine".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -15258,7 +15744,7 @@ impl Variant for EDifficultyLevel {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDifficultyLevel".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -15625,7 +16111,7 @@ impl Variant for EDifficultyParameter {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDifficultyParameter".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -15680,7 +16166,7 @@ impl Variant for EDisconnectReason {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDisconnectReason".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -15747,7 +16233,7 @@ impl Variant for EDisposalType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDisposalType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -15882,7 +16368,7 @@ impl Variant for EDisturbanceType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDisturbanceType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -15945,7 +16431,7 @@ impl Variant for EDramaEventAction {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDramaEventAction".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16020,7 +16506,7 @@ impl Variant for EDramaSituationDescriptors {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDramaSituationDescriptors".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16083,7 +16569,7 @@ impl Variant for EDramaStateFlag {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDramaStateFlag".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16146,7 +16632,7 @@ impl Variant for EDynamicVariableType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EDynamicVariableType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16443,7 +16929,7 @@ impl Variant for EEngineFrameUpdatePriority {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EEngineFrameUpdatePriority".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16502,7 +16988,7 @@ impl Variant for EEngineModeId {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EEngineModeId".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16557,7 +17043,7 @@ impl Variant for EEntityOrdering {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EEntityOrdering".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16610,7 +17096,7 @@ impl Variant for EEquipAbility {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EEquipAbility".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16679,7 +17165,7 @@ impl Variant for EEvergreenMenuLabelPurpose {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EEvergreenMenuLabelPurpose".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16734,7 +17220,7 @@ impl Variant for EExclusionLayer {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EExclusionLayer".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16799,7 +17285,7 @@ impl Variant for EExtendedPropertyType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EExtendedPropertyType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16856,7 +17342,7 @@ impl Variant for EFSMInternalEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EFSMInternalEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16915,7 +17401,7 @@ impl Variant for EFSMStateStatus {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EFSMStateStatus".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -16970,7 +17456,7 @@ impl Variant for EFilterMaskBit {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EFilterMaskBit".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17025,7 +17511,7 @@ impl Variant for EFocusBarState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EFocusBarState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17092,7 +17578,7 @@ impl Variant for EFontFlags {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EFontFlags".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17151,7 +17637,7 @@ impl Variant for EGSBodyPart {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGSBodyPart".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17280,7 +17766,7 @@ impl Variant for EGSEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGSEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17349,7 +17835,7 @@ impl Variant for EGSExplodingPropType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGSExplodingPropType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17418,7 +17904,7 @@ impl Variant for EGSKillSituation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGSKillSituation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17475,7 +17961,7 @@ impl Variant for EGSKillVictim {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGSKillVictim".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17740,7 +18226,7 @@ impl Variant for EGait {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGait".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17805,7 +18291,7 @@ impl Variant for EGameEventArgType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGameEventArgType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17870,7 +18356,7 @@ impl Variant for EGameEventType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGameEventType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17929,7 +18415,7 @@ impl Variant for EGameModeId {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGameModeId".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -17996,7 +18482,7 @@ impl Variant for EGameTension {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGameTension".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18079,7 +18565,7 @@ impl Variant for EGameUIMenu {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGameUIMenu".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18140,7 +18626,7 @@ impl Variant for EGestureCategory {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGestureCategory".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18197,7 +18683,7 @@ impl Variant for EGuardPointType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EGuardPointType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18376,7 +18862,7 @@ impl Variant for EHM5GameInputFlag {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHM5GameInputFlag".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18435,7 +18921,7 @@ impl Variant for EHM5SoundBulletType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHM5SoundBulletType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18516,7 +19002,7 @@ impl Variant for EHM5SoundCloseCombatEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHM5SoundCloseCombatEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18569,7 +19055,7 @@ impl Variant for EHM5SoundFootstepEmitterTarget {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHM5SoundFootstepEmitterTarget".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18634,7 +19120,7 @@ impl Variant for EHM5SoundFootstepEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHM5SoundFootstepEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18695,7 +19181,7 @@ impl Variant for EHM5SoundFootstepStance {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHM5SoundFootstepStance".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18776,7 +19262,7 @@ impl Variant for EHM5SoundFootwearType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHM5SoundFootwearType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18829,7 +19315,7 @@ impl Variant for EHM5SoundRicochetType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHM5SoundRicochetType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18926,7 +19412,7 @@ impl Variant for EHUDElement {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHUDElement".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -18983,7 +19469,7 @@ impl Variant for EHUDIconFlags {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHUDIconFlags".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19048,7 +19534,7 @@ impl Variant for EHUDIconType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHUDIconType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19107,7 +19593,7 @@ impl Variant for EHUDMessageStatus {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHUDMessageStatus".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19250,7 +19736,7 @@ impl Variant for EHeroGameState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHeroGameState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19303,7 +19789,7 @@ impl Variant for EHeroHand {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHeroHand".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19374,7 +19860,7 @@ impl Variant for EHintMessageSoundType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHintMessageSoundType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19431,7 +19917,7 @@ impl Variant for EHintMessageType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHintMessageType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19500,7 +19986,7 @@ impl Variant for EHitmanPermissionFlag {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EHitmanPermissionFlag".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19599,7 +20085,7 @@ impl Variant for EIKEndEffector {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EIKEndEffector".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19660,7 +20146,7 @@ impl Variant for EImpactEffectsOptions {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EImpactEffectsOptions".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19733,7 +20219,7 @@ impl Variant for EInformationBarMessage {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EInformationBarMessage".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19788,7 +20274,7 @@ impl Variant for EIntelStage {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EIntelStage".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19855,7 +20341,7 @@ impl Variant for EIntelTensionLevel {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EIntelTensionLevel".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19914,7 +20400,7 @@ impl Variant for EIntelType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EIntelType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -19971,7 +20457,7 @@ impl Variant for EInteractionIndicatorState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EInteractionIndicatorState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20032,7 +20518,7 @@ impl Variant for EInteractionInputType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EInteractionInputType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20087,7 +20573,7 @@ impl Variant for EInventoryConfigCustomRule {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EInventoryConfigCustomRule".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20142,7 +20628,7 @@ impl Variant for EInventoryConfigFormerEquippedItems {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EInventoryConfigFormerEquippedItems".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20205,7 +20691,7 @@ impl Variant for EInventoryConfigItemHandling {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EInventoryConfigItemHandling".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20272,7 +20758,7 @@ impl Variant for EInventoryStorageType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EInventoryStorageType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20403,7 +20889,7 @@ impl Variant for EItemGripType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EItemGripType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20458,7 +20944,7 @@ impl Variant for EItemHUDType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EItemHUDType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20519,7 +21005,7 @@ impl Variant for EItemLocation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EItemLocation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20576,7 +21062,7 @@ impl Variant for EItemMeleeDamageBehavior {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EItemMeleeDamageBehavior".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20675,7 +21161,7 @@ impl Variant for EItemModifierType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EItemModifierType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20732,7 +21218,7 @@ impl Variant for EItemPoisonType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EItemPoisonType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20789,7 +21275,7 @@ impl Variant for EItemRequirement {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EItemRequirement".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20846,7 +21332,7 @@ impl Variant for EKeywordSetBehavior {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EKeywordSetBehavior".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20917,7 +21403,7 @@ impl Variant for EKillType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EKillType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -20984,7 +21470,7 @@ impl Variant for EKnownEntityType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EKnownEntityType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21043,7 +21529,7 @@ impl Variant for ELastSoundTension {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ELastSoundTension".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21098,7 +21584,7 @@ impl Variant for ELedgeDismountBehavior {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ELedgeDismountBehavior".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21157,7 +21643,7 @@ impl Variant for ELedgeDismountDirection {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ELedgeDismountDirection".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21230,7 +21716,7 @@ impl Variant for ELocale {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ELocale".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21285,7 +21771,7 @@ impl Variant for EMapType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMapType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21340,7 +21826,7 @@ impl Variant for EMarkerClipAlgorithm {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMarkerClipAlgorithm".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21393,7 +21879,7 @@ impl Variant for EMarkerInclusionMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMarkerInclusionMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21450,7 +21936,7 @@ impl Variant for EMassImpulseType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMassImpulseType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21505,7 +21991,7 @@ impl Variant for EMatchOverCondition {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMatchOverCondition".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21562,7 +22048,7 @@ impl Variant for EMaterialRegistrationState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMaterialRegistrationState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21627,7 +22113,7 @@ impl Variant for EMeBarState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMeBarState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21816,7 +22302,7 @@ impl Variant for EMorphemeEventId {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMorphemeEventId".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21871,7 +22357,7 @@ impl Variant for EMotionType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMotionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21926,7 +22412,7 @@ impl Variant for EMoveEndState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMoveEndState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -21979,7 +22465,7 @@ impl Variant for EMoveRecenterMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMoveRecenterMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22038,7 +22524,7 @@ impl Variant for EMoveSpeed {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMoveSpeed".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22097,7 +22583,7 @@ impl Variant for EMultiplayerLobbyRequestType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMultiplayerLobbyRequestType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22164,7 +22650,7 @@ impl Variant for EMultiplayerNetworkState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EMultiplayerNetworkState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22221,7 +22707,7 @@ impl Variant for ENamedGameEvents {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ENamedGameEvents".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22276,7 +22762,7 @@ impl Variant for ENetPlayerEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ENetPlayerEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22331,7 +22817,7 @@ impl Variant for ENetRole {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ENetRole".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22530,7 +23016,7 @@ impl Variant for ENetworkSystemID {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ENetworkSystemID".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22585,7 +23071,7 @@ impl Variant for EObjectiveType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EObjectiveType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22638,7 +23124,7 @@ impl Variant for EOnlinTest {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EOnlinTest".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22723,7 +23209,7 @@ impl Variant for EOnlineEventInvestigationType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EOnlineEventInvestigationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22786,7 +23272,7 @@ impl Variant for EOpportunityRevealState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EOpportunityRevealState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22843,7 +23329,7 @@ impl Variant for EOpportunityState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EOpportunityState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22902,7 +23388,7 @@ impl Variant for EOrderCompletionStatus {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EOrderCompletionStatus".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -22957,7 +23443,7 @@ impl Variant for EOutbreakInfectionStage {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EOutbreakInfectionStage".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23424,7 +23910,7 @@ impl Variant for EOutfitAICategory {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EOutfitAICategory".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23485,7 +23971,7 @@ impl Variant for EOutfitType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EOutfitType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23538,7 +24024,7 @@ impl Variant for EParticleColorUsage {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EParticleColorUsage".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23591,7 +24077,7 @@ impl Variant for EParticleDecalSpawnEntity_Constraints {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EParticleDecalSpawnEntity_Constraints".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23646,7 +24132,7 @@ impl Variant for EParticleModifierImpulseDirections {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EParticleModifierImpulseDirections".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23701,7 +24187,7 @@ impl Variant for EParticleSpritePivotLocation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EParticleSpritePivotLocation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23764,7 +24250,7 @@ impl Variant for EPathFinderBoxType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EPathFinderBoxType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23819,7 +24305,7 @@ impl Variant for EPersistentBoolDataSyncType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EPersistentBoolDataSyncType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23876,7 +24362,7 @@ impl Variant for EPhysicsObjectType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EPhysicsObjectType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23935,7 +24421,7 @@ impl Variant for EPlaceableType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EPlaceableType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -23990,7 +24476,7 @@ impl Variant for EPlayMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EPlayMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24051,7 +24537,7 @@ impl Variant for EPostProcessorComponentType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EPostProcessorComponentType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24118,7 +24604,7 @@ impl Variant for EPushNotificationType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EPushNotificationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24173,7 +24659,7 @@ impl Variant for EQueryMaskType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EQueryMaskType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24226,7 +24712,7 @@ impl Variant for ERANDOM_DISTRIBUTION {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERANDOM_DISTRIBUTION".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24285,7 +24771,7 @@ impl Variant for ERagdollPart {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERagdollPart".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24346,7 +24832,7 @@ impl Variant for ERatingCategory {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERatingCategory".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24417,7 +24903,7 @@ impl Variant for ERatingTitle {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERatingTitle".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24472,7 +24958,7 @@ impl Variant for ERatingTitleRequirement {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERatingTitleRequirement".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24527,7 +25013,7 @@ impl Variant for ERayDetailLevel {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERayDetailLevel".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24618,7 +25104,7 @@ impl Variant for ERayLayer {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERayLayer".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24671,7 +25157,7 @@ impl Variant for ERayType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERayType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24726,7 +25212,7 @@ impl Variant for ERegionId {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERegionId".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24801,7 +25287,7 @@ impl Variant for ERegionMask {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERegionMask".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24862,7 +25348,7 @@ impl Variant for ERegistrationState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERegistrationState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -24971,7 +25457,7 @@ impl Variant for ERenderGlowTypes {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERenderGlowTypes".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25030,7 +25516,7 @@ impl Variant for ERenderVRTrackingID {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERenderVRTrackingID".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25083,7 +25569,7 @@ impl Variant for EReplicaMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EReplicaMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25136,7 +25622,7 @@ impl Variant for EReplicaOperation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EReplicaOperation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25289,7 +25775,7 @@ impl Variant for ERequirementId {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERequirementId".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25346,7 +25832,7 @@ impl Variant for ERestitutionCombineMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERestitutionCombineMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25415,7 +25901,7 @@ impl Variant for ERoleEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERoleEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25470,7 +25956,7 @@ impl Variant for ERuntimeMemoryAllocationState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ERuntimeMemoryAllocationState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25547,7 +26033,7 @@ impl Variant for ESaveLoadStatus {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESaveLoadStatus".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25604,7 +26090,7 @@ impl Variant for ESaveType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESaveType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25671,7 +26157,7 @@ impl Variant for EScreenAnchor {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EScreenAnchor".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25734,7 +26220,7 @@ impl Variant for EScreenPlayState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EScreenPlayState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25797,7 +26283,7 @@ impl Variant for EScreenplayStateFlag {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EScreenplayStateFlag".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25852,7 +26338,7 @@ impl Variant for EScreenplayTriggerEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EScreenplayTriggerEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25917,7 +26403,7 @@ impl Variant for ESeamFixMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESeamFixMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -25974,7 +26460,7 @@ impl Variant for ESentryActionPrompt {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESentryActionPrompt".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26029,7 +26515,7 @@ impl Variant for ESequencePreviewState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESequencePreviewState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26086,7 +26572,7 @@ impl Variant for ESignInState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESignInState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26143,7 +26629,7 @@ impl Variant for ESilenceRating {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESilenceRating".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26208,7 +26694,7 @@ impl Variant for ESituationAvailability {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESituationAvailability".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26297,7 +26783,7 @@ impl Variant for ESituationJoinReason {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESituationJoinReason".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26384,7 +26870,7 @@ impl Variant for ESituationStateChangeReason {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESituationStateChangeReason".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26485,7 +26971,7 @@ impl Variant for ESituationType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESituationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26552,7 +27038,7 @@ impl Variant for ESmartBehaviorOrder {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESmartBehaviorOrder".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26609,7 +27095,7 @@ impl Variant for ESmartWaitCondition {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESmartWaitCondition".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26666,7 +27152,7 @@ impl Variant for ESmoothingMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESmoothingMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26725,7 +27211,7 @@ impl Variant for ESniperScoreMessageType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESniperScoreMessageType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26922,7 +27408,7 @@ impl Variant for ESoundChannelGroup {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESoundChannelGroup".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -26977,7 +27463,7 @@ impl Variant for ESoundCollisionFlags {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESoundCollisionFlags".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27034,7 +27520,7 @@ impl Variant for ESoundCollisionObjectType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESoundCollisionObjectType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27089,7 +27575,7 @@ impl Variant for ESoundCollisionType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESoundCollisionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27144,7 +27630,7 @@ impl Variant for ESoundGateFlags {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESoundGateFlags".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27197,7 +27683,7 @@ impl Variant for ESoundGateType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESoundGateType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27252,7 +27738,7 @@ impl Variant for ESoundMaterialType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESoundMaterialType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27319,7 +27805,7 @@ impl Variant for ESpeechPriority {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESpeechPriority".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27378,7 +27864,7 @@ impl Variant for ESpeed {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESpeed".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27431,7 +27917,7 @@ impl Variant for EStandRepositionStrategy {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EStandRepositionStrategy".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27488,7 +27974,7 @@ impl Variant for EStashpointContainedEntityType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EStashpointContainedEntityType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27635,7 +28121,7 @@ impl Variant for EStealthSituation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EStealthSituation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27690,7 +28176,7 @@ impl Variant for ESubcontrollerInventorySlot {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESubcontrollerInventorySlot".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27761,7 +28247,7 @@ impl Variant for ESubtitleSpeakerIndicatorType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESubtitleSpeakerIndicatorType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27818,7 +28304,7 @@ impl Variant for ESyncEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESyncEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27873,7 +28359,7 @@ impl Variant for ESynchronisedActionState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ESynchronisedActionState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -27978,7 +28464,7 @@ impl Variant for ETakeDownAnim {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETakeDownAnim".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28039,7 +28525,7 @@ impl Variant for ETakeDownState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETakeDownState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28092,7 +28578,7 @@ impl Variant for ETargetPrintDestination {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETargetPrintDestination".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28149,7 +28635,7 @@ impl Variant for ETargetType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETargetType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28202,7 +28688,7 @@ impl Variant for ETeamModeId {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETeamModeId".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28257,7 +28743,7 @@ impl Variant for ETessellationFactorMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETessellationFactorMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28310,7 +28796,7 @@ impl Variant for ETessellationMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETessellationMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28365,7 +28851,7 @@ impl Variant for ETextAlignment {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETextAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28434,7 +28920,7 @@ impl Variant for EThrowType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EThrowType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28491,7 +28977,7 @@ impl Variant for EThrownCollisionSoundLoudness {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EThrownCollisionSoundLoudness".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28546,7 +29032,7 @@ impl Variant for ETimerEntityCommandType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETimerEntityCommandType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28601,7 +29087,7 @@ impl Variant for ETraceMessageType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ETraceMessageType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28700,7 +29186,7 @@ impl Variant for EUIActionGroupIcon {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EUIActionGroupIcon".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28849,7 +29335,7 @@ impl Variant for EUIBusyOperationId {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EUIBusyOperationId".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -28912,7 +29398,7 @@ impl Variant for EUIBusyState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EUIBusyState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -29015,7 +29501,7 @@ impl Variant for EUIGamepadButtonID {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EUIGamepadButtonID".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -29622,7 +30108,7 @@ impl Variant for EUIIconLibrary {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EUIIconLibrary".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -29707,7 +30193,7 @@ impl Variant for EUIOpenVRComponentArchetypeID {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EUIOpenVRComponentArchetypeID".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -29764,7 +30250,7 @@ impl Variant for EUIOpenVRPressDirection {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EUIOpenVRPressDirection".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -29845,7 +30331,7 @@ impl Variant for EUbitusRequest {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EUbitusRequest".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -29900,7 +30386,7 @@ impl Variant for EVRConfig360CameraAnchor {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRConfig360CameraAnchor".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -29963,7 +30449,7 @@ impl Variant for EVRConfigAnimationMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRConfigAnimationMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30018,7 +30504,7 @@ impl Variant for EVRConfigCameraRotationAllowed {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRConfigCameraRotationAllowed".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30071,7 +30557,7 @@ impl Variant for EVRConfigCapsuleGridSize {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRConfigCapsuleGridSize".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30128,7 +30614,7 @@ impl Variant for EVRConfigCinemaMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRConfigCinemaMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30269,7 +30755,7 @@ impl Variant for EVRConfigCustomEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRConfigCustomEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30330,7 +30816,7 @@ impl Variant for EVRConfigHeadAnchorMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRConfigHeadAnchorMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30385,7 +30871,7 @@ impl Variant for EVRConfigRotationType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRConfigRotationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30438,7 +30924,7 @@ impl Variant for EVRHUDHandedness {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRHUDHandedness".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30495,7 +30981,7 @@ impl Variant for EVRIKElement {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRIKElement".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30550,7 +31036,7 @@ impl Variant for EVRIKElementMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRIKElementMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30609,7 +31095,7 @@ impl Variant for EVRRenderDeviceType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRRenderDeviceType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30662,7 +31148,7 @@ impl Variant for EVRRenderingMode {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVRRenderingMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30717,7 +31203,7 @@ impl Variant for EValueUpdateStrategy {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EValueUpdateStrategy".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30792,7 +31278,7 @@ impl Variant for EVictimMovementType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVictimMovementType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30847,7 +31333,7 @@ impl Variant for EViewportLock {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EViewportLock".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -30934,7 +31420,7 @@ impl Variant for EVirtualPlatformID {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVirtualPlatformID".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31003,7 +31489,7 @@ impl Variant for EVolumeTriggerEntityTypeFlags {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVolumeTriggerEntityTypeFlags".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31094,7 +31580,7 @@ impl Variant for EVsGenericEvent {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EVsGenericEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31149,7 +31635,7 @@ impl Variant for EWaypointRotationAlignment {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EWaypointRotationAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31216,7 +31702,7 @@ impl Variant for EWeaponAnimationCategory {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EWeaponAnimationCategory".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31281,7 +31767,7 @@ impl Variant for EWeaponSpecialSituation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EWeaponSpecialSituation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31360,7 +31846,7 @@ impl Variant for EWeaponUpgradeIcon {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EWeaponUpgradeIcon".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31415,7 +31901,7 @@ impl Variant for EWeaponUpgradeUse {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("EWeaponUpgradeUse".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31482,7 +31968,7 @@ impl Variant for GameLobbyState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("GameLobbyState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31520,24 +32006,24 @@ impl Bin1Serialize for ICameraEntity_EProjectionType {
 }
 
 impl StaticVariant for ICameraEntity_EProjectionType {
-     const TYPE_ID: &str = "ICameraEntity_EProjectionType";
+     const TYPE_ID: &str = "ICameraEntity.EProjectionType";
 }
 
 impl StaticVariant for Vec<ICameraEntity_EProjectionType> {
-     const TYPE_ID: &str = "TArray<ICameraEntity_EProjectionType>";
+     const TYPE_ID: &str = "TArray<ICameraEntity.EProjectionType>";
 }
 
 impl StaticVariant for Vec<Vec<ICameraEntity_EProjectionType>> {
-     const TYPE_ID: &str = "TArray<TArray<ICameraEntity_EProjectionType>>";
+     const TYPE_ID: &str = "TArray<TArray<ICameraEntity.EProjectionType>>";
 }
 
 impl Variant for ICameraEntity_EProjectionType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ICameraEntity_EProjectionType")
+        interner.get_or_intern_static("ICameraEntity.EProjectionType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ICameraEntity_EProjectionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31577,24 +32063,24 @@ impl Bin1Serialize for ICloset_EClosetType {
 }
 
 impl StaticVariant for ICloset_EClosetType {
-     const TYPE_ID: &str = "ICloset_EClosetType";
+     const TYPE_ID: &str = "ICloset.EClosetType";
 }
 
 impl StaticVariant for Vec<ICloset_EClosetType> {
-     const TYPE_ID: &str = "TArray<ICloset_EClosetType>";
+     const TYPE_ID: &str = "TArray<ICloset.EClosetType>";
 }
 
 impl StaticVariant for Vec<Vec<ICloset_EClosetType>> {
-     const TYPE_ID: &str = "TArray<TArray<ICloset_EClosetType>>";
+     const TYPE_ID: &str = "TArray<TArray<ICloset.EClosetType>>";
 }
 
 impl Variant for ICloset_EClosetType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ICloset_EClosetType")
+        interner.get_or_intern_static("ICloset.EClosetType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ICloset_EClosetType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31644,24 +32130,24 @@ impl Bin1Serialize for IContractEvaluationContextListener_EListenerType {
 }
 
 impl StaticVariant for IContractEvaluationContextListener_EListenerType {
-     const TYPE_ID: &str = "IContractEvaluationContextListener_EListenerType";
+     const TYPE_ID: &str = "IContractEvaluationContextListener.EListenerType";
 }
 
 impl StaticVariant for Vec<IContractEvaluationContextListener_EListenerType> {
-     const TYPE_ID: &str = "TArray<IContractEvaluationContextListener_EListenerType>";
+     const TYPE_ID: &str = "TArray<IContractEvaluationContextListener.EListenerType>";
 }
 
 impl StaticVariant for Vec<Vec<IContractEvaluationContextListener_EListenerType>> {
-     const TYPE_ID: &str = "TArray<TArray<IContractEvaluationContextListener_EListenerType>>";
+     const TYPE_ID: &str = "TArray<TArray<IContractEvaluationContextListener.EListenerType>>";
 }
 
 impl Variant for IContractEvaluationContextListener_EListenerType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IContractEvaluationContextListener_EListenerType")
+        interner.get_or_intern_static("IContractEvaluationContextListener.EListenerType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IContractEvaluationContextListener_EListenerType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31699,24 +32185,24 @@ impl Bin1Serialize for IContractObjective_Category {
 }
 
 impl StaticVariant for IContractObjective_Category {
-     const TYPE_ID: &str = "IContractObjective_Category";
+     const TYPE_ID: &str = "IContractObjective.Category";
 }
 
 impl StaticVariant for Vec<IContractObjective_Category> {
-     const TYPE_ID: &str = "TArray<IContractObjective_Category>";
+     const TYPE_ID: &str = "TArray<IContractObjective.Category>";
 }
 
 impl StaticVariant for Vec<Vec<IContractObjective_Category>> {
-     const TYPE_ID: &str = "TArray<TArray<IContractObjective_Category>>";
+     const TYPE_ID: &str = "TArray<TArray<IContractObjective.Category>>";
 }
 
 impl Variant for IContractObjective_Category {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IContractObjective_Category")
+        interner.get_or_intern_static("IContractObjective.Category")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IContractObjective_Category".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31756,24 +32242,24 @@ impl Bin1Serialize for IContractObjective_ObjectiveType {
 }
 
 impl StaticVariant for IContractObjective_ObjectiveType {
-     const TYPE_ID: &str = "IContractObjective_ObjectiveType";
+     const TYPE_ID: &str = "IContractObjective.ObjectiveType";
 }
 
 impl StaticVariant for Vec<IContractObjective_ObjectiveType> {
-     const TYPE_ID: &str = "TArray<IContractObjective_ObjectiveType>";
+     const TYPE_ID: &str = "TArray<IContractObjective.ObjectiveType>";
 }
 
 impl StaticVariant for Vec<Vec<IContractObjective_ObjectiveType>> {
-     const TYPE_ID: &str = "TArray<TArray<IContractObjective_ObjectiveType>>";
+     const TYPE_ID: &str = "TArray<TArray<IContractObjective.ObjectiveType>>";
 }
 
 impl Variant for IContractObjective_ObjectiveType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IContractObjective_ObjectiveType")
+        interner.get_or_intern_static("IContractObjective.ObjectiveType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IContractObjective_ObjectiveType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31809,24 +32295,24 @@ impl Bin1Serialize for IContractObjective_SCounterData_ECounterType {
 }
 
 impl StaticVariant for IContractObjective_SCounterData_ECounterType {
-     const TYPE_ID: &str = "IContractObjective_SCounterData_ECounterType";
+     const TYPE_ID: &str = "IContractObjective.SCounterData.ECounterType";
 }
 
 impl StaticVariant for Vec<IContractObjective_SCounterData_ECounterType> {
-     const TYPE_ID: &str = "TArray<IContractObjective_SCounterData_ECounterType>";
+     const TYPE_ID: &str = "TArray<IContractObjective.SCounterData.ECounterType>";
 }
 
 impl StaticVariant for Vec<Vec<IContractObjective_SCounterData_ECounterType>> {
-     const TYPE_ID: &str = "TArray<TArray<IContractObjective_SCounterData_ECounterType>>";
+     const TYPE_ID: &str = "TArray<TArray<IContractObjective.SCounterData.ECounterType>>";
 }
 
 impl Variant for IContractObjective_SCounterData_ECounterType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IContractObjective_SCounterData_ECounterType")
+        interner.get_or_intern_static("IContractObjective.SCounterData.ECounterType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IContractObjective_SCounterData_ECounterType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31864,24 +32350,24 @@ impl Bin1Serialize for IContractObjective_State {
 }
 
 impl StaticVariant for IContractObjective_State {
-     const TYPE_ID: &str = "IContractObjective_State";
+     const TYPE_ID: &str = "IContractObjective.State";
 }
 
 impl StaticVariant for Vec<IContractObjective_State> {
-     const TYPE_ID: &str = "TArray<IContractObjective_State>";
+     const TYPE_ID: &str = "TArray<IContractObjective.State>";
 }
 
 impl StaticVariant for Vec<Vec<IContractObjective_State>> {
-     const TYPE_ID: &str = "TArray<TArray<IContractObjective_State>>";
+     const TYPE_ID: &str = "TArray<TArray<IContractObjective.State>>";
 }
 
 impl Variant for IContractObjective_State {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IContractObjective_State")
+        interner.get_or_intern_static("IContractObjective.State")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IContractObjective_State".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -31917,24 +32403,24 @@ impl Bin1Serialize for IContractObjective_Type {
 }
 
 impl StaticVariant for IContractObjective_Type {
-     const TYPE_ID: &str = "IContractObjective_Type";
+     const TYPE_ID: &str = "IContractObjective.Type";
 }
 
 impl StaticVariant for Vec<IContractObjective_Type> {
-     const TYPE_ID: &str = "TArray<IContractObjective_Type>";
+     const TYPE_ID: &str = "TArray<IContractObjective.Type>";
 }
 
 impl StaticVariant for Vec<Vec<IContractObjective_Type>> {
-     const TYPE_ID: &str = "TArray<TArray<IContractObjective_Type>>";
+     const TYPE_ID: &str = "TArray<TArray<IContractObjective.Type>>";
 }
 
 impl Variant for IContractObjective_Type {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IContractObjective_Type")
+        interner.get_or_intern_static("IContractObjective.Type")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IContractObjective_Type".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32006,24 +32492,24 @@ impl Bin1Serialize for IEvergreenTerritoryDefinition_EDestination {
 }
 
 impl StaticVariant for IEvergreenTerritoryDefinition_EDestination {
-     const TYPE_ID: &str = "IEvergreenTerritoryDefinition_EDestination";
+     const TYPE_ID: &str = "IEvergreenTerritoryDefinition.EDestination";
 }
 
 impl StaticVariant for Vec<IEvergreenTerritoryDefinition_EDestination> {
-     const TYPE_ID: &str = "TArray<IEvergreenTerritoryDefinition_EDestination>";
+     const TYPE_ID: &str = "TArray<IEvergreenTerritoryDefinition.EDestination>";
 }
 
 impl StaticVariant for Vec<Vec<IEvergreenTerritoryDefinition_EDestination>> {
-     const TYPE_ID: &str = "TArray<TArray<IEvergreenTerritoryDefinition_EDestination>>";
+     const TYPE_ID: &str = "TArray<TArray<IEvergreenTerritoryDefinition.EDestination>>";
 }
 
 impl Variant for IEvergreenTerritoryDefinition_EDestination {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IEvergreenTerritoryDefinition_EDestination")
+        interner.get_or_intern_static("IEvergreenTerritoryDefinition.EDestination")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IEvergreenTerritoryDefinition_EDestination".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32061,24 +32547,24 @@ impl Bin1Serialize for IEvergreenTerritoryStatus_EVisited {
 }
 
 impl StaticVariant for IEvergreenTerritoryStatus_EVisited {
-     const TYPE_ID: &str = "IEvergreenTerritoryStatus_EVisited";
+     const TYPE_ID: &str = "IEvergreenTerritoryStatus.EVisited";
 }
 
 impl StaticVariant for Vec<IEvergreenTerritoryStatus_EVisited> {
-     const TYPE_ID: &str = "TArray<IEvergreenTerritoryStatus_EVisited>";
+     const TYPE_ID: &str = "TArray<IEvergreenTerritoryStatus.EVisited>";
 }
 
 impl StaticVariant for Vec<Vec<IEvergreenTerritoryStatus_EVisited>> {
-     const TYPE_ID: &str = "TArray<TArray<IEvergreenTerritoryStatus_EVisited>>";
+     const TYPE_ID: &str = "TArray<TArray<IEvergreenTerritoryStatus.EVisited>>";
 }
 
 impl Variant for IEvergreenTerritoryStatus_EVisited {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IEvergreenTerritoryStatus_EVisited")
+        interner.get_or_intern_static("IEvergreenTerritoryStatus.EVisited")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IEvergreenTerritoryStatus_EVisited".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32114,24 +32600,24 @@ impl Bin1Serialize for IHM5Door_ECPDoorLockType {
 }
 
 impl StaticVariant for IHM5Door_ECPDoorLockType {
-     const TYPE_ID: &str = "IHM5Door_ECPDoorLockType";
+     const TYPE_ID: &str = "IHM5Door.ECPDoorLockType";
 }
 
 impl StaticVariant for Vec<IHM5Door_ECPDoorLockType> {
-     const TYPE_ID: &str = "TArray<IHM5Door_ECPDoorLockType>";
+     const TYPE_ID: &str = "TArray<IHM5Door.ECPDoorLockType>";
 }
 
 impl StaticVariant for Vec<Vec<IHM5Door_ECPDoorLockType>> {
-     const TYPE_ID: &str = "TArray<TArray<IHM5Door_ECPDoorLockType>>";
+     const TYPE_ID: &str = "TArray<TArray<IHM5Door.ECPDoorLockType>>";
 }
 
 impl Variant for IHM5Door_ECPDoorLockType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IHM5Door_ECPDoorLockType")
+        interner.get_or_intern_static("IHM5Door.ECPDoorLockType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IHM5Door_ECPDoorLockType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32171,24 +32657,24 @@ impl Bin1Serialize for IHM5Door_EInitialState {
 }
 
 impl StaticVariant for IHM5Door_EInitialState {
-     const TYPE_ID: &str = "IHM5Door_EInitialState";
+     const TYPE_ID: &str = "IHM5Door.EInitialState";
 }
 
 impl StaticVariant for Vec<IHM5Door_EInitialState> {
-     const TYPE_ID: &str = "TArray<IHM5Door_EInitialState>";
+     const TYPE_ID: &str = "TArray<IHM5Door.EInitialState>";
 }
 
 impl StaticVariant for Vec<Vec<IHM5Door_EInitialState>> {
-     const TYPE_ID: &str = "TArray<TArray<IHM5Door_EInitialState>>";
+     const TYPE_ID: &str = "TArray<TArray<IHM5Door.EInitialState>>";
 }
 
 impl Variant for IHM5Door_EInitialState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IHM5Door_EInitialState")
+        interner.get_or_intern_static("IHM5Door.EInitialState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IHM5Door_EInitialState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32228,24 +32714,24 @@ impl Bin1Serialize for IHM5Door_EOpenDir {
 }
 
 impl StaticVariant for IHM5Door_EOpenDir {
-     const TYPE_ID: &str = "IHM5Door_EOpenDir";
+     const TYPE_ID: &str = "IHM5Door.EOpenDir";
 }
 
 impl StaticVariant for Vec<IHM5Door_EOpenDir> {
-     const TYPE_ID: &str = "TArray<IHM5Door_EOpenDir>";
+     const TYPE_ID: &str = "TArray<IHM5Door.EOpenDir>";
 }
 
 impl StaticVariant for Vec<Vec<IHM5Door_EOpenDir>> {
-     const TYPE_ID: &str = "TArray<TArray<IHM5Door_EOpenDir>>";
+     const TYPE_ID: &str = "TArray<TArray<IHM5Door.EOpenDir>>";
 }
 
 impl Variant for IHM5Door_EOpenDir {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IHM5Door_EOpenDir")
+        interner.get_or_intern_static("IHM5Door.EOpenDir")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IHM5Door_EOpenDir".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32285,24 +32771,24 @@ impl Bin1Serialize for IHM5Door_EOpenMode {
 }
 
 impl StaticVariant for IHM5Door_EOpenMode {
-     const TYPE_ID: &str = "IHM5Door_EOpenMode";
+     const TYPE_ID: &str = "IHM5Door.EOpenMode";
 }
 
 impl StaticVariant for Vec<IHM5Door_EOpenMode> {
-     const TYPE_ID: &str = "TArray<IHM5Door_EOpenMode>";
+     const TYPE_ID: &str = "TArray<IHM5Door.EOpenMode>";
 }
 
 impl StaticVariant for Vec<Vec<IHM5Door_EOpenMode>> {
-     const TYPE_ID: &str = "TArray<TArray<IHM5Door_EOpenMode>>";
+     const TYPE_ID: &str = "TArray<TArray<IHM5Door.EOpenMode>>";
 }
 
 impl Variant for IHM5Door_EOpenMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IHM5Door_EOpenMode")
+        interner.get_or_intern_static("IHM5Door.EOpenMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IHM5Door_EOpenMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32340,24 +32826,24 @@ impl Bin1Serialize for IHM5Door_eCloseMode {
 }
 
 impl StaticVariant for IHM5Door_eCloseMode {
-     const TYPE_ID: &str = "IHM5Door_eCloseMode";
+     const TYPE_ID: &str = "IHM5Door.eCloseMode";
 }
 
 impl StaticVariant for Vec<IHM5Door_eCloseMode> {
-     const TYPE_ID: &str = "TArray<IHM5Door_eCloseMode>";
+     const TYPE_ID: &str = "TArray<IHM5Door.eCloseMode>";
 }
 
 impl StaticVariant for Vec<Vec<IHM5Door_eCloseMode>> {
-     const TYPE_ID: &str = "TArray<TArray<IHM5Door_eCloseMode>>";
+     const TYPE_ID: &str = "TArray<TArray<IHM5Door.eCloseMode>>";
 }
 
 impl Variant for IHM5Door_eCloseMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IHM5Door_eCloseMode")
+        interner.get_or_intern_static("IHM5Door.eCloseMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IHM5Door_eCloseMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32395,24 +32881,24 @@ impl Bin1Serialize for IItemWeapon_EDeadlyThrowType {
 }
 
 impl StaticVariant for IItemWeapon_EDeadlyThrowType {
-     const TYPE_ID: &str = "IItemWeapon_EDeadlyThrowType";
+     const TYPE_ID: &str = "IItemWeapon.EDeadlyThrowType";
 }
 
 impl StaticVariant for Vec<IItemWeapon_EDeadlyThrowType> {
-     const TYPE_ID: &str = "TArray<IItemWeapon_EDeadlyThrowType>";
+     const TYPE_ID: &str = "TArray<IItemWeapon.EDeadlyThrowType>";
 }
 
 impl StaticVariant for Vec<Vec<IItemWeapon_EDeadlyThrowType>> {
-     const TYPE_ID: &str = "TArray<TArray<IItemWeapon_EDeadlyThrowType>>";
+     const TYPE_ID: &str = "TArray<TArray<IItemWeapon.EDeadlyThrowType>>";
 }
 
 impl Variant for IItemWeapon_EDeadlyThrowType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IItemWeapon_EDeadlyThrowType")
+        interner.get_or_intern_static("IItemWeapon.EDeadlyThrowType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IItemWeapon_EDeadlyThrowType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32448,24 +32934,24 @@ impl Bin1Serialize for ILightEntity_EFrameIndexStrategy {
 }
 
 impl StaticVariant for ILightEntity_EFrameIndexStrategy {
-     const TYPE_ID: &str = "ILightEntity_EFrameIndexStrategy";
+     const TYPE_ID: &str = "ILightEntity.EFrameIndexStrategy";
 }
 
 impl StaticVariant for Vec<ILightEntity_EFrameIndexStrategy> {
-     const TYPE_ID: &str = "TArray<ILightEntity_EFrameIndexStrategy>";
+     const TYPE_ID: &str = "TArray<ILightEntity.EFrameIndexStrategy>";
 }
 
 impl StaticVariant for Vec<Vec<ILightEntity_EFrameIndexStrategy>> {
-     const TYPE_ID: &str = "TArray<TArray<ILightEntity_EFrameIndexStrategy>>";
+     const TYPE_ID: &str = "TArray<TArray<ILightEntity.EFrameIndexStrategy>>";
 }
 
 impl Variant for ILightEntity_EFrameIndexStrategy {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ILightEntity_EFrameIndexStrategy")
+        interner.get_or_intern_static("ILightEntity.EFrameIndexStrategy")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ILightEntity_EFrameIndexStrategy".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32511,24 +32997,24 @@ impl Bin1Serialize for ILightEntity_ELightType {
 }
 
 impl StaticVariant for ILightEntity_ELightType {
-     const TYPE_ID: &str = "ILightEntity_ELightType";
+     const TYPE_ID: &str = "ILightEntity.ELightType";
 }
 
 impl StaticVariant for Vec<ILightEntity_ELightType> {
-     const TYPE_ID: &str = "TArray<ILightEntity_ELightType>";
+     const TYPE_ID: &str = "TArray<ILightEntity.ELightType>";
 }
 
 impl StaticVariant for Vec<Vec<ILightEntity_ELightType>> {
-     const TYPE_ID: &str = "TArray<TArray<ILightEntity_ELightType>>";
+     const TYPE_ID: &str = "TArray<TArray<ILightEntity.ELightType>>";
 }
 
 impl Variant for ILightEntity_ELightType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ILightEntity_ELightType")
+        interner.get_or_intern_static("ILightEntity.ELightType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ILightEntity_ELightType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32566,24 +33052,24 @@ impl Bin1Serialize for ILightEntity_ERoomLightFlow {
 }
 
 impl StaticVariant for ILightEntity_ERoomLightFlow {
-     const TYPE_ID: &str = "ILightEntity_ERoomLightFlow";
+     const TYPE_ID: &str = "ILightEntity.ERoomLightFlow";
 }
 
 impl StaticVariant for Vec<ILightEntity_ERoomLightFlow> {
-     const TYPE_ID: &str = "TArray<ILightEntity_ERoomLightFlow>";
+     const TYPE_ID: &str = "TArray<ILightEntity.ERoomLightFlow>";
 }
 
 impl StaticVariant for Vec<Vec<ILightEntity_ERoomLightFlow>> {
-     const TYPE_ID: &str = "TArray<TArray<ILightEntity_ERoomLightFlow>>";
+     const TYPE_ID: &str = "TArray<TArray<ILightEntity.ERoomLightFlow>>";
 }
 
 impl Variant for ILightEntity_ERoomLightFlow {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ILightEntity_ERoomLightFlow")
+        interner.get_or_intern_static("ILightEntity.ERoomLightFlow")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ILightEntity_ERoomLightFlow".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32623,24 +33109,24 @@ impl Bin1Serialize for IRenderCompositorEntity_EMode {
 }
 
 impl StaticVariant for IRenderCompositorEntity_EMode {
-     const TYPE_ID: &str = "IRenderCompositorEntity_EMode";
+     const TYPE_ID: &str = "IRenderCompositorEntity.EMode";
 }
 
 impl StaticVariant for Vec<IRenderCompositorEntity_EMode> {
-     const TYPE_ID: &str = "TArray<IRenderCompositorEntity_EMode>";
+     const TYPE_ID: &str = "TArray<IRenderCompositorEntity.EMode>";
 }
 
 impl StaticVariant for Vec<Vec<IRenderCompositorEntity_EMode>> {
-     const TYPE_ID: &str = "TArray<TArray<IRenderCompositorEntity_EMode>>";
+     const TYPE_ID: &str = "TArray<TArray<IRenderCompositorEntity.EMode>>";
 }
 
 impl Variant for IRenderCompositorEntity_EMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IRenderCompositorEntity_EMode")
+        interner.get_or_intern_static("IRenderCompositorEntity.EMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IRenderCompositorEntity_EMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32682,24 +33168,24 @@ impl Bin1Serialize for IRenderCompositorEntity_EViewportAnchor {
 }
 
 impl StaticVariant for IRenderCompositorEntity_EViewportAnchor {
-     const TYPE_ID: &str = "IRenderCompositorEntity_EViewportAnchor";
+     const TYPE_ID: &str = "IRenderCompositorEntity.EViewportAnchor";
 }
 
 impl StaticVariant for Vec<IRenderCompositorEntity_EViewportAnchor> {
-     const TYPE_ID: &str = "TArray<IRenderCompositorEntity_EViewportAnchor>";
+     const TYPE_ID: &str = "TArray<IRenderCompositorEntity.EViewportAnchor>";
 }
 
 impl StaticVariant for Vec<Vec<IRenderCompositorEntity_EViewportAnchor>> {
-     const TYPE_ID: &str = "TArray<TArray<IRenderCompositorEntity_EViewportAnchor>>";
+     const TYPE_ID: &str = "TArray<TArray<IRenderCompositorEntity.EViewportAnchor>>";
 }
 
 impl Variant for IRenderCompositorEntity_EViewportAnchor {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IRenderCompositorEntity_EViewportAnchor")
+        interner.get_or_intern_static("IRenderCompositorEntity.EViewportAnchor")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IRenderCompositorEntity_EViewportAnchor".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32741,24 +33227,24 @@ impl Bin1Serialize for IRenderMaterialEntity_EModifierOperation {
 }
 
 impl StaticVariant for IRenderMaterialEntity_EModifierOperation {
-     const TYPE_ID: &str = "IRenderMaterialEntity_EModifierOperation";
+     const TYPE_ID: &str = "IRenderMaterialEntity.EModifierOperation";
 }
 
 impl StaticVariant for Vec<IRenderMaterialEntity_EModifierOperation> {
-     const TYPE_ID: &str = "TArray<IRenderMaterialEntity_EModifierOperation>";
+     const TYPE_ID: &str = "TArray<IRenderMaterialEntity.EModifierOperation>";
 }
 
 impl StaticVariant for Vec<Vec<IRenderMaterialEntity_EModifierOperation>> {
-     const TYPE_ID: &str = "TArray<TArray<IRenderMaterialEntity_EModifierOperation>>";
+     const TYPE_ID: &str = "TArray<TArray<IRenderMaterialEntity.EModifierOperation>>";
 }
 
 impl Variant for IRenderMaterialEntity_EModifierOperation {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IRenderMaterialEntity_EModifierOperation")
+        interner.get_or_intern_static("IRenderMaterialEntity.EModifierOperation")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IRenderMaterialEntity_EModifierOperation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32800,24 +33286,24 @@ impl Bin1Serialize for IRoomEntity_EReasoningGridImportance {
 }
 
 impl StaticVariant for IRoomEntity_EReasoningGridImportance {
-     const TYPE_ID: &str = "IRoomEntity_EReasoningGridImportance";
+     const TYPE_ID: &str = "IRoomEntity.EReasoningGridImportance";
 }
 
 impl StaticVariant for Vec<IRoomEntity_EReasoningGridImportance> {
-     const TYPE_ID: &str = "TArray<IRoomEntity_EReasoningGridImportance>";
+     const TYPE_ID: &str = "TArray<IRoomEntity.EReasoningGridImportance>";
 }
 
 impl StaticVariant for Vec<Vec<IRoomEntity_EReasoningGridImportance>> {
-     const TYPE_ID: &str = "TArray<TArray<IRoomEntity_EReasoningGridImportance>>";
+     const TYPE_ID: &str = "TArray<TArray<IRoomEntity.EReasoningGridImportance>>";
 }
 
 impl Variant for IRoomEntity_EReasoningGridImportance {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IRoomEntity_EReasoningGridImportance")
+        interner.get_or_intern_static("IRoomEntity.EReasoningGridImportance")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IRoomEntity_EReasoningGridImportance".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32853,24 +33339,24 @@ impl Bin1Serialize for IScatterContainerEntity_EBrushType {
 }
 
 impl StaticVariant for IScatterContainerEntity_EBrushType {
-     const TYPE_ID: &str = "IScatterContainerEntity_EBrushType";
+     const TYPE_ID: &str = "IScatterContainerEntity.EBrushType";
 }
 
 impl StaticVariant for Vec<IScatterContainerEntity_EBrushType> {
-     const TYPE_ID: &str = "TArray<IScatterContainerEntity_EBrushType>";
+     const TYPE_ID: &str = "TArray<IScatterContainerEntity.EBrushType>";
 }
 
 impl StaticVariant for Vec<Vec<IScatterContainerEntity_EBrushType>> {
-     const TYPE_ID: &str = "TArray<TArray<IScatterContainerEntity_EBrushType>>";
+     const TYPE_ID: &str = "TArray<TArray<IScatterContainerEntity.EBrushType>>";
 }
 
 impl Variant for IScatterContainerEntity_EBrushType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IScatterContainerEntity_EBrushType")
+        interner.get_or_intern_static("IScatterContainerEntity.EBrushType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IScatterContainerEntity_EBrushType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32918,24 +33404,24 @@ impl Bin1Serialize for IScatterContainerEntity_ECanvasClearMode {
 }
 
 impl StaticVariant for IScatterContainerEntity_ECanvasClearMode {
-     const TYPE_ID: &str = "IScatterContainerEntity_ECanvasClearMode";
+     const TYPE_ID: &str = "IScatterContainerEntity.ECanvasClearMode";
 }
 
 impl StaticVariant for Vec<IScatterContainerEntity_ECanvasClearMode> {
-     const TYPE_ID: &str = "TArray<IScatterContainerEntity_ECanvasClearMode>";
+     const TYPE_ID: &str = "TArray<IScatterContainerEntity.ECanvasClearMode>";
 }
 
 impl StaticVariant for Vec<Vec<IScatterContainerEntity_ECanvasClearMode>> {
-     const TYPE_ID: &str = "TArray<TArray<IScatterContainerEntity_ECanvasClearMode>>";
+     const TYPE_ID: &str = "TArray<TArray<IScatterContainerEntity.ECanvasClearMode>>";
 }
 
 impl Variant for IScatterContainerEntity_ECanvasClearMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IScatterContainerEntity_ECanvasClearMode")
+        interner.get_or_intern_static("IScatterContainerEntity.ECanvasClearMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IScatterContainerEntity_ECanvasClearMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -32979,24 +33465,24 @@ impl Bin1Serialize for IScatterContainerEntity_ECanvasSize {
 }
 
 impl StaticVariant for IScatterContainerEntity_ECanvasSize {
-     const TYPE_ID: &str = "IScatterContainerEntity_ECanvasSize";
+     const TYPE_ID: &str = "IScatterContainerEntity.ECanvasSize";
 }
 
 impl StaticVariant for Vec<IScatterContainerEntity_ECanvasSize> {
-     const TYPE_ID: &str = "TArray<IScatterContainerEntity_ECanvasSize>";
+     const TYPE_ID: &str = "TArray<IScatterContainerEntity.ECanvasSize>";
 }
 
 impl StaticVariant for Vec<Vec<IScatterContainerEntity_ECanvasSize>> {
-     const TYPE_ID: &str = "TArray<TArray<IScatterContainerEntity_ECanvasSize>>";
+     const TYPE_ID: &str = "TArray<TArray<IScatterContainerEntity.ECanvasSize>>";
 }
 
 impl Variant for IScatterContainerEntity_ECanvasSize {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IScatterContainerEntity_ECanvasSize")
+        interner.get_or_intern_static("IScatterContainerEntity.ECanvasSize")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IScatterContainerEntity_ECanvasSize".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -33034,24 +33520,24 @@ impl Bin1Serialize for IScatterContainerEntity_EResizeMode {
 }
 
 impl StaticVariant for IScatterContainerEntity_EResizeMode {
-     const TYPE_ID: &str = "IScatterContainerEntity_EResizeMode";
+     const TYPE_ID: &str = "IScatterContainerEntity.EResizeMode";
 }
 
 impl StaticVariant for Vec<IScatterContainerEntity_EResizeMode> {
-     const TYPE_ID: &str = "TArray<IScatterContainerEntity_EResizeMode>";
+     const TYPE_ID: &str = "TArray<IScatterContainerEntity.EResizeMode>";
 }
 
 impl StaticVariant for Vec<Vec<IScatterContainerEntity_EResizeMode>> {
-     const TYPE_ID: &str = "TArray<TArray<IScatterContainerEntity_EResizeMode>>";
+     const TYPE_ID: &str = "TArray<TArray<IScatterContainerEntity.EResizeMode>>";
 }
 
 impl Variant for IScatterContainerEntity_EResizeMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("IScatterContainerEntity_EResizeMode")
+        interner.get_or_intern_static("IScatterContainerEntity.EResizeMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("IScatterContainerEntity_EResizeMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -33549,24 +34035,24 @@ impl Bin1Serialize for InputControlNamesp_eHM5InputAction {
 }
 
 impl StaticVariant for InputControlNamesp_eHM5InputAction {
-     const TYPE_ID: &str = "InputControlNamesp_eHM5InputAction";
+     const TYPE_ID: &str = "InputControlNamesp.eHM5InputAction";
 }
 
 impl StaticVariant for Vec<InputControlNamesp_eHM5InputAction> {
-     const TYPE_ID: &str = "TArray<InputControlNamesp_eHM5InputAction>";
+     const TYPE_ID: &str = "TArray<InputControlNamesp.eHM5InputAction>";
 }
 
 impl StaticVariant for Vec<Vec<InputControlNamesp_eHM5InputAction>> {
-     const TYPE_ID: &str = "TArray<TArray<InputControlNamesp_eHM5InputAction>>";
+     const TYPE_ID: &str = "TArray<TArray<InputControlNamesp.eHM5InputAction>>";
 }
 
 impl Variant for InputControlNamesp_eHM5InputAction {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("InputControlNamesp_eHM5InputAction")
+        interner.get_or_intern_static("InputControlNamesp.eHM5InputAction")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("InputControlNamesp_eHM5InputAction".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -33642,24 +34128,24 @@ impl Bin1Serialize for InputControlNamesp_eHM5InputActionID {
 }
 
 impl StaticVariant for InputControlNamesp_eHM5InputActionID {
-     const TYPE_ID: &str = "InputControlNamesp_eHM5InputActionID";
+     const TYPE_ID: &str = "InputControlNamesp.eHM5InputActionID";
 }
 
 impl StaticVariant for Vec<InputControlNamesp_eHM5InputActionID> {
-     const TYPE_ID: &str = "TArray<InputControlNamesp_eHM5InputActionID>";
+     const TYPE_ID: &str = "TArray<InputControlNamesp.eHM5InputActionID>";
 }
 
 impl StaticVariant for Vec<Vec<InputControlNamesp_eHM5InputActionID>> {
-     const TYPE_ID: &str = "TArray<TArray<InputControlNamesp_eHM5InputActionID>>";
+     const TYPE_ID: &str = "TArray<TArray<InputControlNamesp.eHM5InputActionID>>";
 }
 
 impl Variant for InputControlNamesp_eHM5InputActionID {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("InputControlNamesp_eHM5InputActionID")
+        interner.get_or_intern_static("InputControlNamesp.eHM5InputActionID")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("InputControlNamesp_eHM5InputActionID".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -33721,24 +34207,24 @@ impl Bin1Serialize for InputControlNamesp_eHM5InputActionType {
 }
 
 impl StaticVariant for InputControlNamesp_eHM5InputActionType {
-     const TYPE_ID: &str = "InputControlNamesp_eHM5InputActionType";
+     const TYPE_ID: &str = "InputControlNamesp.eHM5InputActionType";
 }
 
 impl StaticVariant for Vec<InputControlNamesp_eHM5InputActionType> {
-     const TYPE_ID: &str = "TArray<InputControlNamesp_eHM5InputActionType>";
+     const TYPE_ID: &str = "TArray<InputControlNamesp.eHM5InputActionType>";
 }
 
 impl StaticVariant for Vec<Vec<InputControlNamesp_eHM5InputActionType>> {
-     const TYPE_ID: &str = "TArray<TArray<InputControlNamesp_eHM5InputActionType>>";
+     const TYPE_ID: &str = "TArray<TArray<InputControlNamesp.eHM5InputActionType>>";
 }
 
 impl Variant for InputControlNamesp_eHM5InputActionType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("InputControlNamesp_eHM5InputActionType")
+        interner.get_or_intern_static("InputControlNamesp.eHM5InputActionType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("InputControlNamesp_eHM5InputActionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34076,24 +34562,24 @@ impl Bin1Serialize for JSONTemplate_ETemplateType {
 }
 
 impl StaticVariant for JSONTemplate_ETemplateType {
-     const TYPE_ID: &str = "JSONTemplate_ETemplateType";
+     const TYPE_ID: &str = "JSONTemplate.ETemplateType";
 }
 
 impl StaticVariant for Vec<JSONTemplate_ETemplateType> {
-     const TYPE_ID: &str = "TArray<JSONTemplate_ETemplateType>";
+     const TYPE_ID: &str = "TArray<JSONTemplate.ETemplateType>";
 }
 
 impl StaticVariant for Vec<Vec<JSONTemplate_ETemplateType>> {
-     const TYPE_ID: &str = "TArray<TArray<JSONTemplate_ETemplateType>>";
+     const TYPE_ID: &str = "TArray<TArray<JSONTemplate.ETemplateType>>";
 }
 
 impl Variant for JSONTemplate_ETemplateType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("JSONTemplate_ETemplateType")
+        interner.get_or_intern_static("JSONTemplate.ETemplateType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("JSONTemplate_ETemplateType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34141,24 +34627,24 @@ impl Bin1Serialize for MenuWeaponUpgradeData_EUpgradeAction {
 }
 
 impl StaticVariant for MenuWeaponUpgradeData_EUpgradeAction {
-     const TYPE_ID: &str = "MenuWeaponUpgradeData_EUpgradeAction";
+     const TYPE_ID: &str = "MenuWeaponUpgradeData.EUpgradeAction";
 }
 
 impl StaticVariant for Vec<MenuWeaponUpgradeData_EUpgradeAction> {
-     const TYPE_ID: &str = "TArray<MenuWeaponUpgradeData_EUpgradeAction>";
+     const TYPE_ID: &str = "TArray<MenuWeaponUpgradeData.EUpgradeAction>";
 }
 
 impl StaticVariant for Vec<Vec<MenuWeaponUpgradeData_EUpgradeAction>> {
-     const TYPE_ID: &str = "TArray<TArray<MenuWeaponUpgradeData_EUpgradeAction>>";
+     const TYPE_ID: &str = "TArray<TArray<MenuWeaponUpgradeData.EUpgradeAction>>";
 }
 
 impl Variant for MenuWeaponUpgradeData_EUpgradeAction {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("MenuWeaponUpgradeData_EUpgradeAction")
+        interner.get_or_intern_static("MenuWeaponUpgradeData.EUpgradeAction")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("MenuWeaponUpgradeData_EUpgradeAction".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34220,24 +34706,24 @@ impl Bin1Serialize for Network_OrderingChannel {
 }
 
 impl StaticVariant for Network_OrderingChannel {
-     const TYPE_ID: &str = "Network_OrderingChannel";
+     const TYPE_ID: &str = "Network.OrderingChannel";
 }
 
 impl StaticVariant for Vec<Network_OrderingChannel> {
-     const TYPE_ID: &str = "TArray<Network_OrderingChannel>";
+     const TYPE_ID: &str = "TArray<Network.OrderingChannel>";
 }
 
 impl StaticVariant for Vec<Vec<Network_OrderingChannel>> {
-     const TYPE_ID: &str = "TArray<TArray<Network_OrderingChannel>>";
+     const TYPE_ID: &str = "TArray<TArray<Network.OrderingChannel>>";
 }
 
 impl Variant for Network_OrderingChannel {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("Network_OrderingChannel")
+        interner.get_or_intern_static("Network.OrderingChannel")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("Network_OrderingChannel".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34279,24 +34765,24 @@ impl Bin1Serialize for Network_PacketPriority {
 }
 
 impl StaticVariant for Network_PacketPriority {
-     const TYPE_ID: &str = "Network_PacketPriority";
+     const TYPE_ID: &str = "Network.PacketPriority";
 }
 
 impl StaticVariant for Vec<Network_PacketPriority> {
-     const TYPE_ID: &str = "TArray<Network_PacketPriority>";
+     const TYPE_ID: &str = "TArray<Network.PacketPriority>";
 }
 
 impl StaticVariant for Vec<Vec<Network_PacketPriority>> {
-     const TYPE_ID: &str = "TArray<TArray<Network_PacketPriority>>";
+     const TYPE_ID: &str = "TArray<TArray<Network.PacketPriority>>";
 }
 
 impl Variant for Network_PacketPriority {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("Network_PacketPriority")
+        interner.get_or_intern_static("Network.PacketPriority")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("Network_PacketPriority".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34346,24 +34832,24 @@ impl Bin1Serialize for Network_PacketReliability {
 }
 
 impl StaticVariant for Network_PacketReliability {
-     const TYPE_ID: &str = "Network_PacketReliability";
+     const TYPE_ID: &str = "Network.PacketReliability";
 }
 
 impl StaticVariant for Vec<Network_PacketReliability> {
-     const TYPE_ID: &str = "TArray<Network_PacketReliability>";
+     const TYPE_ID: &str = "TArray<Network.PacketReliability>";
 }
 
 impl StaticVariant for Vec<Vec<Network_PacketReliability>> {
-     const TYPE_ID: &str = "TArray<TArray<Network_PacketReliability>>";
+     const TYPE_ID: &str = "TArray<TArray<Network.PacketReliability>>";
 }
 
 impl Variant for Network_PacketReliability {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("Network_PacketReliability")
+        interner.get_or_intern_static("Network.PacketReliability")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("Network_PacketReliability".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34418,7 +34904,7 @@ impl Variant for ReverbFidelity {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ReverbFidelity".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34468,24 +34954,24 @@ impl Bin1Serialize for ZActBehaviorEntity_EState {
 }
 
 impl StaticVariant for ZActBehaviorEntity_EState {
-     const TYPE_ID: &str = "ZActBehaviorEntity_EState";
+     const TYPE_ID: &str = "ZActBehaviorEntity.EState";
 }
 
 impl StaticVariant for Vec<ZActBehaviorEntity_EState> {
-     const TYPE_ID: &str = "TArray<ZActBehaviorEntity_EState>";
+     const TYPE_ID: &str = "TArray<ZActBehaviorEntity.EState>";
 }
 
 impl StaticVariant for Vec<Vec<ZActBehaviorEntity_EState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActBehaviorEntity_EState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActBehaviorEntity.EState>>";
 }
 
 impl Variant for ZActBehaviorEntity_EState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActBehaviorEntity_EState")
+        interner.get_or_intern_static("ZActBehaviorEntity.EState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActBehaviorEntity_EState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34519,24 +35005,24 @@ impl Bin1Serialize for SActorSoundDefs_EDefinition {
 }
 
 impl StaticVariant for SActorSoundDefs_EDefinition {
-     const TYPE_ID: &str = "SActorSoundDefs_EDefinition";
+     const TYPE_ID: &str = "SActorSoundDefs.EDefinition";
 }
 
 impl StaticVariant for Vec<SActorSoundDefs_EDefinition> {
-     const TYPE_ID: &str = "TArray<SActorSoundDefs_EDefinition>";
+     const TYPE_ID: &str = "TArray<SActorSoundDefs.EDefinition>";
 }
 
 impl StaticVariant for Vec<Vec<SActorSoundDefs_EDefinition>> {
-     const TYPE_ID: &str = "TArray<TArray<SActorSoundDefs_EDefinition>>";
+     const TYPE_ID: &str = "TArray<TArray<SActorSoundDefs.EDefinition>>";
 }
 
 impl Variant for SActorSoundDefs_EDefinition {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("SActorSoundDefs_EDefinition")
+        interner.get_or_intern_static("SActorSoundDefs.EDefinition")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("SActorSoundDefs_EDefinition".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34580,24 +35066,24 @@ impl Bin1Serialize for ZHM5BodyContainer_EBCState {
 }
 
 impl StaticVariant for ZHM5BodyContainer_EBCState {
-     const TYPE_ID: &str = "ZHM5BodyContainer_EBCState";
+     const TYPE_ID: &str = "ZHM5BodyContainer.EBCState";
 }
 
 impl StaticVariant for Vec<ZHM5BodyContainer_EBCState> {
-     const TYPE_ID: &str = "TArray<ZHM5BodyContainer_EBCState>";
+     const TYPE_ID: &str = "TArray<ZHM5BodyContainer.EBCState>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5BodyContainer_EBCState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5BodyContainer_EBCState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5BodyContainer.EBCState>>";
 }
 
 impl Variant for ZHM5BodyContainer_EBCState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5BodyContainer_EBCState")
+        interner.get_or_intern_static("ZHM5BodyContainer.EBCState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5BodyContainer_EBCState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34637,24 +35123,24 @@ impl Bin1Serialize for ZCautiousBackupGroup_EGroupState {
 }
 
 impl StaticVariant for ZCautiousBackupGroup_EGroupState {
-     const TYPE_ID: &str = "ZCautiousBackupGroup_EGroupState";
+     const TYPE_ID: &str = "ZCautiousBackupGroup.EGroupState";
 }
 
 impl StaticVariant for Vec<ZCautiousBackupGroup_EGroupState> {
-     const TYPE_ID: &str = "TArray<ZCautiousBackupGroup_EGroupState>";
+     const TYPE_ID: &str = "TArray<ZCautiousBackupGroup.EGroupState>";
 }
 
 impl StaticVariant for Vec<Vec<ZCautiousBackupGroup_EGroupState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCautiousBackupGroup_EGroupState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCautiousBackupGroup.EGroupState>>";
 }
 
 impl Variant for ZCautiousBackupGroup_EGroupState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCautiousBackupGroup_EGroupState")
+        interner.get_or_intern_static("ZCautiousBackupGroup.EGroupState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCautiousBackupGroup_EGroupState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34698,24 +35184,24 @@ impl Bin1Serialize for ZCautiousInvestigateGroup_EApproachOrderState {
 }
 
 impl StaticVariant for ZCautiousInvestigateGroup_EApproachOrderState {
-     const TYPE_ID: &str = "ZCautiousInvestigateGroup_EApproachOrderState";
+     const TYPE_ID: &str = "ZCautiousInvestigateGroup.EApproachOrderState";
 }
 
 impl StaticVariant for Vec<ZCautiousInvestigateGroup_EApproachOrderState> {
-     const TYPE_ID: &str = "TArray<ZCautiousInvestigateGroup_EApproachOrderState>";
+     const TYPE_ID: &str = "TArray<ZCautiousInvestigateGroup.EApproachOrderState>";
 }
 
 impl StaticVariant for Vec<Vec<ZCautiousInvestigateGroup_EApproachOrderState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCautiousInvestigateGroup_EApproachOrderState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCautiousInvestigateGroup.EApproachOrderState>>";
 }
 
 impl Variant for ZCautiousInvestigateGroup_EApproachOrderState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCautiousInvestigateGroup_EApproachOrderState")
+        interner.get_or_intern_static("ZCautiousInvestigateGroup.EApproachOrderState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCautiousInvestigateGroup_EApproachOrderState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34753,24 +35239,24 @@ impl Bin1Serialize for ZInvestigateCautiousSituation_EBystanderState {
 }
 
 impl StaticVariant for ZInvestigateCautiousSituation_EBystanderState {
-     const TYPE_ID: &str = "ZInvestigateCautiousSituation_EBystanderState";
+     const TYPE_ID: &str = "ZInvestigateCautiousSituation.EBystanderState";
 }
 
 impl StaticVariant for Vec<ZInvestigateCautiousSituation_EBystanderState> {
-     const TYPE_ID: &str = "TArray<ZInvestigateCautiousSituation_EBystanderState>";
+     const TYPE_ID: &str = "TArray<ZInvestigateCautiousSituation.EBystanderState>";
 }
 
 impl StaticVariant for Vec<Vec<ZInvestigateCautiousSituation_EBystanderState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInvestigateCautiousSituation_EBystanderState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInvestigateCautiousSituation.EBystanderState>>";
 }
 
 impl Variant for ZInvestigateCautiousSituation_EBystanderState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInvestigateCautiousSituation_EBystanderState")
+        interner.get_or_intern_static("ZInvestigateCautiousSituation.EBystanderState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInvestigateCautiousSituation_EBystanderState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34808,24 +35294,24 @@ impl Bin1Serialize for ZInvestigateCautiousSituation_ESituationState {
 }
 
 impl StaticVariant for ZInvestigateCautiousSituation_ESituationState {
-     const TYPE_ID: &str = "ZInvestigateCautiousSituation_ESituationState";
+     const TYPE_ID: &str = "ZInvestigateCautiousSituation.ESituationState";
 }
 
 impl StaticVariant for Vec<ZInvestigateCautiousSituation_ESituationState> {
-     const TYPE_ID: &str = "TArray<ZInvestigateCautiousSituation_ESituationState>";
+     const TYPE_ID: &str = "TArray<ZInvestigateCautiousSituation.ESituationState>";
 }
 
 impl StaticVariant for Vec<Vec<ZInvestigateCautiousSituation_ESituationState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInvestigateCautiousSituation_ESituationState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInvestigateCautiousSituation.ESituationState>>";
 }
 
 impl Variant for ZInvestigateCautiousSituation_ESituationState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInvestigateCautiousSituation_ESituationState")
+        interner.get_or_intern_static("ZInvestigateCautiousSituation.ESituationState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInvestigateCautiousSituation_ESituationState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34869,24 +35355,24 @@ impl Bin1Serialize for ZCautiousSearchGroup_EAssistantState {
 }
 
 impl StaticVariant for ZCautiousSearchGroup_EAssistantState {
-     const TYPE_ID: &str = "ZCautiousSearchGroup_EAssistantState";
+     const TYPE_ID: &str = "ZCautiousSearchGroup.EAssistantState";
 }
 
 impl StaticVariant for Vec<ZCautiousSearchGroup_EAssistantState> {
-     const TYPE_ID: &str = "TArray<ZCautiousSearchGroup_EAssistantState>";
+     const TYPE_ID: &str = "TArray<ZCautiousSearchGroup.EAssistantState>";
 }
 
 impl StaticVariant for Vec<Vec<ZCautiousSearchGroup_EAssistantState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCautiousSearchGroup_EAssistantState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCautiousSearchGroup.EAssistantState>>";
 }
 
 impl Variant for ZCautiousSearchGroup_EAssistantState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCautiousSearchGroup_EAssistantState")
+        interner.get_or_intern_static("ZCautiousSearchGroup.EAssistantState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCautiousSearchGroup_EAssistantState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34928,24 +35414,24 @@ impl Bin1Serialize for ZCautiousSearchGroup_ESearchGroupState {
 }
 
 impl StaticVariant for ZCautiousSearchGroup_ESearchGroupState {
-     const TYPE_ID: &str = "ZCautiousSearchGroup_ESearchGroupState";
+     const TYPE_ID: &str = "ZCautiousSearchGroup.ESearchGroupState";
 }
 
 impl StaticVariant for Vec<ZCautiousSearchGroup_ESearchGroupState> {
-     const TYPE_ID: &str = "TArray<ZCautiousSearchGroup_ESearchGroupState>";
+     const TYPE_ID: &str = "TArray<ZCautiousSearchGroup.ESearchGroupState>";
 }
 
 impl StaticVariant for Vec<Vec<ZCautiousSearchGroup_ESearchGroupState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCautiousSearchGroup_ESearchGroupState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCautiousSearchGroup.ESearchGroupState>>";
 }
 
 impl Variant for ZCautiousSearchGroup_ESearchGroupState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCautiousSearchGroup_ESearchGroupState")
+        interner.get_or_intern_static("ZCautiousSearchGroup.ESearchGroupState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCautiousSearchGroup_ESearchGroupState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -34985,24 +35471,24 @@ impl Bin1Serialize for SDoorSoundDefs_EDefinition {
 }
 
 impl StaticVariant for SDoorSoundDefs_EDefinition {
-     const TYPE_ID: &str = "SDoorSoundDefs_EDefinition";
+     const TYPE_ID: &str = "SDoorSoundDefs.EDefinition";
 }
 
 impl StaticVariant for Vec<SDoorSoundDefs_EDefinition> {
-     const TYPE_ID: &str = "TArray<SDoorSoundDefs_EDefinition>";
+     const TYPE_ID: &str = "TArray<SDoorSoundDefs.EDefinition>";
 }
 
 impl StaticVariant for Vec<Vec<SDoorSoundDefs_EDefinition>> {
-     const TYPE_ID: &str = "TArray<TArray<SDoorSoundDefs_EDefinition>>";
+     const TYPE_ID: &str = "TArray<TArray<SDoorSoundDefs.EDefinition>>";
 }
 
 impl Variant for SDoorSoundDefs_EDefinition {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("SDoorSoundDefs_EDefinition")
+        interner.get_or_intern_static("SDoorSoundDefs.EDefinition")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("SDoorSoundDefs_EDefinition".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35044,24 +35530,24 @@ impl Bin1Serialize for ZScreenplay_EState {
 }
 
 impl StaticVariant for ZScreenplay_EState {
-     const TYPE_ID: &str = "ZScreenplay_EState";
+     const TYPE_ID: &str = "ZScreenplay.EState";
 }
 
 impl StaticVariant for Vec<ZScreenplay_EState> {
-     const TYPE_ID: &str = "TArray<ZScreenplay_EState>";
+     const TYPE_ID: &str = "TArray<ZScreenplay.EState>";
 }
 
 impl StaticVariant for Vec<Vec<ZScreenplay_EState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZScreenplay_EState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZScreenplay.EState>>";
 }
 
 impl Variant for ZScreenplay_EState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZScreenplay_EState")
+        interner.get_or_intern_static("ZScreenplay.EState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZScreenplay_EState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35103,24 +35589,24 @@ impl Bin1Serialize for ZEscortSituation2Entity_EEscortState {
 }
 
 impl StaticVariant for ZEscortSituation2Entity_EEscortState {
-     const TYPE_ID: &str = "ZEscortSituation2Entity_EEscortState";
+     const TYPE_ID: &str = "ZEscortSituation2Entity.EEscortState";
 }
 
 impl StaticVariant for Vec<ZEscortSituation2Entity_EEscortState> {
-     const TYPE_ID: &str = "TArray<ZEscortSituation2Entity_EEscortState>";
+     const TYPE_ID: &str = "TArray<ZEscortSituation2Entity.EEscortState>";
 }
 
 impl StaticVariant for Vec<Vec<ZEscortSituation2Entity_EEscortState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEscortSituation2Entity_EEscortState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEscortSituation2Entity.EEscortState>>";
 }
 
 impl Variant for ZEscortSituation2Entity_EEscortState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEscortSituation2Entity_EEscortState")
+        interner.get_or_intern_static("ZEscortSituation2Entity.EEscortState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEscortSituation2Entity_EEscortState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35166,24 +35652,24 @@ impl Bin1Serialize for ZEscortSituation2Entity_ETargetState {
 }
 
 impl StaticVariant for ZEscortSituation2Entity_ETargetState {
-     const TYPE_ID: &str = "ZEscortSituation2Entity_ETargetState";
+     const TYPE_ID: &str = "ZEscortSituation2Entity.ETargetState";
 }
 
 impl StaticVariant for Vec<ZEscortSituation2Entity_ETargetState> {
-     const TYPE_ID: &str = "TArray<ZEscortSituation2Entity_ETargetState>";
+     const TYPE_ID: &str = "TArray<ZEscortSituation2Entity.ETargetState>";
 }
 
 impl StaticVariant for Vec<Vec<ZEscortSituation2Entity_ETargetState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEscortSituation2Entity_ETargetState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEscortSituation2Entity.ETargetState>>";
 }
 
 impl Variant for ZEscortSituation2Entity_ETargetState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEscortSituation2Entity_ETargetState")
+        interner.get_or_intern_static("ZEscortSituation2Entity.ETargetState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEscortSituation2Entity_ETargetState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35225,24 +35711,24 @@ impl Bin1Serialize for ZEscortSituationEntity_EEscortState {
 }
 
 impl StaticVariant for ZEscortSituationEntity_EEscortState {
-     const TYPE_ID: &str = "ZEscortSituationEntity_EEscortState";
+     const TYPE_ID: &str = "ZEscortSituationEntity.EEscortState";
 }
 
 impl StaticVariant for Vec<ZEscortSituationEntity_EEscortState> {
-     const TYPE_ID: &str = "TArray<ZEscortSituationEntity_EEscortState>";
+     const TYPE_ID: &str = "TArray<ZEscortSituationEntity.EEscortState>";
 }
 
 impl StaticVariant for Vec<Vec<ZEscortSituationEntity_EEscortState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEscortSituationEntity_EEscortState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEscortSituationEntity.EEscortState>>";
 }
 
 impl Variant for ZEscortSituationEntity_EEscortState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEscortSituationEntity_EEscortState")
+        interner.get_or_intern_static("ZEscortSituationEntity.EEscortState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEscortSituationEntity_EEscortState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35288,24 +35774,24 @@ impl Bin1Serialize for ZEscortSituationEntity_ETargetState {
 }
 
 impl StaticVariant for ZEscortSituationEntity_ETargetState {
-     const TYPE_ID: &str = "ZEscortSituationEntity_ETargetState";
+     const TYPE_ID: &str = "ZEscortSituationEntity.ETargetState";
 }
 
 impl StaticVariant for Vec<ZEscortSituationEntity_ETargetState> {
-     const TYPE_ID: &str = "TArray<ZEscortSituationEntity_ETargetState>";
+     const TYPE_ID: &str = "TArray<ZEscortSituationEntity.ETargetState>";
 }
 
 impl StaticVariant for Vec<Vec<ZEscortSituationEntity_ETargetState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEscortSituationEntity_ETargetState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEscortSituationEntity.ETargetState>>";
 }
 
 impl Variant for ZEscortSituationEntity_ETargetState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEscortSituationEntity_ETargetState")
+        interner.get_or_intern_static("ZEscortSituationEntity.ETargetState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEscortSituationEntity_ETargetState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35343,24 +35829,24 @@ impl Bin1Serialize for SFootIKEventData_EFoot {
 }
 
 impl StaticVariant for SFootIKEventData_EFoot {
-     const TYPE_ID: &str = "SFootIKEventData_EFoot";
+     const TYPE_ID: &str = "SFootIKEventData.EFoot";
 }
 
 impl StaticVariant for Vec<SFootIKEventData_EFoot> {
-     const TYPE_ID: &str = "TArray<SFootIKEventData_EFoot>";
+     const TYPE_ID: &str = "TArray<SFootIKEventData.EFoot>";
 }
 
 impl StaticVariant for Vec<Vec<SFootIKEventData_EFoot>> {
-     const TYPE_ID: &str = "TArray<TArray<SFootIKEventData_EFoot>>";
+     const TYPE_ID: &str = "TArray<TArray<SFootIKEventData.EFoot>>";
 }
 
 impl Variant for SFootIKEventData_EFoot {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("SFootIKEventData_EFoot")
+        interner.get_or_intern_static("SFootIKEventData.EFoot")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("SFootIKEventData_EFoot".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35400,24 +35886,24 @@ impl Bin1Serialize for ZFriskSuspectGroup_EAssistantState {
 }
 
 impl StaticVariant for ZFriskSuspectGroup_EAssistantState {
-     const TYPE_ID: &str = "ZFriskSuspectGroup_EAssistantState";
+     const TYPE_ID: &str = "ZFriskSuspectGroup.EAssistantState";
 }
 
 impl StaticVariant for Vec<ZFriskSuspectGroup_EAssistantState> {
-     const TYPE_ID: &str = "TArray<ZFriskSuspectGroup_EAssistantState>";
+     const TYPE_ID: &str = "TArray<ZFriskSuspectGroup.EAssistantState>";
 }
 
 impl StaticVariant for Vec<Vec<ZFriskSuspectGroup_EAssistantState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZFriskSuspectGroup_EAssistantState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZFriskSuspectGroup.EAssistantState>>";
 }
 
 impl Variant for ZFriskSuspectGroup_EAssistantState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZFriskSuspectGroup_EAssistantState")
+        interner.get_or_intern_static("ZFriskSuspectGroup.EAssistantState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZFriskSuspectGroup_EAssistantState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35455,24 +35941,24 @@ impl Bin1Serialize for ZFriskSuspectGroup_EHitmanGreetState {
 }
 
 impl StaticVariant for ZFriskSuspectGroup_EHitmanGreetState {
-     const TYPE_ID: &str = "ZFriskSuspectGroup_EHitmanGreetState";
+     const TYPE_ID: &str = "ZFriskSuspectGroup.EHitmanGreetState";
 }
 
 impl StaticVariant for Vec<ZFriskSuspectGroup_EHitmanGreetState> {
-     const TYPE_ID: &str = "TArray<ZFriskSuspectGroup_EHitmanGreetState>";
+     const TYPE_ID: &str = "TArray<ZFriskSuspectGroup.EHitmanGreetState>";
 }
 
 impl StaticVariant for Vec<Vec<ZFriskSuspectGroup_EHitmanGreetState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZFriskSuspectGroup_EHitmanGreetState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZFriskSuspectGroup.EHitmanGreetState>>";
 }
 
 impl Variant for ZFriskSuspectGroup_EHitmanGreetState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZFriskSuspectGroup_EHitmanGreetState")
+        interner.get_or_intern_static("ZFriskSuspectGroup.EHitmanGreetState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZFriskSuspectGroup_EHitmanGreetState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35551,7 +36037,7 @@ impl Variant for eAmmoType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eAmmoType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35794,7 +36280,7 @@ impl Variant for eItemType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eItemType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35834,24 +36320,24 @@ impl Bin1Serialize for ZHUDUIRoot_EHUDVisibility {
 }
 
 impl StaticVariant for ZHUDUIRoot_EHUDVisibility {
-     const TYPE_ID: &str = "ZHUDUIRoot_EHUDVisibility";
+     const TYPE_ID: &str = "ZHUDUIRoot.EHUDVisibility";
 }
 
 impl StaticVariant for Vec<ZHUDUIRoot_EHUDVisibility> {
-     const TYPE_ID: &str = "TArray<ZHUDUIRoot_EHUDVisibility>";
+     const TYPE_ID: &str = "TArray<ZHUDUIRoot.EHUDVisibility>";
 }
 
 impl StaticVariant for Vec<Vec<ZHUDUIRoot_EHUDVisibility>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHUDUIRoot_EHUDVisibility>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHUDUIRoot.EHUDVisibility>>";
 }
 
 impl Variant for ZHUDUIRoot_EHUDVisibility {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHUDUIRoot_EHUDVisibility")
+        interner.get_or_intern_static("ZHUDUIRoot.EHUDVisibility")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHUDUIRoot_EHUDVisibility".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35893,24 +36379,24 @@ impl Bin1Serialize for ZHeroEscortSituation2Entity_EEscortState {
 }
 
 impl StaticVariant for ZHeroEscortSituation2Entity_EEscortState {
-     const TYPE_ID: &str = "ZHeroEscortSituation2Entity_EEscortState";
+     const TYPE_ID: &str = "ZHeroEscortSituation2Entity.EEscortState";
 }
 
 impl StaticVariant for Vec<ZHeroEscortSituation2Entity_EEscortState> {
-     const TYPE_ID: &str = "TArray<ZHeroEscortSituation2Entity_EEscortState>";
+     const TYPE_ID: &str = "TArray<ZHeroEscortSituation2Entity.EEscortState>";
 }
 
 impl StaticVariant for Vec<Vec<ZHeroEscortSituation2Entity_EEscortState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHeroEscortSituation2Entity_EEscortState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHeroEscortSituation2Entity.EEscortState>>";
 }
 
 impl Variant for ZHeroEscortSituation2Entity_EEscortState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHeroEscortSituation2Entity_EEscortState")
+        interner.get_or_intern_static("ZHeroEscortSituation2Entity.EEscortState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHeroEscortSituation2Entity_EEscortState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -35956,24 +36442,24 @@ impl Bin1Serialize for ZHeroEscortSituation2Entity_ETargetState {
 }
 
 impl StaticVariant for ZHeroEscortSituation2Entity_ETargetState {
-     const TYPE_ID: &str = "ZHeroEscortSituation2Entity_ETargetState";
+     const TYPE_ID: &str = "ZHeroEscortSituation2Entity.ETargetState";
 }
 
 impl StaticVariant for Vec<ZHeroEscortSituation2Entity_ETargetState> {
-     const TYPE_ID: &str = "TArray<ZHeroEscortSituation2Entity_ETargetState>";
+     const TYPE_ID: &str = "TArray<ZHeroEscortSituation2Entity.ETargetState>";
 }
 
 impl StaticVariant for Vec<Vec<ZHeroEscortSituation2Entity_ETargetState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHeroEscortSituation2Entity_ETargetState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHeroEscortSituation2Entity.ETargetState>>";
 }
 
 impl Variant for ZHeroEscortSituation2Entity_ETargetState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHeroEscortSituation2Entity_ETargetState")
+        interner.get_or_intern_static("ZHeroEscortSituation2Entity.ETargetState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHeroEscortSituation2Entity_ETargetState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36015,24 +36501,24 @@ impl Bin1Serialize for ZHeroEscortSituationEntity_EEscortState {
 }
 
 impl StaticVariant for ZHeroEscortSituationEntity_EEscortState {
-     const TYPE_ID: &str = "ZHeroEscortSituationEntity_EEscortState";
+     const TYPE_ID: &str = "ZHeroEscortSituationEntity.EEscortState";
 }
 
 impl StaticVariant for Vec<ZHeroEscortSituationEntity_EEscortState> {
-     const TYPE_ID: &str = "TArray<ZHeroEscortSituationEntity_EEscortState>";
+     const TYPE_ID: &str = "TArray<ZHeroEscortSituationEntity.EEscortState>";
 }
 
 impl StaticVariant for Vec<Vec<ZHeroEscortSituationEntity_EEscortState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHeroEscortSituationEntity_EEscortState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHeroEscortSituationEntity.EEscortState>>";
 }
 
 impl Variant for ZHeroEscortSituationEntity_EEscortState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHeroEscortSituationEntity_EEscortState")
+        interner.get_or_intern_static("ZHeroEscortSituationEntity.EEscortState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHeroEscortSituationEntity_EEscortState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36078,24 +36564,24 @@ impl Bin1Serialize for ZHeroEscortSituationEntity_ETargetState {
 }
 
 impl StaticVariant for ZHeroEscortSituationEntity_ETargetState {
-     const TYPE_ID: &str = "ZHeroEscortSituationEntity_ETargetState";
+     const TYPE_ID: &str = "ZHeroEscortSituationEntity.ETargetState";
 }
 
 impl StaticVariant for Vec<ZHeroEscortSituationEntity_ETargetState> {
-     const TYPE_ID: &str = "TArray<ZHeroEscortSituationEntity_ETargetState>";
+     const TYPE_ID: &str = "TArray<ZHeroEscortSituationEntity.ETargetState>";
 }
 
 impl StaticVariant for Vec<Vec<ZHeroEscortSituationEntity_ETargetState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHeroEscortSituationEntity_ETargetState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHeroEscortSituationEntity.ETargetState>>";
 }
 
 impl Variant for ZHeroEscortSituationEntity_ETargetState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHeroEscortSituationEntity_ETargetState")
+        interner.get_or_intern_static("ZHeroEscortSituationEntity.ETargetState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHeroEscortSituationEntity_ETargetState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36156,7 +36642,7 @@ impl Variant for eEvergreenItemRarity {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eEvergreenItemRarity".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36206,24 +36692,24 @@ impl Bin1Serialize for ZInvestigateDisguiseGroup_EState {
 }
 
 impl StaticVariant for ZInvestigateDisguiseGroup_EState {
-     const TYPE_ID: &str = "ZInvestigateDisguiseGroup_EState";
+     const TYPE_ID: &str = "ZInvestigateDisguiseGroup.EState";
 }
 
 impl StaticVariant for Vec<ZInvestigateDisguiseGroup_EState> {
-     const TYPE_ID: &str = "TArray<ZInvestigateDisguiseGroup_EState>";
+     const TYPE_ID: &str = "TArray<ZInvestigateDisguiseGroup.EState>";
 }
 
 impl StaticVariant for Vec<Vec<ZInvestigateDisguiseGroup_EState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInvestigateDisguiseGroup_EState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInvestigateDisguiseGroup.EState>>";
 }
 
 impl Variant for ZInvestigateDisguiseGroup_EState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInvestigateDisguiseGroup_EState")
+        interner.get_or_intern_static("ZInvestigateDisguiseGroup.EState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInvestigateDisguiseGroup_EState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36263,24 +36749,24 @@ impl Bin1Serialize for ZMoveToOrder_EMoveSpeed {
 }
 
 impl StaticVariant for ZMoveToOrder_EMoveSpeed {
-     const TYPE_ID: &str = "ZMoveToOrder_EMoveSpeed";
+     const TYPE_ID: &str = "ZMoveToOrder.EMoveSpeed";
 }
 
 impl StaticVariant for Vec<ZMoveToOrder_EMoveSpeed> {
-     const TYPE_ID: &str = "TArray<ZMoveToOrder_EMoveSpeed>";
+     const TYPE_ID: &str = "TArray<ZMoveToOrder.EMoveSpeed>";
 }
 
 impl StaticVariant for Vec<Vec<ZMoveToOrder_EMoveSpeed>> {
-     const TYPE_ID: &str = "TArray<TArray<ZMoveToOrder_EMoveSpeed>>";
+     const TYPE_ID: &str = "TArray<TArray<ZMoveToOrder.EMoveSpeed>>";
 }
 
 impl Variant for ZMoveToOrder_EMoveSpeed {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZMoveToOrder_EMoveSpeed")
+        interner.get_or_intern_static("ZMoveToOrder.EMoveSpeed")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZMoveToOrder_EMoveSpeed".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36320,24 +36806,24 @@ impl Bin1Serialize for ZLeadEscortSituationEntity_EEscortState {
 }
 
 impl StaticVariant for ZLeadEscortSituationEntity_EEscortState {
-     const TYPE_ID: &str = "ZLeadEscortSituationEntity_EEscortState";
+     const TYPE_ID: &str = "ZLeadEscortSituationEntity.EEscortState";
 }
 
 impl StaticVariant for Vec<ZLeadEscortSituationEntity_EEscortState> {
-     const TYPE_ID: &str = "TArray<ZLeadEscortSituationEntity_EEscortState>";
+     const TYPE_ID: &str = "TArray<ZLeadEscortSituationEntity.EEscortState>";
 }
 
 impl StaticVariant for Vec<Vec<ZLeadEscortSituationEntity_EEscortState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZLeadEscortSituationEntity_EEscortState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZLeadEscortSituationEntity.EEscortState>>";
 }
 
 impl Variant for ZLeadEscortSituationEntity_EEscortState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZLeadEscortSituationEntity_EEscortState")
+        interner.get_or_intern_static("ZLeadEscortSituationEntity.EEscortState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZLeadEscortSituationEntity_EEscortState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36383,24 +36869,24 @@ impl Bin1Serialize for ZLeadEscortSituationEntity_ETargetState {
 }
 
 impl StaticVariant for ZLeadEscortSituationEntity_ETargetState {
-     const TYPE_ID: &str = "ZLeadEscortSituationEntity_ETargetState";
+     const TYPE_ID: &str = "ZLeadEscortSituationEntity.ETargetState";
 }
 
 impl StaticVariant for Vec<ZLeadEscortSituationEntity_ETargetState> {
-     const TYPE_ID: &str = "TArray<ZLeadEscortSituationEntity_ETargetState>";
+     const TYPE_ID: &str = "TArray<ZLeadEscortSituationEntity.ETargetState>";
 }
 
 impl StaticVariant for Vec<Vec<ZLeadEscortSituationEntity_ETargetState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZLeadEscortSituationEntity_ETargetState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZLeadEscortSituationEntity.ETargetState>>";
 }
 
 impl Variant for ZLeadEscortSituationEntity_ETargetState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZLeadEscortSituationEntity_ETargetState")
+        interner.get_or_intern_static("ZLeadEscortSituationEntity.ETargetState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZLeadEscortSituationEntity_ETargetState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36464,24 +36950,24 @@ impl Bin1Serialize for ZSequenceEntity_ECommand {
 }
 
 impl StaticVariant for ZSequenceEntity_ECommand {
-     const TYPE_ID: &str = "ZSequenceEntity_ECommand";
+     const TYPE_ID: &str = "ZSequenceEntity.ECommand";
 }
 
 impl StaticVariant for Vec<ZSequenceEntity_ECommand> {
-     const TYPE_ID: &str = "TArray<ZSequenceEntity_ECommand>";
+     const TYPE_ID: &str = "TArray<ZSequenceEntity.ECommand>";
 }
 
 impl StaticVariant for Vec<Vec<ZSequenceEntity_ECommand>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSequenceEntity_ECommand>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSequenceEntity.ECommand>>";
 }
 
 impl Variant for ZSequenceEntity_ECommand {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSequenceEntity_ECommand")
+        interner.get_or_intern_static("ZSequenceEntity.ECommand")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSequenceEntity_ECommand".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36527,24 +37013,24 @@ impl Bin1Serialize for ZSmuggleSituationEntity_ESmuggleState {
 }
 
 impl StaticVariant for ZSmuggleSituationEntity_ESmuggleState {
-     const TYPE_ID: &str = "ZSmuggleSituationEntity_ESmuggleState";
+     const TYPE_ID: &str = "ZSmuggleSituationEntity.ESmuggleState";
 }
 
 impl StaticVariant for Vec<ZSmuggleSituationEntity_ESmuggleState> {
-     const TYPE_ID: &str = "TArray<ZSmuggleSituationEntity_ESmuggleState>";
+     const TYPE_ID: &str = "TArray<ZSmuggleSituationEntity.ESmuggleState>";
 }
 
 impl StaticVariant for Vec<Vec<ZSmuggleSituationEntity_ESmuggleState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSmuggleSituationEntity_ESmuggleState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSmuggleSituationEntity.ESmuggleState>>";
 }
 
 impl Variant for ZSmuggleSituationEntity_ESmuggleState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSmuggleSituationEntity_ESmuggleState")
+        interner.get_or_intern_static("ZSmuggleSituationEntity.ESmuggleState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSmuggleSituationEntity_ESmuggleState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36580,24 +37066,24 @@ impl Bin1Serialize for STestStruct_ETestEnum {
 }
 
 impl StaticVariant for STestStruct_ETestEnum {
-     const TYPE_ID: &str = "STestStruct_ETestEnum";
+     const TYPE_ID: &str = "STestStruct.ETestEnum";
 }
 
 impl StaticVariant for Vec<STestStruct_ETestEnum> {
-     const TYPE_ID: &str = "TArray<STestStruct_ETestEnum>";
+     const TYPE_ID: &str = "TArray<STestStruct.ETestEnum>";
 }
 
 impl StaticVariant for Vec<Vec<STestStruct_ETestEnum>> {
-     const TYPE_ID: &str = "TArray<TArray<STestStruct_ETestEnum>>";
+     const TYPE_ID: &str = "TArray<TArray<STestStruct.ETestEnum>>";
 }
 
 impl Variant for STestStruct_ETestEnum {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("STestStruct_ETestEnum")
+        interner.get_or_intern_static("STestStruct.ETestEnum")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("STestStruct_ETestEnum".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36940,7 +37426,7 @@ impl Variant for _EUIOptionKey {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("_EUIOptionKey".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -36978,24 +37464,24 @@ impl Bin1Serialize for SUITestData_ETestEnum {
 }
 
 impl StaticVariant for SUITestData_ETestEnum {
-     const TYPE_ID: &str = "SUITestData_ETestEnum";
+     const TYPE_ID: &str = "SUITestData.ETestEnum";
 }
 
 impl StaticVariant for Vec<SUITestData_ETestEnum> {
-     const TYPE_ID: &str = "TArray<SUITestData_ETestEnum>";
+     const TYPE_ID: &str = "TArray<SUITestData.ETestEnum>";
 }
 
 impl StaticVariant for Vec<Vec<SUITestData_ETestEnum>> {
-     const TYPE_ID: &str = "TArray<TArray<SUITestData_ETestEnum>>";
+     const TYPE_ID: &str = "TArray<TArray<SUITestData.ETestEnum>>";
 }
 
 impl Variant for SUITestData_ETestEnum {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("SUITestData_ETestEnum")
+        interner.get_or_intern_static("SUITestData.ETestEnum")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("SUITestData_ETestEnum".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37048,7 +37534,7 @@ impl Variant for SniperControllerConditionType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("SniperControllerConditionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37103,7 +37589,7 @@ impl Variant for SoundPlayState {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("SoundPlayState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37147,24 +37633,24 @@ impl Bin1Serialize for String_Comperator_Poll_EEvaluationType {
 }
 
 impl StaticVariant for String_Comperator_Poll_EEvaluationType {
-     const TYPE_ID: &str = "String_Comperator_Poll_EEvaluationType";
+     const TYPE_ID: &str = "String_Comperator_Poll.EEvaluationType";
 }
 
 impl StaticVariant for Vec<String_Comperator_Poll_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<String_Comperator_Poll_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<String_Comperator_Poll.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<String_Comperator_Poll_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<String_Comperator_Poll_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<String_Comperator_Poll.EEvaluationType>>";
 }
 
 impl Variant for String_Comperator_Poll_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("String_Comperator_Poll_EEvaluationType")
+        interner.get_or_intern_static("String_Comperator_Poll.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("String_Comperator_Poll_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37219,7 +37705,7 @@ impl Variant for TeleportActionType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("TeleportActionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37281,24 +37767,24 @@ impl Bin1Serialize for UIMapLayer_EUIMapLayerID {
 }
 
 impl StaticVariant for UIMapLayer_EUIMapLayerID {
-     const TYPE_ID: &str = "UIMapLayer_EUIMapLayerID";
+     const TYPE_ID: &str = "UIMapLayer.EUIMapLayerID";
 }
 
 impl StaticVariant for Vec<UIMapLayer_EUIMapLayerID> {
-     const TYPE_ID: &str = "TArray<UIMapLayer_EUIMapLayerID>";
+     const TYPE_ID: &str = "TArray<UIMapLayer.EUIMapLayerID>";
 }
 
 impl StaticVariant for Vec<Vec<UIMapLayer_EUIMapLayerID>> {
-     const TYPE_ID: &str = "TArray<TArray<UIMapLayer_EUIMapLayerID>>";
+     const TYPE_ID: &str = "TArray<TArray<UIMapLayer.EUIMapLayerID>>";
 }
 
 impl Variant for UIMapLayer_EUIMapLayerID {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("UIMapLayer_EUIMapLayerID")
+        interner.get_or_intern_static("UIMapLayer.EUIMapLayerID")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("UIMapLayer_EUIMapLayerID".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37356,24 +37842,24 @@ impl Bin1Serialize for WebSocketUtils_ECloseStatus {
 }
 
 impl StaticVariant for WebSocketUtils_ECloseStatus {
-     const TYPE_ID: &str = "WebSocketUtils_ECloseStatus";
+     const TYPE_ID: &str = "WebSocketUtils.ECloseStatus";
 }
 
 impl StaticVariant for Vec<WebSocketUtils_ECloseStatus> {
-     const TYPE_ID: &str = "TArray<WebSocketUtils_ECloseStatus>";
+     const TYPE_ID: &str = "TArray<WebSocketUtils.ECloseStatus>";
 }
 
 impl StaticVariant for Vec<Vec<WebSocketUtils_ECloseStatus>> {
-     const TYPE_ID: &str = "TArray<TArray<WebSocketUtils_ECloseStatus>>";
+     const TYPE_ID: &str = "TArray<TArray<WebSocketUtils.ECloseStatus>>";
 }
 
 impl Variant for WebSocketUtils_ECloseStatus {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("WebSocketUtils_ECloseStatus")
+        interner.get_or_intern_static("WebSocketUtils.ECloseStatus")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("WebSocketUtils_ECloseStatus".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37419,24 +37905,24 @@ impl Bin1Serialize for WebSocketUtils_EOpCode {
 }
 
 impl StaticVariant for WebSocketUtils_EOpCode {
-     const TYPE_ID: &str = "WebSocketUtils_EOpCode";
+     const TYPE_ID: &str = "WebSocketUtils.EOpCode";
 }
 
 impl StaticVariant for Vec<WebSocketUtils_EOpCode> {
-     const TYPE_ID: &str = "TArray<WebSocketUtils_EOpCode>";
+     const TYPE_ID: &str = "TArray<WebSocketUtils.EOpCode>";
 }
 
 impl StaticVariant for Vec<Vec<WebSocketUtils_EOpCode>> {
-     const TYPE_ID: &str = "TArray<TArray<WebSocketUtils_EOpCode>>";
+     const TYPE_ID: &str = "TArray<TArray<WebSocketUtils.EOpCode>>";
 }
 
 impl Variant for WebSocketUtils_EOpCode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("WebSocketUtils_EOpCode")
+        interner.get_or_intern_static("WebSocketUtils.EOpCode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("WebSocketUtils_EOpCode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37474,24 +37960,24 @@ impl Bin1Serialize for ZAIPerceptibleEntity_EReactionBehaviorMode {
 }
 
 impl StaticVariant for ZAIPerceptibleEntity_EReactionBehaviorMode {
-     const TYPE_ID: &str = "ZAIPerceptibleEntity_EReactionBehaviorMode";
+     const TYPE_ID: &str = "ZAIPerceptibleEntity.EReactionBehaviorMode";
 }
 
 impl StaticVariant for Vec<ZAIPerceptibleEntity_EReactionBehaviorMode> {
-     const TYPE_ID: &str = "TArray<ZAIPerceptibleEntity_EReactionBehaviorMode>";
+     const TYPE_ID: &str = "TArray<ZAIPerceptibleEntity.EReactionBehaviorMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZAIPerceptibleEntity_EReactionBehaviorMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZAIPerceptibleEntity_EReactionBehaviorMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZAIPerceptibleEntity.EReactionBehaviorMode>>";
 }
 
 impl Variant for ZAIPerceptibleEntity_EReactionBehaviorMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZAIPerceptibleEntity_EReactionBehaviorMode")
+        interner.get_or_intern_static("ZAIPerceptibleEntity.EReactionBehaviorMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZAIPerceptibleEntity_EReactionBehaviorMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37535,24 +38021,24 @@ impl Bin1Serialize for ZAISoundEvent_ELoudness {
 }
 
 impl StaticVariant for ZAISoundEvent_ELoudness {
-     const TYPE_ID: &str = "ZAISoundEvent_ELoudness";
+     const TYPE_ID: &str = "ZAISoundEvent.ELoudness";
 }
 
 impl StaticVariant for Vec<ZAISoundEvent_ELoudness> {
-     const TYPE_ID: &str = "TArray<ZAISoundEvent_ELoudness>";
+     const TYPE_ID: &str = "TArray<ZAISoundEvent.ELoudness>";
 }
 
 impl StaticVariant for Vec<Vec<ZAISoundEvent_ELoudness>> {
-     const TYPE_ID: &str = "TArray<TArray<ZAISoundEvent_ELoudness>>";
+     const TYPE_ID: &str = "TArray<TArray<ZAISoundEvent.ELoudness>>";
 }
 
 impl Variant for ZAISoundEvent_ELoudness {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZAISoundEvent_ELoudness")
+        interner.get_or_intern_static("ZAISoundEvent.ELoudness")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZAISoundEvent_ELoudness".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37588,24 +38074,24 @@ impl Bin1Serialize for ZAT2Controller_EFoot {
 }
 
 impl StaticVariant for ZAT2Controller_EFoot {
-     const TYPE_ID: &str = "ZAT2Controller_EFoot";
+     const TYPE_ID: &str = "ZAT2Controller.EFoot";
 }
 
 impl StaticVariant for Vec<ZAT2Controller_EFoot> {
-     const TYPE_ID: &str = "TArray<ZAT2Controller_EFoot>";
+     const TYPE_ID: &str = "TArray<ZAT2Controller.EFoot>";
 }
 
 impl StaticVariant for Vec<Vec<ZAT2Controller_EFoot>> {
-     const TYPE_ID: &str = "TArray<TArray<ZAT2Controller_EFoot>>";
+     const TYPE_ID: &str = "TArray<TArray<ZAT2Controller.EFoot>>";
 }
 
 impl Variant for ZAT2Controller_EFoot {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZAT2Controller_EFoot")
+        interner.get_or_intern_static("ZAT2Controller.EFoot")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZAT2Controller_EFoot".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37645,24 +38131,24 @@ impl Bin1Serialize for ZAT2Controller_EFootstepsMovementType {
 }
 
 impl StaticVariant for ZAT2Controller_EFootstepsMovementType {
-     const TYPE_ID: &str = "ZAT2Controller_EFootstepsMovementType";
+     const TYPE_ID: &str = "ZAT2Controller.EFootstepsMovementType";
 }
 
 impl StaticVariant for Vec<ZAT2Controller_EFootstepsMovementType> {
-     const TYPE_ID: &str = "TArray<ZAT2Controller_EFootstepsMovementType>";
+     const TYPE_ID: &str = "TArray<ZAT2Controller.EFootstepsMovementType>";
 }
 
 impl StaticVariant for Vec<Vec<ZAT2Controller_EFootstepsMovementType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZAT2Controller_EFootstepsMovementType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZAT2Controller.EFootstepsMovementType>>";
 }
 
 impl Variant for ZAT2Controller_EFootstepsMovementType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZAT2Controller_EFootstepsMovementType")
+        interner.get_or_intern_static("ZAT2Controller.EFootstepsMovementType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZAT2Controller_EFootstepsMovementType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37698,24 +38184,24 @@ impl Bin1Serialize for ZActBehaviorEntity_EApproachAlignment {
 }
 
 impl StaticVariant for ZActBehaviorEntity_EApproachAlignment {
-     const TYPE_ID: &str = "ZActBehaviorEntity_EApproachAlignment";
+     const TYPE_ID: &str = "ZActBehaviorEntity.EApproachAlignment";
 }
 
 impl StaticVariant for Vec<ZActBehaviorEntity_EApproachAlignment> {
-     const TYPE_ID: &str = "TArray<ZActBehaviorEntity_EApproachAlignment>";
+     const TYPE_ID: &str = "TArray<ZActBehaviorEntity.EApproachAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZActBehaviorEntity_EApproachAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActBehaviorEntity_EApproachAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActBehaviorEntity.EApproachAlignment>>";
 }
 
 impl Variant for ZActBehaviorEntity_EApproachAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActBehaviorEntity_EApproachAlignment")
+        interner.get_or_intern_static("ZActBehaviorEntity.EApproachAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActBehaviorEntity_EApproachAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37753,24 +38239,24 @@ impl Bin1Serialize for ZActBehaviorEntity_EMovementType {
 }
 
 impl StaticVariant for ZActBehaviorEntity_EMovementType {
-     const TYPE_ID: &str = "ZActBehaviorEntity_EMovementType";
+     const TYPE_ID: &str = "ZActBehaviorEntity.EMovementType";
 }
 
 impl StaticVariant for Vec<ZActBehaviorEntity_EMovementType> {
-     const TYPE_ID: &str = "TArray<ZActBehaviorEntity_EMovementType>";
+     const TYPE_ID: &str = "TArray<ZActBehaviorEntity.EMovementType>";
 }
 
 impl StaticVariant for Vec<Vec<ZActBehaviorEntity_EMovementType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActBehaviorEntity_EMovementType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActBehaviorEntity.EMovementType>>";
 }
 
 impl Variant for ZActBehaviorEntity_EMovementType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActBehaviorEntity_EMovementType")
+        interner.get_or_intern_static("ZActBehaviorEntity.EMovementType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActBehaviorEntity_EMovementType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37808,24 +38294,24 @@ impl Bin1Serialize for ZActBehaviorEntity_ERotationAlignment {
 }
 
 impl StaticVariant for ZActBehaviorEntity_ERotationAlignment {
-     const TYPE_ID: &str = "ZActBehaviorEntity_ERotationAlignment";
+     const TYPE_ID: &str = "ZActBehaviorEntity.ERotationAlignment";
 }
 
 impl StaticVariant for Vec<ZActBehaviorEntity_ERotationAlignment> {
-     const TYPE_ID: &str = "TArray<ZActBehaviorEntity_ERotationAlignment>";
+     const TYPE_ID: &str = "TArray<ZActBehaviorEntity.ERotationAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZActBehaviorEntity_ERotationAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActBehaviorEntity_ERotationAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActBehaviorEntity.ERotationAlignment>>";
 }
 
 impl Variant for ZActBehaviorEntity_ERotationAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActBehaviorEntity_ERotationAlignment")
+        interner.get_or_intern_static("ZActBehaviorEntity.ERotationAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActBehaviorEntity_ERotationAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37865,24 +38351,24 @@ impl Bin1Serialize for ZActDurationCondition_EState {
 }
 
 impl StaticVariant for ZActDurationCondition_EState {
-     const TYPE_ID: &str = "ZActDurationCondition_EState";
+     const TYPE_ID: &str = "ZActDurationCondition.EState";
 }
 
 impl StaticVariant for Vec<ZActDurationCondition_EState> {
-     const TYPE_ID: &str = "TArray<ZActDurationCondition_EState>";
+     const TYPE_ID: &str = "TArray<ZActDurationCondition.EState>";
 }
 
 impl StaticVariant for Vec<Vec<ZActDurationCondition_EState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActDurationCondition_EState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActDurationCondition.EState>>";
 }
 
 impl Variant for ZActDurationCondition_EState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActDurationCondition_EState")
+        interner.get_or_intern_static("ZActDurationCondition.EState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActDurationCondition_EState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37920,24 +38406,24 @@ impl Bin1Serialize for ZActStateCondition_EState {
 }
 
 impl StaticVariant for ZActStateCondition_EState {
-     const TYPE_ID: &str = "ZActStateCondition_EState";
+     const TYPE_ID: &str = "ZActStateCondition.EState";
 }
 
 impl StaticVariant for Vec<ZActStateCondition_EState> {
-     const TYPE_ID: &str = "TArray<ZActStateCondition_EState>";
+     const TYPE_ID: &str = "TArray<ZActStateCondition.EState>";
 }
 
 impl StaticVariant for Vec<Vec<ZActStateCondition_EState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActStateCondition_EState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActStateCondition.EState>>";
 }
 
 impl Variant for ZActStateCondition_EState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActStateCondition_EState")
+        interner.get_or_intern_static("ZActStateCondition.EState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActStateCondition_EState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -37973,24 +38459,24 @@ impl Bin1Serialize for ZActorAccessoryItemCondition_EConditionTypes {
 }
 
 impl StaticVariant for ZActorAccessoryItemCondition_EConditionTypes {
-     const TYPE_ID: &str = "ZActorAccessoryItemCondition_EConditionTypes";
+     const TYPE_ID: &str = "ZActorAccessoryItemCondition.EConditionTypes";
 }
 
 impl StaticVariant for Vec<ZActorAccessoryItemCondition_EConditionTypes> {
-     const TYPE_ID: &str = "TArray<ZActorAccessoryItemCondition_EConditionTypes>";
+     const TYPE_ID: &str = "TArray<ZActorAccessoryItemCondition.EConditionTypes>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorAccessoryItemCondition_EConditionTypes>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorAccessoryItemCondition_EConditionTypes>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorAccessoryItemCondition.EConditionTypes>>";
 }
 
 impl Variant for ZActorAccessoryItemCondition_EConditionTypes {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorAccessoryItemCondition_EConditionTypes")
+        interner.get_or_intern_static("ZActorAccessoryItemCondition.EConditionTypes")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorAccessoryItemCondition_EConditionTypes".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38026,24 +38512,24 @@ impl Bin1Serialize for ZActorBoneAttachEntity_EResetMode {
 }
 
 impl StaticVariant for ZActorBoneAttachEntity_EResetMode {
-     const TYPE_ID: &str = "ZActorBoneAttachEntity_EResetMode";
+     const TYPE_ID: &str = "ZActorBoneAttachEntity.EResetMode";
 }
 
 impl StaticVariant for Vec<ZActorBoneAttachEntity_EResetMode> {
-     const TYPE_ID: &str = "TArray<ZActorBoneAttachEntity_EResetMode>";
+     const TYPE_ID: &str = "TArray<ZActorBoneAttachEntity.EResetMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorBoneAttachEntity_EResetMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorBoneAttachEntity_EResetMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorBoneAttachEntity.EResetMode>>";
 }
 
 impl Variant for ZActorBoneAttachEntity_EResetMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorBoneAttachEntity_EResetMode")
+        interner.get_or_intern_static("ZActorBoneAttachEntity.EResetMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorBoneAttachEntity_EResetMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38095,24 +38581,24 @@ impl Bin1Serialize for ZActorDebugEntity_EActorDebugColor {
 }
 
 impl StaticVariant for ZActorDebugEntity_EActorDebugColor {
-     const TYPE_ID: &str = "ZActorDebugEntity_EActorDebugColor";
+     const TYPE_ID: &str = "ZActorDebugEntity.EActorDebugColor";
 }
 
 impl StaticVariant for Vec<ZActorDebugEntity_EActorDebugColor> {
-     const TYPE_ID: &str = "TArray<ZActorDebugEntity_EActorDebugColor>";
+     const TYPE_ID: &str = "TArray<ZActorDebugEntity.EActorDebugColor>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorDebugEntity_EActorDebugColor>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorDebugEntity_EActorDebugColor>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorDebugEntity.EActorDebugColor>>";
 }
 
 impl Variant for ZActorDebugEntity_EActorDebugColor {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorDebugEntity_EActorDebugColor")
+        interner.get_or_intern_static("ZActorDebugEntity.EActorDebugColor")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorDebugEntity_EActorDebugColor".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38148,24 +38634,24 @@ impl Bin1Serialize for ZActorInstanceEntity_EFFXMode {
 }
 
 impl StaticVariant for ZActorInstanceEntity_EFFXMode {
-     const TYPE_ID: &str = "ZActorInstanceEntity_EFFXMode";
+     const TYPE_ID: &str = "ZActorInstanceEntity.EFFXMode";
 }
 
 impl StaticVariant for Vec<ZActorInstanceEntity_EFFXMode> {
-     const TYPE_ID: &str = "TArray<ZActorInstanceEntity_EFFXMode>";
+     const TYPE_ID: &str = "TArray<ZActorInstanceEntity.EFFXMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorInstanceEntity_EFFXMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorInstanceEntity_EFFXMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorInstanceEntity.EFFXMode>>";
 }
 
 impl Variant for ZActorInstanceEntity_EFFXMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorInstanceEntity_EFFXMode")
+        interner.get_or_intern_static("ZActorInstanceEntity.EFFXMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorInstanceEntity_EFFXMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38205,24 +38691,24 @@ impl Bin1Serialize for ZActorKeywordCondition_EEvaluationType {
 }
 
 impl StaticVariant for ZActorKeywordCondition_EEvaluationType {
-     const TYPE_ID: &str = "ZActorKeywordCondition_EEvaluationType";
+     const TYPE_ID: &str = "ZActorKeywordCondition.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZActorKeywordCondition_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZActorKeywordCondition_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZActorKeywordCondition.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorKeywordCondition_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorKeywordCondition_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorKeywordCondition.EEvaluationType>>";
 }
 
 impl Variant for ZActorKeywordCondition_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorKeywordCondition_EEvaluationType")
+        interner.get_or_intern_static("ZActorKeywordCondition.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorKeywordCondition_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38258,24 +38744,24 @@ impl Bin1Serialize for ZActorKnowledgeCondition_EEvaluationType {
 }
 
 impl StaticVariant for ZActorKnowledgeCondition_EEvaluationType {
-     const TYPE_ID: &str = "ZActorKnowledgeCondition_EEvaluationType";
+     const TYPE_ID: &str = "ZActorKnowledgeCondition.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZActorKnowledgeCondition_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZActorKnowledgeCondition_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZActorKnowledgeCondition.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorKnowledgeCondition_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorKnowledgeCondition_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorKnowledgeCondition.EEvaluationType>>";
 }
 
 impl Variant for ZActorKnowledgeCondition_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorKnowledgeCondition_EEvaluationType")
+        interner.get_or_intern_static("ZActorKnowledgeCondition.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorKnowledgeCondition_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38313,24 +38799,24 @@ impl Bin1Serialize for ZActorPicker_EKeywordEvaluationType {
 }
 
 impl StaticVariant for ZActorPicker_EKeywordEvaluationType {
-     const TYPE_ID: &str = "ZActorPicker_EKeywordEvaluationType";
+     const TYPE_ID: &str = "ZActorPicker.EKeywordEvaluationType";
 }
 
 impl StaticVariant for Vec<ZActorPicker_EKeywordEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZActorPicker_EKeywordEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZActorPicker.EKeywordEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorPicker_EKeywordEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorPicker_EKeywordEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorPicker.EKeywordEvaluationType>>";
 }
 
 impl Variant for ZActorPicker_EKeywordEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorPicker_EKeywordEvaluationType")
+        interner.get_or_intern_static("ZActorPicker.EKeywordEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorPicker_EKeywordEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38366,24 +38852,24 @@ impl Bin1Serialize for ZActorPickerEffectDrama_EEffectPhaseAction {
 }
 
 impl StaticVariant for ZActorPickerEffectDrama_EEffectPhaseAction {
-     const TYPE_ID: &str = "ZActorPickerEffectDrama_EEffectPhaseAction";
+     const TYPE_ID: &str = "ZActorPickerEffectDrama.EEffectPhaseAction";
 }
 
 impl StaticVariant for Vec<ZActorPickerEffectDrama_EEffectPhaseAction> {
-     const TYPE_ID: &str = "TArray<ZActorPickerEffectDrama_EEffectPhaseAction>";
+     const TYPE_ID: &str = "TArray<ZActorPickerEffectDrama.EEffectPhaseAction>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorPickerEffectDrama_EEffectPhaseAction>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorPickerEffectDrama_EEffectPhaseAction>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorPickerEffectDrama.EEffectPhaseAction>>";
 }
 
 impl Variant for ZActorPickerEffectDrama_EEffectPhaseAction {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorPickerEffectDrama_EEffectPhaseAction")
+        interner.get_or_intern_static("ZActorPickerEffectDrama.EEffectPhaseAction")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorPickerEffectDrama_EEffectPhaseAction".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38421,24 +38907,24 @@ impl Bin1Serialize for ZActorPickerEffectTemplate_EEffectPhaseAction {
 }
 
 impl StaticVariant for ZActorPickerEffectTemplate_EEffectPhaseAction {
-     const TYPE_ID: &str = "ZActorPickerEffectTemplate_EEffectPhaseAction";
+     const TYPE_ID: &str = "ZActorPickerEffectTemplate.EEffectPhaseAction";
 }
 
 impl StaticVariant for Vec<ZActorPickerEffectTemplate_EEffectPhaseAction> {
-     const TYPE_ID: &str = "TArray<ZActorPickerEffectTemplate_EEffectPhaseAction>";
+     const TYPE_ID: &str = "TArray<ZActorPickerEffectTemplate.EEffectPhaseAction>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorPickerEffectTemplate_EEffectPhaseAction>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorPickerEffectTemplate_EEffectPhaseAction>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorPickerEffectTemplate.EEffectPhaseAction>>";
 }
 
 impl Variant for ZActorPickerEffectTemplate_EEffectPhaseAction {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorPickerEffectTemplate_EEffectPhaseAction")
+        interner.get_or_intern_static("ZActorPickerEffectTemplate.EEffectPhaseAction")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorPickerEffectTemplate_EEffectPhaseAction".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38474,24 +38960,24 @@ impl Bin1Serialize for ZActorPickerEffectTrack_EEffectPhaseAction {
 }
 
 impl StaticVariant for ZActorPickerEffectTrack_EEffectPhaseAction {
-     const TYPE_ID: &str = "ZActorPickerEffectTrack_EEffectPhaseAction";
+     const TYPE_ID: &str = "ZActorPickerEffectTrack.EEffectPhaseAction";
 }
 
 impl StaticVariant for Vec<ZActorPickerEffectTrack_EEffectPhaseAction> {
-     const TYPE_ID: &str = "TArray<ZActorPickerEffectTrack_EEffectPhaseAction>";
+     const TYPE_ID: &str = "TArray<ZActorPickerEffectTrack.EEffectPhaseAction>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorPickerEffectTrack_EEffectPhaseAction>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorPickerEffectTrack_EEffectPhaseAction>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorPickerEffectTrack.EEffectPhaseAction>>";
 }
 
 impl Variant for ZActorPickerEffectTrack_EEffectPhaseAction {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorPickerEffectTrack_EEffectPhaseAction")
+        interner.get_or_intern_static("ZActorPickerEffectTrack.EEffectPhaseAction")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorPickerEffectTrack_EEffectPhaseAction".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38529,24 +39015,24 @@ impl Bin1Serialize for ZActorPickerFilterGroup_EEvaluationType {
 }
 
 impl StaticVariant for ZActorPickerFilterGroup_EEvaluationType {
-     const TYPE_ID: &str = "ZActorPickerFilterGroup_EEvaluationType";
+     const TYPE_ID: &str = "ZActorPickerFilterGroup.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZActorPickerFilterGroup_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZActorPickerFilterGroup_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZActorPickerFilterGroup.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorPickerFilterGroup_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorPickerFilterGroup_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorPickerFilterGroup.EEvaluationType>>";
 }
 
 impl Variant for ZActorPickerFilterGroup_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorPickerFilterGroup_EEvaluationType")
+        interner.get_or_intern_static("ZActorPickerFilterGroup.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorPickerFilterGroup_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38584,24 +39070,24 @@ impl Bin1Serialize for ZActorPickerFilterKeyword_EEvaluationType {
 }
 
 impl StaticVariant for ZActorPickerFilterKeyword_EEvaluationType {
-     const TYPE_ID: &str = "ZActorPickerFilterKeyword_EEvaluationType";
+     const TYPE_ID: &str = "ZActorPickerFilterKeyword.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZActorPickerFilterKeyword_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZActorPickerFilterKeyword_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZActorPickerFilterKeyword.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorPickerFilterKeyword_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorPickerFilterKeyword_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorPickerFilterKeyword.EEvaluationType>>";
 }
 
 impl Variant for ZActorPickerFilterKeyword_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorPickerFilterKeyword_EEvaluationType")
+        interner.get_or_intern_static("ZActorPickerFilterKeyword.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorPickerFilterKeyword_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38639,24 +39125,24 @@ impl Bin1Serialize for ZActorProviderFilterKeyword_EEvaluationType {
 }
 
 impl StaticVariant for ZActorProviderFilterKeyword_EEvaluationType {
-     const TYPE_ID: &str = "ZActorProviderFilterKeyword_EEvaluationType";
+     const TYPE_ID: &str = "ZActorProviderFilterKeyword.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZActorProviderFilterKeyword_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZActorProviderFilterKeyword_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZActorProviderFilterKeyword.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorProviderFilterKeyword_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorProviderFilterKeyword_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorProviderFilterKeyword.EEvaluationType>>";
 }
 
 impl Variant for ZActorProviderFilterKeyword_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorProviderFilterKeyword_EEvaluationType")
+        interner.get_or_intern_static("ZActorProviderFilterKeyword.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorProviderFilterKeyword_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38692,24 +39178,24 @@ impl Bin1Serialize for ZActorTensionEntity_ETensionCheckMode {
 }
 
 impl StaticVariant for ZActorTensionEntity_ETensionCheckMode {
-     const TYPE_ID: &str = "ZActorTensionEntity_ETensionCheckMode";
+     const TYPE_ID: &str = "ZActorTensionEntity.ETensionCheckMode";
 }
 
 impl StaticVariant for Vec<ZActorTensionEntity_ETensionCheckMode> {
-     const TYPE_ID: &str = "TArray<ZActorTensionEntity_ETensionCheckMode>";
+     const TYPE_ID: &str = "TArray<ZActorTensionEntity.ETensionCheckMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZActorTensionEntity_ETensionCheckMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZActorTensionEntity_ETensionCheckMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZActorTensionEntity.ETensionCheckMode>>";
 }
 
 impl Variant for ZActorTensionEntity_ETensionCheckMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZActorTensionEntity_ETensionCheckMode")
+        interner.get_or_intern_static("ZActorTensionEntity.ETensionCheckMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZActorTensionEntity_ETensionCheckMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38749,24 +39235,24 @@ impl Bin1Serialize for ZApproachOrder_EApproachStyle {
 }
 
 impl StaticVariant for ZApproachOrder_EApproachStyle {
-     const TYPE_ID: &str = "ZApproachOrder_EApproachStyle";
+     const TYPE_ID: &str = "ZApproachOrder.EApproachStyle";
 }
 
 impl StaticVariant for Vec<ZApproachOrder_EApproachStyle> {
-     const TYPE_ID: &str = "TArray<ZApproachOrder_EApproachStyle>";
+     const TYPE_ID: &str = "TArray<ZApproachOrder.EApproachStyle>";
 }
 
 impl StaticVariant for Vec<Vec<ZApproachOrder_EApproachStyle>> {
-     const TYPE_ID: &str = "TArray<TArray<ZApproachOrder_EApproachStyle>>";
+     const TYPE_ID: &str = "TArray<TArray<ZApproachOrder.EApproachStyle>>";
 }
 
 impl Variant for ZApproachOrder_EApproachStyle {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZApproachOrder_EApproachStyle")
+        interner.get_or_intern_static("ZApproachOrder.EApproachStyle")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZApproachOrder_EApproachStyle".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38806,24 +39292,24 @@ impl Bin1Serialize for ZAudioSequenceTrack_EPlaybackTarget {
 }
 
 impl StaticVariant for ZAudioSequenceTrack_EPlaybackTarget {
-     const TYPE_ID: &str = "ZAudioSequenceTrack_EPlaybackTarget";
+     const TYPE_ID: &str = "ZAudioSequenceTrack.EPlaybackTarget";
 }
 
 impl StaticVariant for Vec<ZAudioSequenceTrack_EPlaybackTarget> {
-     const TYPE_ID: &str = "TArray<ZAudioSequenceTrack_EPlaybackTarget>";
+     const TYPE_ID: &str = "TArray<ZAudioSequenceTrack.EPlaybackTarget>";
 }
 
 impl StaticVariant for Vec<Vec<ZAudioSequenceTrack_EPlaybackTarget>> {
-     const TYPE_ID: &str = "TArray<TArray<ZAudioSequenceTrack_EPlaybackTarget>>";
+     const TYPE_ID: &str = "TArray<TArray<ZAudioSequenceTrack.EPlaybackTarget>>";
 }
 
 impl Variant for ZAudioSequenceTrack_EPlaybackTarget {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZAudioSequenceTrack_EPlaybackTarget")
+        interner.get_or_intern_static("ZAudioSequenceTrack.EPlaybackTarget")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZAudioSequenceTrack_EPlaybackTarget".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38867,24 +39353,24 @@ impl Bin1Serialize for ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState {
 }
 
 impl StaticVariant for ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState {
-     const TYPE_ID: &str = "ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState";
+     const TYPE_ID: &str = "ZAvoidDangerousAreaGroup.EAvoidDangerousAreaGroupState";
 }
 
 impl StaticVariant for Vec<ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState> {
-     const TYPE_ID: &str = "TArray<ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState>";
+     const TYPE_ID: &str = "TArray<ZAvoidDangerousAreaGroup.EAvoidDangerousAreaGroupState>";
 }
 
 impl StaticVariant for Vec<Vec<ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZAvoidDangerousAreaGroup.EAvoidDangerousAreaGroupState>>";
 }
 
 impl Variant for ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState")
+        interner.get_or_intern_static("ZAvoidDangerousAreaGroup.EAvoidDangerousAreaGroupState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZAvoidDangerousAreaGroup_EAvoidDangerousAreaGroupState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38920,24 +39406,24 @@ impl Bin1Serialize for ZBoneAttachEntity_EResetMode {
 }
 
 impl StaticVariant for ZBoneAttachEntity_EResetMode {
-     const TYPE_ID: &str = "ZBoneAttachEntity_EResetMode";
+     const TYPE_ID: &str = "ZBoneAttachEntity.EResetMode";
 }
 
 impl StaticVariant for Vec<ZBoneAttachEntity_EResetMode> {
-     const TYPE_ID: &str = "TArray<ZBoneAttachEntity_EResetMode>";
+     const TYPE_ID: &str = "TArray<ZBoneAttachEntity.EResetMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZBoneAttachEntity_EResetMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZBoneAttachEntity_EResetMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZBoneAttachEntity.EResetMode>>";
 }
 
 impl Variant for ZBoneAttachEntity_EResetMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZBoneAttachEntity_EResetMode")
+        interner.get_or_intern_static("ZBoneAttachEntity.EResetMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZBoneAttachEntity_EResetMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -38975,24 +39461,24 @@ impl Bin1Serialize for ZBoneWeightRotationEntity_eRotationAxises {
 }
 
 impl StaticVariant for ZBoneWeightRotationEntity_eRotationAxises {
-     const TYPE_ID: &str = "ZBoneWeightRotationEntity_eRotationAxises";
+     const TYPE_ID: &str = "ZBoneWeightRotationEntity.eRotationAxises";
 }
 
 impl StaticVariant for Vec<ZBoneWeightRotationEntity_eRotationAxises> {
-     const TYPE_ID: &str = "TArray<ZBoneWeightRotationEntity_eRotationAxises>";
+     const TYPE_ID: &str = "TArray<ZBoneWeightRotationEntity.eRotationAxises>";
 }
 
 impl StaticVariant for Vec<Vec<ZBoneWeightRotationEntity_eRotationAxises>> {
-     const TYPE_ID: &str = "TArray<TArray<ZBoneWeightRotationEntity_eRotationAxises>>";
+     const TYPE_ID: &str = "TArray<TArray<ZBoneWeightRotationEntity.eRotationAxises>>";
 }
 
 impl Variant for ZBoneWeightRotationEntity_eRotationAxises {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZBoneWeightRotationEntity_eRotationAxises")
+        interner.get_or_intern_static("ZBoneWeightRotationEntity.eRotationAxises")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZBoneWeightRotationEntity_eRotationAxises".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39028,24 +39514,24 @@ impl Bin1Serialize for ZBoxReflectionEntity_EBoundsType {
 }
 
 impl StaticVariant for ZBoxReflectionEntity_EBoundsType {
-     const TYPE_ID: &str = "ZBoxReflectionEntity_EBoundsType";
+     const TYPE_ID: &str = "ZBoxReflectionEntity.EBoundsType";
 }
 
 impl StaticVariant for Vec<ZBoxReflectionEntity_EBoundsType> {
-     const TYPE_ID: &str = "TArray<ZBoxReflectionEntity_EBoundsType>";
+     const TYPE_ID: &str = "TArray<ZBoxReflectionEntity.EBoundsType>";
 }
 
 impl StaticVariant for Vec<Vec<ZBoxReflectionEntity_EBoundsType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZBoxReflectionEntity_EBoundsType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZBoxReflectionEntity.EBoundsType>>";
 }
 
 impl Variant for ZBoxReflectionEntity_EBoundsType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZBoxReflectionEntity_EBoundsType")
+        interner.get_or_intern_static("ZBoxReflectionEntity.EBoundsType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZBoxReflectionEntity_EBoundsType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39081,24 +39567,24 @@ impl Bin1Serialize for ZBoxReflectionEntity_EType {
 }
 
 impl StaticVariant for ZBoxReflectionEntity_EType {
-     const TYPE_ID: &str = "ZBoxReflectionEntity_EType";
+     const TYPE_ID: &str = "ZBoxReflectionEntity.EType";
 }
 
 impl StaticVariant for Vec<ZBoxReflectionEntity_EType> {
-     const TYPE_ID: &str = "TArray<ZBoxReflectionEntity_EType>";
+     const TYPE_ID: &str = "TArray<ZBoxReflectionEntity.EType>";
 }
 
 impl StaticVariant for Vec<Vec<ZBoxReflectionEntity_EType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZBoxReflectionEntity_EType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZBoxReflectionEntity.EType>>";
 }
 
 impl Variant for ZBoxReflectionEntity_EType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZBoxReflectionEntity_EType")
+        interner.get_or_intern_static("ZBoxReflectionEntity.EType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZBoxReflectionEntity_EType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39142,24 +39628,24 @@ impl Bin1Serialize for ZCameraConeTriggerEntity_EAlignment {
 }
 
 impl StaticVariant for ZCameraConeTriggerEntity_EAlignment {
-     const TYPE_ID: &str = "ZCameraConeTriggerEntity_EAlignment";
+     const TYPE_ID: &str = "ZCameraConeTriggerEntity.EAlignment";
 }
 
 impl StaticVariant for Vec<ZCameraConeTriggerEntity_EAlignment> {
-     const TYPE_ID: &str = "TArray<ZCameraConeTriggerEntity_EAlignment>";
+     const TYPE_ID: &str = "TArray<ZCameraConeTriggerEntity.EAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZCameraConeTriggerEntity_EAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCameraConeTriggerEntity_EAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCameraConeTriggerEntity.EAlignment>>";
 }
 
 impl Variant for ZCameraConeTriggerEntity_EAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCameraConeTriggerEntity_EAlignment")
+        interner.get_or_intern_static("ZCameraConeTriggerEntity.EAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCameraConeTriggerEntity_EAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39203,24 +39689,24 @@ impl Bin1Serialize for ZCameraPlaneAlignedTriggerEntity_EAlignment {
 }
 
 impl StaticVariant for ZCameraPlaneAlignedTriggerEntity_EAlignment {
-     const TYPE_ID: &str = "ZCameraPlaneAlignedTriggerEntity_EAlignment";
+     const TYPE_ID: &str = "ZCameraPlaneAlignedTriggerEntity.EAlignment";
 }
 
 impl StaticVariant for Vec<ZCameraPlaneAlignedTriggerEntity_EAlignment> {
-     const TYPE_ID: &str = "TArray<ZCameraPlaneAlignedTriggerEntity_EAlignment>";
+     const TYPE_ID: &str = "TArray<ZCameraPlaneAlignedTriggerEntity.EAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZCameraPlaneAlignedTriggerEntity_EAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCameraPlaneAlignedTriggerEntity_EAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCameraPlaneAlignedTriggerEntity.EAlignment>>";
 }
 
 impl Variant for ZCameraPlaneAlignedTriggerEntity_EAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCameraPlaneAlignedTriggerEntity_EAlignment")
+        interner.get_or_intern_static("ZCameraPlaneAlignedTriggerEntity.EAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCameraPlaneAlignedTriggerEntity_EAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39258,24 +39744,24 @@ impl Bin1Serialize for ZCameraPlaneTriggerEntity_EAlignment {
 }
 
 impl StaticVariant for ZCameraPlaneTriggerEntity_EAlignment {
-     const TYPE_ID: &str = "ZCameraPlaneTriggerEntity_EAlignment";
+     const TYPE_ID: &str = "ZCameraPlaneTriggerEntity.EAlignment";
 }
 
 impl StaticVariant for Vec<ZCameraPlaneTriggerEntity_EAlignment> {
-     const TYPE_ID: &str = "TArray<ZCameraPlaneTriggerEntity_EAlignment>";
+     const TYPE_ID: &str = "TArray<ZCameraPlaneTriggerEntity.EAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZCameraPlaneTriggerEntity_EAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCameraPlaneTriggerEntity_EAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCameraPlaneTriggerEntity.EAlignment>>";
 }
 
 impl Variant for ZCameraPlaneTriggerEntity_EAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCameraPlaneTriggerEntity_EAlignment")
+        interner.get_or_intern_static("ZCameraPlaneTriggerEntity.EAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCameraPlaneTriggerEntity_EAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39313,24 +39799,24 @@ impl Bin1Serialize for ZCausalNodeEntity_ECauseEvaluationType {
 }
 
 impl StaticVariant for ZCausalNodeEntity_ECauseEvaluationType {
-     const TYPE_ID: &str = "ZCausalNodeEntity_ECauseEvaluationType";
+     const TYPE_ID: &str = "ZCausalNodeEntity.ECauseEvaluationType";
 }
 
 impl StaticVariant for Vec<ZCausalNodeEntity_ECauseEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZCausalNodeEntity_ECauseEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZCausalNodeEntity.ECauseEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZCausalNodeEntity_ECauseEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCausalNodeEntity_ECauseEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCausalNodeEntity.ECauseEvaluationType>>";
 }
 
 impl Variant for ZCausalNodeEntity_ECauseEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCausalNodeEntity_ECauseEvaluationType")
+        interner.get_or_intern_static("ZCausalNodeEntity.ECauseEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCausalNodeEntity_ECauseEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39374,24 +39860,24 @@ impl Bin1Serialize for ZCautiousInvestigateGroup_EAssistantState {
 }
 
 impl StaticVariant for ZCautiousInvestigateGroup_EAssistantState {
-     const TYPE_ID: &str = "ZCautiousInvestigateGroup_EAssistantState";
+     const TYPE_ID: &str = "ZCautiousInvestigateGroup.EAssistantState";
 }
 
 impl StaticVariant for Vec<ZCautiousInvestigateGroup_EAssistantState> {
-     const TYPE_ID: &str = "TArray<ZCautiousInvestigateGroup_EAssistantState>";
+     const TYPE_ID: &str = "TArray<ZCautiousInvestigateGroup.EAssistantState>";
 }
 
 impl StaticVariant for Vec<Vec<ZCautiousInvestigateGroup_EAssistantState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCautiousInvestigateGroup_EAssistantState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCautiousInvestigateGroup.EAssistantState>>";
 }
 
 impl Variant for ZCautiousInvestigateGroup_EAssistantState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCautiousInvestigateGroup_EAssistantState")
+        interner.get_or_intern_static("ZCautiousInvestigateGroup.EAssistantState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCautiousInvestigateGroup_EAssistantState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39441,24 +39927,24 @@ impl Bin1Serialize for ZCautiousInvestigateGroup_EInvestigateGroupState {
 }
 
 impl StaticVariant for ZCautiousInvestigateGroup_EInvestigateGroupState {
-     const TYPE_ID: &str = "ZCautiousInvestigateGroup_EInvestigateGroupState";
+     const TYPE_ID: &str = "ZCautiousInvestigateGroup.EInvestigateGroupState";
 }
 
 impl StaticVariant for Vec<ZCautiousInvestigateGroup_EInvestigateGroupState> {
-     const TYPE_ID: &str = "TArray<ZCautiousInvestigateGroup_EInvestigateGroupState>";
+     const TYPE_ID: &str = "TArray<ZCautiousInvestigateGroup.EInvestigateGroupState>";
 }
 
 impl StaticVariant for Vec<Vec<ZCautiousInvestigateGroup_EInvestigateGroupState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCautiousInvestigateGroup_EInvestigateGroupState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCautiousInvestigateGroup.EInvestigateGroupState>>";
 }
 
 impl Variant for ZCautiousInvestigateGroup_EInvestigateGroupState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCautiousInvestigateGroup_EInvestigateGroupState")
+        interner.get_or_intern_static("ZCautiousInvestigateGroup.EInvestigateGroupState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCautiousInvestigateGroup_EInvestigateGroupState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39498,24 +39984,24 @@ impl Bin1Serialize for ZChannelKeywordCondition_EEvaluationType {
 }
 
 impl StaticVariant for ZChannelKeywordCondition_EEvaluationType {
-     const TYPE_ID: &str = "ZChannelKeywordCondition_EEvaluationType";
+     const TYPE_ID: &str = "ZChannelKeywordCondition.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZChannelKeywordCondition_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZChannelKeywordCondition_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZChannelKeywordCondition.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZChannelKeywordCondition_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZChannelKeywordCondition_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZChannelKeywordCondition.EEvaluationType>>";
 }
 
 impl Variant for ZChannelKeywordCondition_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZChannelKeywordCondition_EEvaluationType")
+        interner.get_or_intern_static("ZChannelKeywordCondition.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZChannelKeywordCondition_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39561,24 +40047,24 @@ impl Bin1Serialize for ZCharacterSpeakCondition_EState {
 }
 
 impl StaticVariant for ZCharacterSpeakCondition_EState {
-     const TYPE_ID: &str = "ZCharacterSpeakCondition_EState";
+     const TYPE_ID: &str = "ZCharacterSpeakCondition.EState";
 }
 
 impl StaticVariant for Vec<ZCharacterSpeakCondition_EState> {
-     const TYPE_ID: &str = "TArray<ZCharacterSpeakCondition_EState>";
+     const TYPE_ID: &str = "TArray<ZCharacterSpeakCondition.EState>";
 }
 
 impl StaticVariant for Vec<Vec<ZCharacterSpeakCondition_EState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCharacterSpeakCondition_EState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCharacterSpeakCondition.EState>>";
 }
 
 impl Variant for ZCharacterSpeakCondition_EState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCharacterSpeakCondition_EState")
+        interner.get_or_intern_static("ZCharacterSpeakCondition.EState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCharacterSpeakCondition_EState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39614,24 +40100,24 @@ impl Bin1Serialize for ZConditionListEntity_EEvaluationType {
 }
 
 impl StaticVariant for ZConditionListEntity_EEvaluationType {
-     const TYPE_ID: &str = "ZConditionListEntity_EEvaluationType";
+     const TYPE_ID: &str = "ZConditionListEntity.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZConditionListEntity_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZConditionListEntity_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZConditionListEntity.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZConditionListEntity_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZConditionListEntity_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZConditionListEntity.EEvaluationType>>";
 }
 
 impl Variant for ZConditionListEntity_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZConditionListEntity_EEvaluationType")
+        interner.get_or_intern_static("ZConditionListEntity.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZConditionListEntity_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39673,24 +40159,24 @@ impl Bin1Serialize for ZContextKillGuide_EContextKillType {
 }
 
 impl StaticVariant for ZContextKillGuide_EContextKillType {
-     const TYPE_ID: &str = "ZContextKillGuide_EContextKillType";
+     const TYPE_ID: &str = "ZContextKillGuide.EContextKillType";
 }
 
 impl StaticVariant for Vec<ZContextKillGuide_EContextKillType> {
-     const TYPE_ID: &str = "TArray<ZContextKillGuide_EContextKillType>";
+     const TYPE_ID: &str = "TArray<ZContextKillGuide.EContextKillType>";
 }
 
 impl StaticVariant for Vec<Vec<ZContextKillGuide_EContextKillType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZContextKillGuide_EContextKillType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZContextKillGuide.EContextKillType>>";
 }
 
 impl Variant for ZContextKillGuide_EContextKillType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZContextKillGuide_EContextKillType")
+        interner.get_or_intern_static("ZContextKillGuide.EContextKillType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZContextKillGuide_EContextKillType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39728,24 +40214,24 @@ impl Bin1Serialize for ZContextKillGuide_EEvaluationType {
 }
 
 impl StaticVariant for ZContextKillGuide_EEvaluationType {
-     const TYPE_ID: &str = "ZContextKillGuide_EEvaluationType";
+     const TYPE_ID: &str = "ZContextKillGuide.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZContextKillGuide_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZContextKillGuide_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZContextKillGuide.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZContextKillGuide_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZContextKillGuide_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZContextKillGuide.EEvaluationType>>";
 }
 
 impl Variant for ZContextKillGuide_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZContextKillGuide_EEvaluationType")
+        interner.get_or_intern_static("ZContextKillGuide.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZContextKillGuide_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39813,24 +40299,24 @@ impl Bin1Serialize for ZContractObjectiveHudHintEntity_EObjectiveHintIcon {
 }
 
 impl StaticVariant for ZContractObjectiveHudHintEntity_EObjectiveHintIcon {
-     const TYPE_ID: &str = "ZContractObjectiveHudHintEntity_EObjectiveHintIcon";
+     const TYPE_ID: &str = "ZContractObjectiveHudHintEntity.EObjectiveHintIcon";
 }
 
 impl StaticVariant for Vec<ZContractObjectiveHudHintEntity_EObjectiveHintIcon> {
-     const TYPE_ID: &str = "TArray<ZContractObjectiveHudHintEntity_EObjectiveHintIcon>";
+     const TYPE_ID: &str = "TArray<ZContractObjectiveHudHintEntity.EObjectiveHintIcon>";
 }
 
 impl StaticVariant for Vec<Vec<ZContractObjectiveHudHintEntity_EObjectiveHintIcon>> {
-     const TYPE_ID: &str = "TArray<TArray<ZContractObjectiveHudHintEntity_EObjectiveHintIcon>>";
+     const TYPE_ID: &str = "TArray<TArray<ZContractObjectiveHudHintEntity.EObjectiveHintIcon>>";
 }
 
 impl Variant for ZContractObjectiveHudHintEntity_EObjectiveHintIcon {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZContractObjectiveHudHintEntity_EObjectiveHintIcon")
+        interner.get_or_intern_static("ZContractObjectiveHudHintEntity.EObjectiveHintIcon")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZContractObjectiveHudHintEntity_EObjectiveHintIcon".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39868,24 +40354,24 @@ impl Bin1Serialize for ZCoverPlane_ECoverSize {
 }
 
 impl StaticVariant for ZCoverPlane_ECoverSize {
-     const TYPE_ID: &str = "ZCoverPlane_ECoverSize";
+     const TYPE_ID: &str = "ZCoverPlane.ECoverSize";
 }
 
 impl StaticVariant for Vec<ZCoverPlane_ECoverSize> {
-     const TYPE_ID: &str = "TArray<ZCoverPlane_ECoverSize>";
+     const TYPE_ID: &str = "TArray<ZCoverPlane.ECoverSize>";
 }
 
 impl StaticVariant for Vec<Vec<ZCoverPlane_ECoverSize>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCoverPlane_ECoverSize>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCoverPlane.ECoverSize>>";
 }
 
 impl Variant for ZCoverPlane_ECoverSize {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCoverPlane_ECoverSize")
+        interner.get_or_intern_static("ZCoverPlane.ECoverSize")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCoverPlane_ECoverSize".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39923,24 +40409,24 @@ impl Bin1Serialize for ZCoverPlane_ECoverType {
 }
 
 impl StaticVariant for ZCoverPlane_ECoverType {
-     const TYPE_ID: &str = "ZCoverPlane_ECoverType";
+     const TYPE_ID: &str = "ZCoverPlane.ECoverType";
 }
 
 impl StaticVariant for Vec<ZCoverPlane_ECoverType> {
-     const TYPE_ID: &str = "TArray<ZCoverPlane_ECoverType>";
+     const TYPE_ID: &str = "TArray<ZCoverPlane.ECoverType>";
 }
 
 impl StaticVariant for Vec<Vec<ZCoverPlane_ECoverType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCoverPlane_ECoverType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCoverPlane.ECoverType>>";
 }
 
 impl Variant for ZCoverPlane_ECoverType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCoverPlane_ECoverType")
+        interner.get_or_intern_static("ZCoverPlane.ECoverType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCoverPlane_ECoverType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -39978,24 +40464,24 @@ impl Bin1Serialize for ZCrowdActorEntity_ECharacterSoundType {
 }
 
 impl StaticVariant for ZCrowdActorEntity_ECharacterSoundType {
-     const TYPE_ID: &str = "ZCrowdActorEntity_ECharacterSoundType";
+     const TYPE_ID: &str = "ZCrowdActorEntity.ECharacterSoundType";
 }
 
 impl StaticVariant for Vec<ZCrowdActorEntity_ECharacterSoundType> {
-     const TYPE_ID: &str = "TArray<ZCrowdActorEntity_ECharacterSoundType>";
+     const TYPE_ID: &str = "TArray<ZCrowdActorEntity.ECharacterSoundType>";
 }
 
 impl StaticVariant for Vec<Vec<ZCrowdActorEntity_ECharacterSoundType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZCrowdActorEntity_ECharacterSoundType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZCrowdActorEntity.ECharacterSoundType>>";
 }
 
 impl Variant for ZCrowdActorEntity_ECharacterSoundType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZCrowdActorEntity_ECharacterSoundType")
+        interner.get_or_intern_static("ZCrowdActorEntity.ECharacterSoundType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZCrowdActorEntity_ECharacterSoundType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40035,24 +40521,24 @@ impl Bin1Serialize for ZDeadBodySituation_ESituationFlavor {
 }
 
 impl StaticVariant for ZDeadBodySituation_ESituationFlavor {
-     const TYPE_ID: &str = "ZDeadBodySituation_ESituationFlavor";
+     const TYPE_ID: &str = "ZDeadBodySituation.ESituationFlavor";
 }
 
 impl StaticVariant for Vec<ZDeadBodySituation_ESituationFlavor> {
-     const TYPE_ID: &str = "TArray<ZDeadBodySituation_ESituationFlavor>";
+     const TYPE_ID: &str = "TArray<ZDeadBodySituation.ESituationFlavor>";
 }
 
 impl StaticVariant for Vec<Vec<ZDeadBodySituation_ESituationFlavor>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDeadBodySituation_ESituationFlavor>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDeadBodySituation.ESituationFlavor>>";
 }
 
 impl Variant for ZDeadBodySituation_ESituationFlavor {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDeadBodySituation_ESituationFlavor")
+        interner.get_or_intern_static("ZDeadBodySituation.ESituationFlavor")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDeadBodySituation_ESituationFlavor".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40126,24 +40612,24 @@ impl Bin1Serialize for ZDebugGizmoEntity_EDrawLayer {
 }
 
 impl StaticVariant for ZDebugGizmoEntity_EDrawLayer {
-     const TYPE_ID: &str = "ZDebugGizmoEntity_EDrawLayer";
+     const TYPE_ID: &str = "ZDebugGizmoEntity.EDrawLayer";
 }
 
 impl StaticVariant for Vec<ZDebugGizmoEntity_EDrawLayer> {
-     const TYPE_ID: &str = "TArray<ZDebugGizmoEntity_EDrawLayer>";
+     const TYPE_ID: &str = "TArray<ZDebugGizmoEntity.EDrawLayer>";
 }
 
 impl StaticVariant for Vec<Vec<ZDebugGizmoEntity_EDrawLayer>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDebugGizmoEntity_EDrawLayer>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDebugGizmoEntity.EDrawLayer>>";
 }
 
 impl Variant for ZDebugGizmoEntity_EDrawLayer {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDebugGizmoEntity_EDrawLayer")
+        interner.get_or_intern_static("ZDebugGizmoEntity.EDrawLayer")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDebugGizmoEntity_EDrawLayer".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40191,24 +40677,24 @@ impl Bin1Serialize for ZDebugHM5GameTimeMultiplierEnt_eTMLDReason {
 }
 
 impl StaticVariant for ZDebugHM5GameTimeMultiplierEnt_eTMLDReason {
-     const TYPE_ID: &str = "ZDebugHM5GameTimeMultiplierEnt_eTMLDReason";
+     const TYPE_ID: &str = "ZDebugHM5GameTimeMultiplierEnt.eTMLDReason";
 }
 
 impl StaticVariant for Vec<ZDebugHM5GameTimeMultiplierEnt_eTMLDReason> {
-     const TYPE_ID: &str = "TArray<ZDebugHM5GameTimeMultiplierEnt_eTMLDReason>";
+     const TYPE_ID: &str = "TArray<ZDebugHM5GameTimeMultiplierEnt.eTMLDReason>";
 }
 
 impl StaticVariant for Vec<Vec<ZDebugHM5GameTimeMultiplierEnt_eTMLDReason>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDebugHM5GameTimeMultiplierEnt_eTMLDReason>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDebugHM5GameTimeMultiplierEnt.eTMLDReason>>";
 }
 
 impl Variant for ZDebugHM5GameTimeMultiplierEnt_eTMLDReason {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDebugHM5GameTimeMultiplierEnt_eTMLDReason")
+        interner.get_or_intern_static("ZDebugHM5GameTimeMultiplierEnt.eTMLDReason")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDebugHM5GameTimeMultiplierEnt_eTMLDReason".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40280,24 +40766,24 @@ impl Bin1Serialize for ZDebugSpatialEntity_EDrawLayer {
 }
 
 impl StaticVariant for ZDebugSpatialEntity_EDrawLayer {
-     const TYPE_ID: &str = "ZDebugSpatialEntity_EDrawLayer";
+     const TYPE_ID: &str = "ZDebugSpatialEntity.EDrawLayer";
 }
 
 impl StaticVariant for Vec<ZDebugSpatialEntity_EDrawLayer> {
-     const TYPE_ID: &str = "TArray<ZDebugSpatialEntity_EDrawLayer>";
+     const TYPE_ID: &str = "TArray<ZDebugSpatialEntity.EDrawLayer>";
 }
 
 impl StaticVariant for Vec<Vec<ZDebugSpatialEntity_EDrawLayer>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDebugSpatialEntity_EDrawLayer>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDebugSpatialEntity.EDrawLayer>>";
 }
 
 impl Variant for ZDebugSpatialEntity_EDrawLayer {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDebugSpatialEntity_EDrawLayer")
+        interner.get_or_intern_static("ZDebugSpatialEntity.EDrawLayer")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDebugSpatialEntity_EDrawLayer".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40335,24 +40821,24 @@ impl Bin1Serialize for ZDebugTextEntity_EHorizontalAlignment {
 }
 
 impl StaticVariant for ZDebugTextEntity_EHorizontalAlignment {
-     const TYPE_ID: &str = "ZDebugTextEntity_EHorizontalAlignment";
+     const TYPE_ID: &str = "ZDebugTextEntity.EHorizontalAlignment";
 }
 
 impl StaticVariant for Vec<ZDebugTextEntity_EHorizontalAlignment> {
-     const TYPE_ID: &str = "TArray<ZDebugTextEntity_EHorizontalAlignment>";
+     const TYPE_ID: &str = "TArray<ZDebugTextEntity.EHorizontalAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZDebugTextEntity_EHorizontalAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDebugTextEntity_EHorizontalAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDebugTextEntity.EHorizontalAlignment>>";
 }
 
 impl Variant for ZDebugTextEntity_EHorizontalAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDebugTextEntity_EHorizontalAlignment")
+        interner.get_or_intern_static("ZDebugTextEntity.EHorizontalAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDebugTextEntity_EHorizontalAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40390,24 +40876,24 @@ impl Bin1Serialize for ZDebugTextEntity_EVerticalAlignment {
 }
 
 impl StaticVariant for ZDebugTextEntity_EVerticalAlignment {
-     const TYPE_ID: &str = "ZDebugTextEntity_EVerticalAlignment";
+     const TYPE_ID: &str = "ZDebugTextEntity.EVerticalAlignment";
 }
 
 impl StaticVariant for Vec<ZDebugTextEntity_EVerticalAlignment> {
-     const TYPE_ID: &str = "TArray<ZDebugTextEntity_EVerticalAlignment>";
+     const TYPE_ID: &str = "TArray<ZDebugTextEntity.EVerticalAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZDebugTextEntity_EVerticalAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDebugTextEntity_EVerticalAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDebugTextEntity.EVerticalAlignment>>";
 }
 
 impl Variant for ZDebugTextEntity_EVerticalAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDebugTextEntity_EVerticalAlignment")
+        interner.get_or_intern_static("ZDebugTextEntity.EVerticalAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDebugTextEntity_EVerticalAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40445,24 +40931,24 @@ impl Bin1Serialize for ZDecalControllerEntity_ERotationType {
 }
 
 impl StaticVariant for ZDecalControllerEntity_ERotationType {
-     const TYPE_ID: &str = "ZDecalControllerEntity_ERotationType";
+     const TYPE_ID: &str = "ZDecalControllerEntity.ERotationType";
 }
 
 impl StaticVariant for Vec<ZDecalControllerEntity_ERotationType> {
-     const TYPE_ID: &str = "TArray<ZDecalControllerEntity_ERotationType>";
+     const TYPE_ID: &str = "TArray<ZDecalControllerEntity.ERotationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZDecalControllerEntity_ERotationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDecalControllerEntity_ERotationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDecalControllerEntity.ERotationType>>";
 }
 
 impl Variant for ZDecalControllerEntity_ERotationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDecalControllerEntity_ERotationType")
+        interner.get_or_intern_static("ZDecalControllerEntity.ERotationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDecalControllerEntity_ERotationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40500,24 +40986,24 @@ impl Bin1Serialize for ZDecalControllerEntity_EScaleType {
 }
 
 impl StaticVariant for ZDecalControllerEntity_EScaleType {
-     const TYPE_ID: &str = "ZDecalControllerEntity_EScaleType";
+     const TYPE_ID: &str = "ZDecalControllerEntity.EScaleType";
 }
 
 impl StaticVariant for Vec<ZDecalControllerEntity_EScaleType> {
-     const TYPE_ID: &str = "TArray<ZDecalControllerEntity_EScaleType>";
+     const TYPE_ID: &str = "TArray<ZDecalControllerEntity.EScaleType>";
 }
 
 impl StaticVariant for Vec<Vec<ZDecalControllerEntity_EScaleType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDecalControllerEntity_EScaleType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDecalControllerEntity.EScaleType>>";
 }
 
 impl Variant for ZDecalControllerEntity_EScaleType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDecalControllerEntity_EScaleType")
+        interner.get_or_intern_static("ZDecalControllerEntity.EScaleType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDecalControllerEntity_EScaleType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40561,24 +41047,24 @@ impl Bin1Serialize for ZDetectedInPrivateGroup_EInvestigateGroupState {
 }
 
 impl StaticVariant for ZDetectedInPrivateGroup_EInvestigateGroupState {
-     const TYPE_ID: &str = "ZDetectedInPrivateGroup_EInvestigateGroupState";
+     const TYPE_ID: &str = "ZDetectedInPrivateGroup.EInvestigateGroupState";
 }
 
 impl StaticVariant for Vec<ZDetectedInPrivateGroup_EInvestigateGroupState> {
-     const TYPE_ID: &str = "TArray<ZDetectedInPrivateGroup_EInvestigateGroupState>";
+     const TYPE_ID: &str = "TArray<ZDetectedInPrivateGroup.EInvestigateGroupState>";
 }
 
 impl StaticVariant for Vec<Vec<ZDetectedInPrivateGroup_EInvestigateGroupState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDetectedInPrivateGroup_EInvestigateGroupState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDetectedInPrivateGroup.EInvestigateGroupState>>";
 }
 
 impl Variant for ZDetectedInPrivateGroup_EInvestigateGroupState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDetectedInPrivateGroup_EInvestigateGroupState")
+        interner.get_or_intern_static("ZDetectedInPrivateGroup.EInvestigateGroupState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDetectedInPrivateGroup_EInvestigateGroupState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40614,24 +41100,24 @@ impl Bin1Serialize for ZDistanceCondition_ECompareMethod {
 }
 
 impl StaticVariant for ZDistanceCondition_ECompareMethod {
-     const TYPE_ID: &str = "ZDistanceCondition_ECompareMethod";
+     const TYPE_ID: &str = "ZDistanceCondition.ECompareMethod";
 }
 
 impl StaticVariant for Vec<ZDistanceCondition_ECompareMethod> {
-     const TYPE_ID: &str = "TArray<ZDistanceCondition_ECompareMethod>";
+     const TYPE_ID: &str = "TArray<ZDistanceCondition.ECompareMethod>";
 }
 
 impl StaticVariant for Vec<Vec<ZDistanceCondition_ECompareMethod>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDistanceCondition_ECompareMethod>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDistanceCondition.ECompareMethod>>";
 }
 
 impl Variant for ZDistanceCondition_ECompareMethod {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDistanceCondition_ECompareMethod")
+        interner.get_or_intern_static("ZDistanceCondition.ECompareMethod")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDistanceCondition_ECompareMethod".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40667,24 +41153,24 @@ impl Bin1Serialize for ZDistanceCondition_EObjectType {
 }
 
 impl StaticVariant for ZDistanceCondition_EObjectType {
-     const TYPE_ID: &str = "ZDistanceCondition_EObjectType";
+     const TYPE_ID: &str = "ZDistanceCondition.EObjectType";
 }
 
 impl StaticVariant for Vec<ZDistanceCondition_EObjectType> {
-     const TYPE_ID: &str = "TArray<ZDistanceCondition_EObjectType>";
+     const TYPE_ID: &str = "TArray<ZDistanceCondition.EObjectType>";
 }
 
 impl StaticVariant for Vec<Vec<ZDistanceCondition_EObjectType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDistanceCondition_EObjectType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDistanceCondition.EObjectType>>";
 }
 
 impl Variant for ZDistanceCondition_EObjectType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDistanceCondition_EObjectType")
+        interner.get_or_intern_static("ZDistanceCondition.EObjectType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDistanceCondition_EObjectType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40726,24 +41212,24 @@ impl Bin1Serialize for ZDramaSituationEntity_EReentryBehavior {
 }
 
 impl StaticVariant for ZDramaSituationEntity_EReentryBehavior {
-     const TYPE_ID: &str = "ZDramaSituationEntity_EReentryBehavior";
+     const TYPE_ID: &str = "ZDramaSituationEntity.EReentryBehavior";
 }
 
 impl StaticVariant for Vec<ZDramaSituationEntity_EReentryBehavior> {
-     const TYPE_ID: &str = "TArray<ZDramaSituationEntity_EReentryBehavior>";
+     const TYPE_ID: &str = "TArray<ZDramaSituationEntity.EReentryBehavior>";
 }
 
 impl StaticVariant for Vec<Vec<ZDramaSituationEntity_EReentryBehavior>> {
-     const TYPE_ID: &str = "TArray<TArray<ZDramaSituationEntity_EReentryBehavior>>";
+     const TYPE_ID: &str = "TArray<TArray<ZDramaSituationEntity.EReentryBehavior>>";
 }
 
 impl Variant for ZDramaSituationEntity_EReentryBehavior {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZDramaSituationEntity_EReentryBehavior")
+        interner.get_or_intern_static("ZDramaSituationEntity.EReentryBehavior")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZDramaSituationEntity_EReentryBehavior".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40781,24 +41267,24 @@ impl Bin1Serialize for ZEntityPropertyReplica_EReplicationStrategy {
 }
 
 impl StaticVariant for ZEntityPropertyReplica_EReplicationStrategy {
-     const TYPE_ID: &str = "ZEntityPropertyReplica_EReplicationStrategy";
+     const TYPE_ID: &str = "ZEntityPropertyReplica.EReplicationStrategy";
 }
 
 impl StaticVariant for Vec<ZEntityPropertyReplica_EReplicationStrategy> {
-     const TYPE_ID: &str = "TArray<ZEntityPropertyReplica_EReplicationStrategy>";
+     const TYPE_ID: &str = "TArray<ZEntityPropertyReplica.EReplicationStrategy>";
 }
 
 impl StaticVariant for Vec<Vec<ZEntityPropertyReplica_EReplicationStrategy>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEntityPropertyReplica_EReplicationStrategy>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEntityPropertyReplica.EReplicationStrategy>>";
 }
 
 impl Variant for ZEntityPropertyReplica_EReplicationStrategy {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEntityPropertyReplica_EReplicationStrategy")
+        interner.get_or_intern_static("ZEntityPropertyReplica.EReplicationStrategy")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEntityPropertyReplica_EReplicationStrategy".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40838,24 +41324,24 @@ impl Bin1Serialize for ZEvergreenCampaignDefinitionPollInt_EQuery {
 }
 
 impl StaticVariant for ZEvergreenCampaignDefinitionPollInt_EQuery {
-     const TYPE_ID: &str = "ZEvergreenCampaignDefinitionPollInt_EQuery";
+     const TYPE_ID: &str = "ZEvergreenCampaignDefinitionPollInt.EQuery";
 }
 
 impl StaticVariant for Vec<ZEvergreenCampaignDefinitionPollInt_EQuery> {
-     const TYPE_ID: &str = "TArray<ZEvergreenCampaignDefinitionPollInt_EQuery>";
+     const TYPE_ID: &str = "TArray<ZEvergreenCampaignDefinitionPollInt.EQuery>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenCampaignDefinitionPollInt_EQuery>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenCampaignDefinitionPollInt_EQuery>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenCampaignDefinitionPollInt.EQuery>>";
 }
 
 impl Variant for ZEvergreenCampaignDefinitionPollInt_EQuery {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenCampaignDefinitionPollInt_EQuery")
+        interner.get_or_intern_static("ZEvergreenCampaignDefinitionPollInt.EQuery")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenCampaignDefinitionPollInt_EQuery".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40891,24 +41377,24 @@ impl Bin1Serialize for ZEvergreenCampaignDefinitionPollString_EQuery {
 }
 
 impl StaticVariant for ZEvergreenCampaignDefinitionPollString_EQuery {
-     const TYPE_ID: &str = "ZEvergreenCampaignDefinitionPollString_EQuery";
+     const TYPE_ID: &str = "ZEvergreenCampaignDefinitionPollString.EQuery";
 }
 
 impl StaticVariant for Vec<ZEvergreenCampaignDefinitionPollString_EQuery> {
-     const TYPE_ID: &str = "TArray<ZEvergreenCampaignDefinitionPollString_EQuery>";
+     const TYPE_ID: &str = "TArray<ZEvergreenCampaignDefinitionPollString.EQuery>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenCampaignDefinitionPollString_EQuery>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenCampaignDefinitionPollString_EQuery>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenCampaignDefinitionPollString.EQuery>>";
 }
 
 impl Variant for ZEvergreenCampaignDefinitionPollString_EQuery {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenCampaignDefinitionPollString_EQuery")
+        interner.get_or_intern_static("ZEvergreenCampaignDefinitionPollString.EQuery")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenCampaignDefinitionPollString_EQuery".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -40948,24 +41434,24 @@ impl Bin1Serialize for ZEvergreenCampaignStatusPollInt_EQuery {
 }
 
 impl StaticVariant for ZEvergreenCampaignStatusPollInt_EQuery {
-     const TYPE_ID: &str = "ZEvergreenCampaignStatusPollInt_EQuery";
+     const TYPE_ID: &str = "ZEvergreenCampaignStatusPollInt.EQuery";
 }
 
 impl StaticVariant for Vec<ZEvergreenCampaignStatusPollInt_EQuery> {
-     const TYPE_ID: &str = "TArray<ZEvergreenCampaignStatusPollInt_EQuery>";
+     const TYPE_ID: &str = "TArray<ZEvergreenCampaignStatusPollInt.EQuery>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenCampaignStatusPollInt_EQuery>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenCampaignStatusPollInt_EQuery>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenCampaignStatusPollInt.EQuery>>";
 }
 
 impl Variant for ZEvergreenCampaignStatusPollInt_EQuery {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenCampaignStatusPollInt_EQuery")
+        interner.get_or_intern_static("ZEvergreenCampaignStatusPollInt.EQuery")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenCampaignStatusPollInt_EQuery".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41001,24 +41487,24 @@ impl Bin1Serialize for ZEvergreenCampaignStatusPollString_EQuery {
 }
 
 impl StaticVariant for ZEvergreenCampaignStatusPollString_EQuery {
-     const TYPE_ID: &str = "ZEvergreenCampaignStatusPollString_EQuery";
+     const TYPE_ID: &str = "ZEvergreenCampaignStatusPollString.EQuery";
 }
 
 impl StaticVariant for Vec<ZEvergreenCampaignStatusPollString_EQuery> {
-     const TYPE_ID: &str = "TArray<ZEvergreenCampaignStatusPollString_EQuery>";
+     const TYPE_ID: &str = "TArray<ZEvergreenCampaignStatusPollString.EQuery>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenCampaignStatusPollString_EQuery>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenCampaignStatusPollString_EQuery>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenCampaignStatusPollString.EQuery>>";
 }
 
 impl Variant for ZEvergreenCampaignStatusPollString_EQuery {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenCampaignStatusPollString_EQuery")
+        interner.get_or_intern_static("ZEvergreenCampaignStatusPollString.EQuery")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenCampaignStatusPollString_EQuery".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41062,24 +41548,24 @@ impl Bin1Serialize for ZEvergreenGearWallMenuEntryAddOn_EItemRarity {
 }
 
 impl StaticVariant for ZEvergreenGearWallMenuEntryAddOn_EItemRarity {
-     const TYPE_ID: &str = "ZEvergreenGearWallMenuEntryAddOn_EItemRarity";
+     const TYPE_ID: &str = "ZEvergreenGearWallMenuEntryAddOn.EItemRarity";
 }
 
 impl StaticVariant for Vec<ZEvergreenGearWallMenuEntryAddOn_EItemRarity> {
-     const TYPE_ID: &str = "TArray<ZEvergreenGearWallMenuEntryAddOn_EItemRarity>";
+     const TYPE_ID: &str = "TArray<ZEvergreenGearWallMenuEntryAddOn.EItemRarity>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenGearWallMenuEntryAddOn_EItemRarity>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenGearWallMenuEntryAddOn_EItemRarity>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenGearWallMenuEntryAddOn.EItemRarity>>";
 }
 
 impl Variant for ZEvergreenGearWallMenuEntryAddOn_EItemRarity {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenGearWallMenuEntryAddOn_EItemRarity")
+        interner.get_or_intern_static("ZEvergreenGearWallMenuEntryAddOn.EItemRarity")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenGearWallMenuEntryAddOn_EItemRarity".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41121,24 +41607,24 @@ impl Bin1Serialize for ZEvergreenIntelWallDataProvider_EAgenda {
 }
 
 impl StaticVariant for ZEvergreenIntelWallDataProvider_EAgenda {
-     const TYPE_ID: &str = "ZEvergreenIntelWallDataProvider_EAgenda";
+     const TYPE_ID: &str = "ZEvergreenIntelWallDataProvider.EAgenda";
 }
 
 impl StaticVariant for Vec<ZEvergreenIntelWallDataProvider_EAgenda> {
-     const TYPE_ID: &str = "TArray<ZEvergreenIntelWallDataProvider_EAgenda>";
+     const TYPE_ID: &str = "TArray<ZEvergreenIntelWallDataProvider.EAgenda>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenIntelWallDataProvider_EAgenda>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenIntelWallDataProvider_EAgenda>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenIntelWallDataProvider.EAgenda>>";
 }
 
 impl Variant for ZEvergreenIntelWallDataProvider_EAgenda {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenIntelWallDataProvider_EAgenda")
+        interner.get_or_intern_static("ZEvergreenIntelWallDataProvider.EAgenda")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenIntelWallDataProvider_EAgenda".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41196,24 +41682,24 @@ impl Bin1Serialize for ZEvergreenIntelWallDataProvider_ELook {
 }
 
 impl StaticVariant for ZEvergreenIntelWallDataProvider_ELook {
-     const TYPE_ID: &str = "ZEvergreenIntelWallDataProvider_ELook";
+     const TYPE_ID: &str = "ZEvergreenIntelWallDataProvider.ELook";
 }
 
 impl StaticVariant for Vec<ZEvergreenIntelWallDataProvider_ELook> {
-     const TYPE_ID: &str = "TArray<ZEvergreenIntelWallDataProvider_ELook>";
+     const TYPE_ID: &str = "TArray<ZEvergreenIntelWallDataProvider.ELook>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenIntelWallDataProvider_ELook>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenIntelWallDataProvider_ELook>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenIntelWallDataProvider.ELook>>";
 }
 
 impl Variant for ZEvergreenIntelWallDataProvider_ELook {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenIntelWallDataProvider_ELook")
+        interner.get_or_intern_static("ZEvergreenIntelWallDataProvider.ELook")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenIntelWallDataProvider_ELook".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41261,24 +41747,24 @@ impl Bin1Serialize for ZEvergreenIntelWallDataProvider_ETell {
 }
 
 impl StaticVariant for ZEvergreenIntelWallDataProvider_ETell {
-     const TYPE_ID: &str = "ZEvergreenIntelWallDataProvider_ETell";
+     const TYPE_ID: &str = "ZEvergreenIntelWallDataProvider.ETell";
 }
 
 impl StaticVariant for Vec<ZEvergreenIntelWallDataProvider_ETell> {
-     const TYPE_ID: &str = "TArray<ZEvergreenIntelWallDataProvider_ETell>";
+     const TYPE_ID: &str = "TArray<ZEvergreenIntelWallDataProvider.ETell>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenIntelWallDataProvider_ETell>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenIntelWallDataProvider_ETell>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenIntelWallDataProvider.ETell>>";
 }
 
 impl Variant for ZEvergreenIntelWallDataProvider_ETell {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenIntelWallDataProvider_ETell")
+        interner.get_or_intern_static("ZEvergreenIntelWallDataProvider.ETell")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenIntelWallDataProvider_ETell".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41316,24 +41802,24 @@ impl Bin1Serialize for ZEvergreenLocationIntelDataProvider_EVisited {
 }
 
 impl StaticVariant for ZEvergreenLocationIntelDataProvider_EVisited {
-     const TYPE_ID: &str = "ZEvergreenLocationIntelDataProvider_EVisited";
+     const TYPE_ID: &str = "ZEvergreenLocationIntelDataProvider.EVisited";
 }
 
 impl StaticVariant for Vec<ZEvergreenLocationIntelDataProvider_EVisited> {
-     const TYPE_ID: &str = "TArray<ZEvergreenLocationIntelDataProvider_EVisited>";
+     const TYPE_ID: &str = "TArray<ZEvergreenLocationIntelDataProvider.EVisited>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenLocationIntelDataProvider_EVisited>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenLocationIntelDataProvider_EVisited>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenLocationIntelDataProvider.EVisited>>";
 }
 
 impl Variant for ZEvergreenLocationIntelDataProvider_EVisited {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenLocationIntelDataProvider_EVisited")
+        interner.get_or_intern_static("ZEvergreenLocationIntelDataProvider.EVisited")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenLocationIntelDataProvider_EVisited".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41381,24 +41867,24 @@ impl Bin1Serialize for ZEvergreenMenuCondition_EQuery {
 }
 
 impl StaticVariant for ZEvergreenMenuCondition_EQuery {
-     const TYPE_ID: &str = "ZEvergreenMenuCondition_EQuery";
+     const TYPE_ID: &str = "ZEvergreenMenuCondition.EQuery";
 }
 
 impl StaticVariant for Vec<ZEvergreenMenuCondition_EQuery> {
-     const TYPE_ID: &str = "TArray<ZEvergreenMenuCondition_EQuery>";
+     const TYPE_ID: &str = "TArray<ZEvergreenMenuCondition.EQuery>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenMenuCondition_EQuery>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuCondition_EQuery>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuCondition.EQuery>>";
 }
 
 impl Variant for ZEvergreenMenuCondition_EQuery {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenMenuCondition_EQuery")
+        interner.get_or_intern_static("ZEvergreenMenuCondition.EQuery")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenMenuCondition_EQuery".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41438,24 +41924,24 @@ impl Bin1Serialize for ZEvergreenMenuCounterScrollEntity_EAxis2DMouse {
 }
 
 impl StaticVariant for ZEvergreenMenuCounterScrollEntity_EAxis2DMouse {
-     const TYPE_ID: &str = "ZEvergreenMenuCounterScrollEntity_EAxis2DMouse";
+     const TYPE_ID: &str = "ZEvergreenMenuCounterScrollEntity.EAxis2DMouse";
 }
 
 impl StaticVariant for Vec<ZEvergreenMenuCounterScrollEntity_EAxis2DMouse> {
-     const TYPE_ID: &str = "TArray<ZEvergreenMenuCounterScrollEntity_EAxis2DMouse>";
+     const TYPE_ID: &str = "TArray<ZEvergreenMenuCounterScrollEntity.EAxis2DMouse>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenMenuCounterScrollEntity_EAxis2DMouse>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuCounterScrollEntity_EAxis2DMouse>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuCounterScrollEntity.EAxis2DMouse>>";
 }
 
 impl Variant for ZEvergreenMenuCounterScrollEntity_EAxis2DMouse {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenMenuCounterScrollEntity_EAxis2DMouse")
+        interner.get_or_intern_static("ZEvergreenMenuCounterScrollEntity.EAxis2DMouse")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenMenuCounterScrollEntity_EAxis2DMouse".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41493,24 +41979,24 @@ impl Bin1Serialize for ZEvergreenMenuCounterScrollEntity_EAxis3DSpace {
 }
 
 impl StaticVariant for ZEvergreenMenuCounterScrollEntity_EAxis3DSpace {
-     const TYPE_ID: &str = "ZEvergreenMenuCounterScrollEntity_EAxis3DSpace";
+     const TYPE_ID: &str = "ZEvergreenMenuCounterScrollEntity.EAxis3DSpace";
 }
 
 impl StaticVariant for Vec<ZEvergreenMenuCounterScrollEntity_EAxis3DSpace> {
-     const TYPE_ID: &str = "TArray<ZEvergreenMenuCounterScrollEntity_EAxis3DSpace>";
+     const TYPE_ID: &str = "TArray<ZEvergreenMenuCounterScrollEntity.EAxis3DSpace>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenMenuCounterScrollEntity_EAxis3DSpace>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuCounterScrollEntity_EAxis3DSpace>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuCounterScrollEntity.EAxis3DSpace>>";
 }
 
 impl Variant for ZEvergreenMenuCounterScrollEntity_EAxis3DSpace {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenMenuCounterScrollEntity_EAxis3DSpace")
+        interner.get_or_intern_static("ZEvergreenMenuCounterScrollEntity.EAxis3DSpace")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenMenuCounterScrollEntity_EAxis3DSpace".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41548,24 +42034,24 @@ impl Bin1Serialize for ZEvergreenMenuEntryCondition_EQuery {
 }
 
 impl StaticVariant for ZEvergreenMenuEntryCondition_EQuery {
-     const TYPE_ID: &str = "ZEvergreenMenuEntryCondition_EQuery";
+     const TYPE_ID: &str = "ZEvergreenMenuEntryCondition.EQuery";
 }
 
 impl StaticVariant for Vec<ZEvergreenMenuEntryCondition_EQuery> {
-     const TYPE_ID: &str = "TArray<ZEvergreenMenuEntryCondition_EQuery>";
+     const TYPE_ID: &str = "TArray<ZEvergreenMenuEntryCondition.EQuery>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenMenuEntryCondition_EQuery>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuEntryCondition_EQuery>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuEntryCondition.EQuery>>";
 }
 
 impl Variant for ZEvergreenMenuEntryCondition_EQuery {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenMenuEntryCondition_EQuery")
+        interner.get_or_intern_static("ZEvergreenMenuEntryCondition.EQuery")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenMenuEntryCondition_EQuery".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41607,24 +42093,24 @@ impl Bin1Serialize for ZEvergreenMenuEntryEntity_ECursorShape {
 }
 
 impl StaticVariant for ZEvergreenMenuEntryEntity_ECursorShape {
-     const TYPE_ID: &str = "ZEvergreenMenuEntryEntity_ECursorShape";
+     const TYPE_ID: &str = "ZEvergreenMenuEntryEntity.ECursorShape";
 }
 
 impl StaticVariant for Vec<ZEvergreenMenuEntryEntity_ECursorShape> {
-     const TYPE_ID: &str = "TArray<ZEvergreenMenuEntryEntity_ECursorShape>";
+     const TYPE_ID: &str = "TArray<ZEvergreenMenuEntryEntity.ECursorShape>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenMenuEntryEntity_ECursorShape>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuEntryEntity_ECursorShape>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuEntryEntity.ECursorShape>>";
 }
 
 impl Variant for ZEvergreenMenuEntryEntity_ECursorShape {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenMenuEntryEntity_ECursorShape")
+        interner.get_or_intern_static("ZEvergreenMenuEntryEntity.ECursorShape")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenMenuEntryEntity_ECursorShape".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41664,24 +42150,24 @@ impl Bin1Serialize for ZEvergreenMenuEntryPromptButtonAction_EInputTrigger {
 }
 
 impl StaticVariant for ZEvergreenMenuEntryPromptButtonAction_EInputTrigger {
-     const TYPE_ID: &str = "ZEvergreenMenuEntryPromptButtonAction_EInputTrigger";
+     const TYPE_ID: &str = "ZEvergreenMenuEntryPromptButtonAction.EInputTrigger";
 }
 
 impl StaticVariant for Vec<ZEvergreenMenuEntryPromptButtonAction_EInputTrigger> {
-     const TYPE_ID: &str = "TArray<ZEvergreenMenuEntryPromptButtonAction_EInputTrigger>";
+     const TYPE_ID: &str = "TArray<ZEvergreenMenuEntryPromptButtonAction.EInputTrigger>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenMenuEntryPromptButtonAction_EInputTrigger>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuEntryPromptButtonAction_EInputTrigger>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuEntryPromptButtonAction.EInputTrigger>>";
 }
 
 impl Variant for ZEvergreenMenuEntryPromptButtonAction_EInputTrigger {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenMenuEntryPromptButtonAction_EInputTrigger")
+        interner.get_or_intern_static("ZEvergreenMenuEntryPromptButtonAction.EInputTrigger")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenMenuEntryPromptButtonAction_EInputTrigger".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41719,24 +42205,24 @@ impl Bin1Serialize for ZEvergreenMenuGlobalCondition_EQuery {
 }
 
 impl StaticVariant for ZEvergreenMenuGlobalCondition_EQuery {
-     const TYPE_ID: &str = "ZEvergreenMenuGlobalCondition_EQuery";
+     const TYPE_ID: &str = "ZEvergreenMenuGlobalCondition.EQuery";
 }
 
 impl StaticVariant for Vec<ZEvergreenMenuGlobalCondition_EQuery> {
-     const TYPE_ID: &str = "TArray<ZEvergreenMenuGlobalCondition_EQuery>";
+     const TYPE_ID: &str = "TArray<ZEvergreenMenuGlobalCondition.EQuery>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenMenuGlobalCondition_EQuery>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuGlobalCondition_EQuery>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuGlobalCondition.EQuery>>";
 }
 
 impl Variant for ZEvergreenMenuGlobalCondition_EQuery {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenMenuGlobalCondition_EQuery")
+        interner.get_or_intern_static("ZEvergreenMenuGlobalCondition.EQuery")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenMenuGlobalCondition_EQuery".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41772,24 +42258,24 @@ impl Bin1Serialize for ZEvergreenMenuValueFloatQuery_EQuery {
 }
 
 impl StaticVariant for ZEvergreenMenuValueFloatQuery_EQuery {
-     const TYPE_ID: &str = "ZEvergreenMenuValueFloatQuery_EQuery";
+     const TYPE_ID: &str = "ZEvergreenMenuValueFloatQuery.EQuery";
 }
 
 impl StaticVariant for Vec<ZEvergreenMenuValueFloatQuery_EQuery> {
-     const TYPE_ID: &str = "TArray<ZEvergreenMenuValueFloatQuery_EQuery>";
+     const TYPE_ID: &str = "TArray<ZEvergreenMenuValueFloatQuery.EQuery>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenMenuValueFloatQuery_EQuery>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuValueFloatQuery_EQuery>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuValueFloatQuery.EQuery>>";
 }
 
 impl Variant for ZEvergreenMenuValueFloatQuery_EQuery {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenMenuValueFloatQuery_EQuery")
+        interner.get_or_intern_static("ZEvergreenMenuValueFloatQuery.EQuery")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenMenuValueFloatQuery_EQuery".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41823,24 +42309,24 @@ impl Bin1Serialize for ZEvergreenMenuValueVector3Query_EQuery {
 }
 
 impl StaticVariant for ZEvergreenMenuValueVector3Query_EQuery {
-     const TYPE_ID: &str = "ZEvergreenMenuValueVector3Query_EQuery";
+     const TYPE_ID: &str = "ZEvergreenMenuValueVector3Query.EQuery";
 }
 
 impl StaticVariant for Vec<ZEvergreenMenuValueVector3Query_EQuery> {
-     const TYPE_ID: &str = "TArray<ZEvergreenMenuValueVector3Query_EQuery>";
+     const TYPE_ID: &str = "TArray<ZEvergreenMenuValueVector3Query.EQuery>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenMenuValueVector3Query_EQuery>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuValueVector3Query_EQuery>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenMenuValueVector3Query.EQuery>>";
 }
 
 impl Variant for ZEvergreenMenuValueVector3Query_EQuery {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenMenuValueVector3Query_EQuery")
+        interner.get_or_intern_static("ZEvergreenMenuValueVector3Query.EQuery")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenMenuValueVector3Query_EQuery".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41880,24 +42366,24 @@ impl Bin1Serialize for ZEvergreenVitalInfoEntity_EVitalInfoType {
 }
 
 impl StaticVariant for ZEvergreenVitalInfoEntity_EVitalInfoType {
-     const TYPE_ID: &str = "ZEvergreenVitalInfoEntity_EVitalInfoType";
+     const TYPE_ID: &str = "ZEvergreenVitalInfoEntity.EVitalInfoType";
 }
 
 impl StaticVariant for Vec<ZEvergreenVitalInfoEntity_EVitalInfoType> {
-     const TYPE_ID: &str = "TArray<ZEvergreenVitalInfoEntity_EVitalInfoType>";
+     const TYPE_ID: &str = "TArray<ZEvergreenVitalInfoEntity.EVitalInfoType>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenVitalInfoEntity_EVitalInfoType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenVitalInfoEntity_EVitalInfoType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenVitalInfoEntity.EVitalInfoType>>";
 }
 
 impl Variant for ZEvergreenVitalInfoEntity_EVitalInfoType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenVitalInfoEntity_EVitalInfoType")
+        interner.get_or_intern_static("ZEvergreenVitalInfoEntity.EVitalInfoType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenVitalInfoEntity_EVitalInfoType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -41935,24 +42421,24 @@ impl Bin1Serialize for ZEvergreenWorldMapTerritoryDataProvider_EVisited {
 }
 
 impl StaticVariant for ZEvergreenWorldMapTerritoryDataProvider_EVisited {
-     const TYPE_ID: &str = "ZEvergreenWorldMapTerritoryDataProvider_EVisited";
+     const TYPE_ID: &str = "ZEvergreenWorldMapTerritoryDataProvider.EVisited";
 }
 
 impl StaticVariant for Vec<ZEvergreenWorldMapTerritoryDataProvider_EVisited> {
-     const TYPE_ID: &str = "TArray<ZEvergreenWorldMapTerritoryDataProvider_EVisited>";
+     const TYPE_ID: &str = "TArray<ZEvergreenWorldMapTerritoryDataProvider.EVisited>";
 }
 
 impl StaticVariant for Vec<Vec<ZEvergreenWorldMapTerritoryDataProvider_EVisited>> {
-     const TYPE_ID: &str = "TArray<TArray<ZEvergreenWorldMapTerritoryDataProvider_EVisited>>";
+     const TYPE_ID: &str = "TArray<TArray<ZEvergreenWorldMapTerritoryDataProvider.EVisited>>";
 }
 
 impl Variant for ZEvergreenWorldMapTerritoryDataProvider_EVisited {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZEvergreenWorldMapTerritoryDataProvider_EVisited")
+        interner.get_or_intern_static("ZEvergreenWorldMapTerritoryDataProvider.EVisited")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZEvergreenWorldMapTerritoryDataProvider_EVisited".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42004,24 +42490,24 @@ impl Bin1Serialize for ZGetHelpGroup_EInvestigateGroupState {
 }
 
 impl StaticVariant for ZGetHelpGroup_EInvestigateGroupState {
-     const TYPE_ID: &str = "ZGetHelpGroup_EInvestigateGroupState";
+     const TYPE_ID: &str = "ZGetHelpGroup.EInvestigateGroupState";
 }
 
 impl StaticVariant for Vec<ZGetHelpGroup_EInvestigateGroupState> {
-     const TYPE_ID: &str = "TArray<ZGetHelpGroup_EInvestigateGroupState>";
+     const TYPE_ID: &str = "TArray<ZGetHelpGroup.EInvestigateGroupState>";
 }
 
 impl StaticVariant for Vec<Vec<ZGetHelpGroup_EInvestigateGroupState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZGetHelpGroup_EInvestigateGroupState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZGetHelpGroup.EInvestigateGroupState>>";
 }
 
 impl Variant for ZGetHelpGroup_EInvestigateGroupState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZGetHelpGroup_EInvestigateGroupState")
+        interner.get_or_intern_static("ZGetHelpGroup.EInvestigateGroupState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZGetHelpGroup_EInvestigateGroupState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42061,24 +42547,24 @@ impl Bin1Serialize for ZHM5AgilityEventConsumer_EEvent {
 }
 
 impl StaticVariant for ZHM5AgilityEventConsumer_EEvent {
-     const TYPE_ID: &str = "ZHM5AgilityEventConsumer_EEvent";
+     const TYPE_ID: &str = "ZHM5AgilityEventConsumer.EEvent";
 }
 
 impl StaticVariant for Vec<ZHM5AgilityEventConsumer_EEvent> {
-     const TYPE_ID: &str = "TArray<ZHM5AgilityEventConsumer_EEvent>";
+     const TYPE_ID: &str = "TArray<ZHM5AgilityEventConsumer.EEvent>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5AgilityEventConsumer_EEvent>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5AgilityEventConsumer_EEvent>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5AgilityEventConsumer.EEvent>>";
 }
 
 impl Variant for ZHM5AgilityEventConsumer_EEvent {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5AgilityEventConsumer_EEvent")
+        interner.get_or_intern_static("ZHM5AgilityEventConsumer.EEvent")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5AgilityEventConsumer_EEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42120,24 +42606,24 @@ impl Bin1Serialize for ZHM5Animator_EBoneAnimator {
 }
 
 impl StaticVariant for ZHM5Animator_EBoneAnimator {
-     const TYPE_ID: &str = "ZHM5Animator_EBoneAnimator";
+     const TYPE_ID: &str = "ZHM5Animator.EBoneAnimator";
 }
 
 impl StaticVariant for Vec<ZHM5Animator_EBoneAnimator> {
-     const TYPE_ID: &str = "TArray<ZHM5Animator_EBoneAnimator>";
+     const TYPE_ID: &str = "TArray<ZHM5Animator.EBoneAnimator>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5Animator_EBoneAnimator>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5Animator_EBoneAnimator>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5Animator.EBoneAnimator>>";
 }
 
 impl Variant for ZHM5Animator_EBoneAnimator {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5Animator_EBoneAnimator")
+        interner.get_or_intern_static("ZHM5Animator.EBoneAnimator")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5Animator_EBoneAnimator".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42179,24 +42665,24 @@ impl Bin1Serialize for ZHM5BodyContainer_EBCAnimSet {
 }
 
 impl StaticVariant for ZHM5BodyContainer_EBCAnimSet {
-     const TYPE_ID: &str = "ZHM5BodyContainer_EBCAnimSet";
+     const TYPE_ID: &str = "ZHM5BodyContainer.EBCAnimSet";
 }
 
 impl StaticVariant for Vec<ZHM5BodyContainer_EBCAnimSet> {
-     const TYPE_ID: &str = "TArray<ZHM5BodyContainer_EBCAnimSet>";
+     const TYPE_ID: &str = "TArray<ZHM5BodyContainer.EBCAnimSet>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5BodyContainer_EBCAnimSet>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5BodyContainer_EBCAnimSet>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5BodyContainer.EBCAnimSet>>";
 }
 
 impl Variant for ZHM5BodyContainer_EBCAnimSet {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5BodyContainer_EBCAnimSet")
+        interner.get_or_intern_static("ZHM5BodyContainer.EBCAnimSet")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5BodyContainer_EBCAnimSet".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42236,24 +42722,24 @@ impl Bin1Serialize for ZHM5BodyContainer_EBCBodyMode {
 }
 
 impl StaticVariant for ZHM5BodyContainer_EBCBodyMode {
-     const TYPE_ID: &str = "ZHM5BodyContainer_EBCBodyMode";
+     const TYPE_ID: &str = "ZHM5BodyContainer.EBCBodyMode";
 }
 
 impl StaticVariant for Vec<ZHM5BodyContainer_EBCBodyMode> {
-     const TYPE_ID: &str = "TArray<ZHM5BodyContainer_EBCBodyMode>";
+     const TYPE_ID: &str = "TArray<ZHM5BodyContainer.EBCBodyMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5BodyContainer_EBCBodyMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5BodyContainer_EBCBodyMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5BodyContainer.EBCBodyMode>>";
 }
 
 impl Variant for ZHM5BodyContainer_EBCBodyMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5BodyContainer_EBCBodyMode")
+        interner.get_or_intern_static("ZHM5BodyContainer.EBCBodyMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5BodyContainer_EBCBodyMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42289,24 +42775,24 @@ impl Bin1Serialize for ZHM5BodyContainer_eBCCloseMode {
 }
 
 impl StaticVariant for ZHM5BodyContainer_eBCCloseMode {
-     const TYPE_ID: &str = "ZHM5BodyContainer_eBCCloseMode";
+     const TYPE_ID: &str = "ZHM5BodyContainer.eBCCloseMode";
 }
 
 impl StaticVariant for Vec<ZHM5BodyContainer_eBCCloseMode> {
-     const TYPE_ID: &str = "TArray<ZHM5BodyContainer_eBCCloseMode>";
+     const TYPE_ID: &str = "TArray<ZHM5BodyContainer.eBCCloseMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5BodyContainer_eBCCloseMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5BodyContainer_eBCCloseMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5BodyContainer.eBCCloseMode>>";
 }
 
 impl Variant for ZHM5BodyContainer_eBCCloseMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5BodyContainer_eBCCloseMode")
+        interner.get_or_intern_static("ZHM5BodyContainer.eBCCloseMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5BodyContainer_eBCCloseMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42368,24 +42854,24 @@ impl Bin1Serialize for ZHM5BodySoundEventConsumer_EAnimSoundBody {
 }
 
 impl StaticVariant for ZHM5BodySoundEventConsumer_EAnimSoundBody {
-     const TYPE_ID: &str = "ZHM5BodySoundEventConsumer_EAnimSoundBody";
+     const TYPE_ID: &str = "ZHM5BodySoundEventConsumer.EAnimSoundBody";
 }
 
 impl StaticVariant for Vec<ZHM5BodySoundEventConsumer_EAnimSoundBody> {
-     const TYPE_ID: &str = "TArray<ZHM5BodySoundEventConsumer_EAnimSoundBody>";
+     const TYPE_ID: &str = "TArray<ZHM5BodySoundEventConsumer.EAnimSoundBody>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5BodySoundEventConsumer_EAnimSoundBody>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5BodySoundEventConsumer_EAnimSoundBody>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5BodySoundEventConsumer.EAnimSoundBody>>";
 }
 
 impl Variant for ZHM5BodySoundEventConsumer_EAnimSoundBody {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5BodySoundEventConsumer_EAnimSoundBody")
+        interner.get_or_intern_static("ZHM5BodySoundEventConsumer.EAnimSoundBody")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5BodySoundEventConsumer_EAnimSoundBody".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42423,24 +42909,24 @@ impl Bin1Serialize for ZHM5ContextActionEntity_EInteraction {
 }
 
 impl StaticVariant for ZHM5ContextActionEntity_EInteraction {
-     const TYPE_ID: &str = "ZHM5ContextActionEntity_EInteraction";
+     const TYPE_ID: &str = "ZHM5ContextActionEntity.EInteraction";
 }
 
 impl StaticVariant for Vec<ZHM5ContextActionEntity_EInteraction> {
-     const TYPE_ID: &str = "TArray<ZHM5ContextActionEntity_EInteraction>";
+     const TYPE_ID: &str = "TArray<ZHM5ContextActionEntity.EInteraction>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5ContextActionEntity_EInteraction>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5ContextActionEntity_EInteraction>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5ContextActionEntity.EInteraction>>";
 }
 
 impl Variant for ZHM5ContextActionEntity_EInteraction {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5ContextActionEntity_EInteraction")
+        interner.get_or_intern_static("ZHM5ContextActionEntity.EInteraction")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5ContextActionEntity_EInteraction".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42488,24 +42974,24 @@ impl Bin1Serialize for ZHM5CrowdGenericEventConsumer_EEvent {
 }
 
 impl StaticVariant for ZHM5CrowdGenericEventConsumer_EEvent {
-     const TYPE_ID: &str = "ZHM5CrowdGenericEventConsumer_EEvent";
+     const TYPE_ID: &str = "ZHM5CrowdGenericEventConsumer.EEvent";
 }
 
 impl StaticVariant for Vec<ZHM5CrowdGenericEventConsumer_EEvent> {
-     const TYPE_ID: &str = "TArray<ZHM5CrowdGenericEventConsumer_EEvent>";
+     const TYPE_ID: &str = "TArray<ZHM5CrowdGenericEventConsumer.EEvent>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5CrowdGenericEventConsumer_EEvent>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5CrowdGenericEventConsumer_EEvent>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5CrowdGenericEventConsumer.EEvent>>";
 }
 
 impl Variant for ZHM5CrowdGenericEventConsumer_EEvent {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5CrowdGenericEventConsumer_EEvent")
+        interner.get_or_intern_static("ZHM5CrowdGenericEventConsumer.EEvent")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5CrowdGenericEventConsumer_EEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42549,24 +43035,24 @@ impl Bin1Serialize for ZHM5DynamicRayCastEntity_ECollideType {
 }
 
 impl StaticVariant for ZHM5DynamicRayCastEntity_ECollideType {
-     const TYPE_ID: &str = "ZHM5DynamicRayCastEntity_ECollideType";
+     const TYPE_ID: &str = "ZHM5DynamicRayCastEntity.ECollideType";
 }
 
 impl StaticVariant for Vec<ZHM5DynamicRayCastEntity_ECollideType> {
-     const TYPE_ID: &str = "TArray<ZHM5DynamicRayCastEntity_ECollideType>";
+     const TYPE_ID: &str = "TArray<ZHM5DynamicRayCastEntity.ECollideType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5DynamicRayCastEntity_ECollideType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5DynamicRayCastEntity_ECollideType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5DynamicRayCastEntity.ECollideType>>";
 }
 
 impl Variant for ZHM5DynamicRayCastEntity_ECollideType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5DynamicRayCastEntity_ECollideType")
+        interner.get_or_intern_static("ZHM5DynamicRayCastEntity.ECollideType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5DynamicRayCastEntity_ECollideType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42618,24 +43104,24 @@ impl Bin1Serialize for ZHM5FaceFXReactionEventConsumer_EEvent {
 }
 
 impl StaticVariant for ZHM5FaceFXReactionEventConsumer_EEvent {
-     const TYPE_ID: &str = "ZHM5FaceFXReactionEventConsumer_EEvent";
+     const TYPE_ID: &str = "ZHM5FaceFXReactionEventConsumer.EEvent";
 }
 
 impl StaticVariant for Vec<ZHM5FaceFXReactionEventConsumer_EEvent> {
-     const TYPE_ID: &str = "TArray<ZHM5FaceFXReactionEventConsumer_EEvent>";
+     const TYPE_ID: &str = "TArray<ZHM5FaceFXReactionEventConsumer.EEvent>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5FaceFXReactionEventConsumer_EEvent>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5FaceFXReactionEventConsumer_EEvent>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5FaceFXReactionEventConsumer.EEvent>>";
 }
 
 impl Variant for ZHM5FaceFXReactionEventConsumer_EEvent {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5FaceFXReactionEventConsumer_EEvent")
+        interner.get_or_intern_static("ZHM5FaceFXReactionEventConsumer.EEvent")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5FaceFXReactionEventConsumer_EEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42683,24 +43169,24 @@ impl Bin1Serialize for ZHM5FaceFXSpecificEventConsumer_EEvent {
 }
 
 impl StaticVariant for ZHM5FaceFXSpecificEventConsumer_EEvent {
-     const TYPE_ID: &str = "ZHM5FaceFXSpecificEventConsumer_EEvent";
+     const TYPE_ID: &str = "ZHM5FaceFXSpecificEventConsumer.EEvent";
 }
 
 impl StaticVariant for Vec<ZHM5FaceFXSpecificEventConsumer_EEvent> {
-     const TYPE_ID: &str = "TArray<ZHM5FaceFXSpecificEventConsumer_EEvent>";
+     const TYPE_ID: &str = "TArray<ZHM5FaceFXSpecificEventConsumer.EEvent>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5FaceFXSpecificEventConsumer_EEvent>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5FaceFXSpecificEventConsumer_EEvent>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5FaceFXSpecificEventConsumer.EEvent>>";
 }
 
 impl Variant for ZHM5FaceFXSpecificEventConsumer_EEvent {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5FaceFXSpecificEventConsumer_EEvent")
+        interner.get_or_intern_static("ZHM5FaceFXSpecificEventConsumer.EEvent")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5FaceFXSpecificEventConsumer_EEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42736,24 +43222,24 @@ impl Bin1Serialize for ZHM5ForceCover_EFaceDirection {
 }
 
 impl StaticVariant for ZHM5ForceCover_EFaceDirection {
-     const TYPE_ID: &str = "ZHM5ForceCover_EFaceDirection";
+     const TYPE_ID: &str = "ZHM5ForceCover.EFaceDirection";
 }
 
 impl StaticVariant for Vec<ZHM5ForceCover_EFaceDirection> {
-     const TYPE_ID: &str = "TArray<ZHM5ForceCover_EFaceDirection>";
+     const TYPE_ID: &str = "TArray<ZHM5ForceCover.EFaceDirection>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5ForceCover_EFaceDirection>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5ForceCover_EFaceDirection>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5ForceCover.EFaceDirection>>";
 }
 
 impl Variant for ZHM5ForceCover_EFaceDirection {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5ForceCover_EFaceDirection")
+        interner.get_or_intern_static("ZHM5ForceCover.EFaceDirection")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5ForceCover_EFaceDirection".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42801,24 +43287,24 @@ impl Bin1Serialize for ZHM5GameTimeMultiplierEntity_eTMLDReason {
 }
 
 impl StaticVariant for ZHM5GameTimeMultiplierEntity_eTMLDReason {
-     const TYPE_ID: &str = "ZHM5GameTimeMultiplierEntity_eTMLDReason";
+     const TYPE_ID: &str = "ZHM5GameTimeMultiplierEntity.eTMLDReason";
 }
 
 impl StaticVariant for Vec<ZHM5GameTimeMultiplierEntity_eTMLDReason> {
-     const TYPE_ID: &str = "TArray<ZHM5GameTimeMultiplierEntity_eTMLDReason>";
+     const TYPE_ID: &str = "TArray<ZHM5GameTimeMultiplierEntity.eTMLDReason>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5GameTimeMultiplierEntity_eTMLDReason>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5GameTimeMultiplierEntity_eTMLDReason>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5GameTimeMultiplierEntity.eTMLDReason>>";
 }
 
 impl Variant for ZHM5GameTimeMultiplierEntity_eTMLDReason {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5GameTimeMultiplierEntity_eTMLDReason")
+        interner.get_or_intern_static("ZHM5GameTimeMultiplierEntity.eTMLDReason")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5GameTimeMultiplierEntity_eTMLDReason".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42866,24 +43352,24 @@ impl Bin1Serialize for ZHM5GenericEventConsumer_EEvent {
 }
 
 impl StaticVariant for ZHM5GenericEventConsumer_EEvent {
-     const TYPE_ID: &str = "ZHM5GenericEventConsumer_EEvent";
+     const TYPE_ID: &str = "ZHM5GenericEventConsumer.EEvent";
 }
 
 impl StaticVariant for Vec<ZHM5GenericEventConsumer_EEvent> {
-     const TYPE_ID: &str = "TArray<ZHM5GenericEventConsumer_EEvent>";
+     const TYPE_ID: &str = "TArray<ZHM5GenericEventConsumer.EEvent>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5GenericEventConsumer_EEvent>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5GenericEventConsumer_EEvent>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5GenericEventConsumer.EEvent>>";
 }
 
 impl Variant for ZHM5GenericEventConsumer_EEvent {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5GenericEventConsumer_EEvent")
+        interner.get_or_intern_static("ZHM5GenericEventConsumer.EEvent")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5GenericEventConsumer_EEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42923,24 +43409,24 @@ impl Bin1Serialize for ZHM5HIKEventConsumer_EBlend {
 }
 
 impl StaticVariant for ZHM5HIKEventConsumer_EBlend {
-     const TYPE_ID: &str = "ZHM5HIKEventConsumer_EBlend";
+     const TYPE_ID: &str = "ZHM5HIKEventConsumer.EBlend";
 }
 
 impl StaticVariant for Vec<ZHM5HIKEventConsumer_EBlend> {
-     const TYPE_ID: &str = "TArray<ZHM5HIKEventConsumer_EBlend>";
+     const TYPE_ID: &str = "TArray<ZHM5HIKEventConsumer.EBlend>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5HIKEventConsumer_EBlend>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5HIKEventConsumer_EBlend>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5HIKEventConsumer.EBlend>>";
 }
 
 impl Variant for ZHM5HIKEventConsumer_EBlend {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5HIKEventConsumer_EBlend")
+        interner.get_or_intern_static("ZHM5HIKEventConsumer.EBlend")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5HIKEventConsumer_EBlend".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -42976,24 +43462,24 @@ impl Bin1Serialize for ZHM5HIKEventConsumer_EEffector {
 }
 
 impl StaticVariant for ZHM5HIKEventConsumer_EEffector {
-     const TYPE_ID: &str = "ZHM5HIKEventConsumer_EEffector";
+     const TYPE_ID: &str = "ZHM5HIKEventConsumer.EEffector";
 }
 
 impl StaticVariant for Vec<ZHM5HIKEventConsumer_EEffector> {
-     const TYPE_ID: &str = "TArray<ZHM5HIKEventConsumer_EEffector>";
+     const TYPE_ID: &str = "TArray<ZHM5HIKEventConsumer.EEffector>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5HIKEventConsumer_EEffector>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5HIKEventConsumer_EEffector>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5HIKEventConsumer.EEffector>>";
 }
 
 impl Variant for ZHM5HIKEventConsumer_EEffector {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5HIKEventConsumer_EEffector")
+        interner.get_or_intern_static("ZHM5HIKEventConsumer.EEffector")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5HIKEventConsumer_EEffector".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43029,24 +43515,24 @@ impl Bin1Serialize for ZHM5HitmanHealthModifier_EHealthDrainType {
 }
 
 impl StaticVariant for ZHM5HitmanHealthModifier_EHealthDrainType {
-     const TYPE_ID: &str = "ZHM5HitmanHealthModifier_EHealthDrainType";
+     const TYPE_ID: &str = "ZHM5HitmanHealthModifier.EHealthDrainType";
 }
 
 impl StaticVariant for Vec<ZHM5HitmanHealthModifier_EHealthDrainType> {
-     const TYPE_ID: &str = "TArray<ZHM5HitmanHealthModifier_EHealthDrainType>";
+     const TYPE_ID: &str = "TArray<ZHM5HitmanHealthModifier.EHealthDrainType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5HitmanHealthModifier_EHealthDrainType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5HitmanHealthModifier_EHealthDrainType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5HitmanHealthModifier.EHealthDrainType>>";
 }
 
 impl Variant for ZHM5HitmanHealthModifier_EHealthDrainType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5HitmanHealthModifier_EHealthDrainType")
+        interner.get_or_intern_static("ZHM5HitmanHealthModifier.EHealthDrainType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5HitmanHealthModifier_EHealthDrainType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43100,24 +43586,24 @@ impl Bin1Serialize for ZHM5HitmanHealthModifier_EHealthValue {
 }
 
 impl StaticVariant for ZHM5HitmanHealthModifier_EHealthValue {
-     const TYPE_ID: &str = "ZHM5HitmanHealthModifier_EHealthValue";
+     const TYPE_ID: &str = "ZHM5HitmanHealthModifier.EHealthValue";
 }
 
 impl StaticVariant for Vec<ZHM5HitmanHealthModifier_EHealthValue> {
-     const TYPE_ID: &str = "TArray<ZHM5HitmanHealthModifier_EHealthValue>";
+     const TYPE_ID: &str = "TArray<ZHM5HitmanHealthModifier.EHealthValue>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5HitmanHealthModifier_EHealthValue>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5HitmanHealthModifier_EHealthValue>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5HitmanHealthModifier.EHealthValue>>";
 }
 
 impl Variant for ZHM5HitmanHealthModifier_EHealthValue {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5HitmanHealthModifier_EHealthValue")
+        interner.get_or_intern_static("ZHM5HitmanHealthModifier.EHealthValue")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5HitmanHealthModifier_EHealthValue".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43169,24 +43655,24 @@ impl Bin1Serialize for ZHM5IndicatorManager_EIndicatorType {
 }
 
 impl StaticVariant for ZHM5IndicatorManager_EIndicatorType {
-     const TYPE_ID: &str = "ZHM5IndicatorManager_EIndicatorType";
+     const TYPE_ID: &str = "ZHM5IndicatorManager.EIndicatorType";
 }
 
 impl StaticVariant for Vec<ZHM5IndicatorManager_EIndicatorType> {
-     const TYPE_ID: &str = "TArray<ZHM5IndicatorManager_EIndicatorType>";
+     const TYPE_ID: &str = "TArray<ZHM5IndicatorManager.EIndicatorType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5IndicatorManager_EIndicatorType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5IndicatorManager_EIndicatorType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5IndicatorManager.EIndicatorType>>";
 }
 
 impl Variant for ZHM5IndicatorManager_EIndicatorType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5IndicatorManager_EIndicatorType")
+        interner.get_or_intern_static("ZHM5IndicatorManager.EIndicatorType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5IndicatorManager_EIndicatorType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43224,24 +43710,24 @@ impl Bin1Serialize for ZHM5Item_EKeywordEvaluationType {
 }
 
 impl StaticVariant for ZHM5Item_EKeywordEvaluationType {
-     const TYPE_ID: &str = "ZHM5Item_EKeywordEvaluationType";
+     const TYPE_ID: &str = "ZHM5Item.EKeywordEvaluationType";
 }
 
 impl StaticVariant for Vec<ZHM5Item_EKeywordEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZHM5Item_EKeywordEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZHM5Item.EKeywordEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5Item_EKeywordEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5Item_EKeywordEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5Item.EKeywordEvaluationType>>";
 }
 
 impl Variant for ZHM5Item_EKeywordEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5Item_EKeywordEvaluationType")
+        interner.get_or_intern_static("ZHM5Item.EKeywordEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5Item_EKeywordEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43279,24 +43765,24 @@ impl Bin1Serialize for ZHM5Item_EUseTypes {
 }
 
 impl StaticVariant for ZHM5Item_EUseTypes {
-     const TYPE_ID: &str = "ZHM5Item_EUseTypes";
+     const TYPE_ID: &str = "ZHM5Item.EUseTypes";
 }
 
 impl StaticVariant for Vec<ZHM5Item_EUseTypes> {
-     const TYPE_ID: &str = "TArray<ZHM5Item_EUseTypes>";
+     const TYPE_ID: &str = "TArray<ZHM5Item.EUseTypes>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5Item_EUseTypes>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5Item_EUseTypes>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5Item.EUseTypes>>";
 }
 
 impl Variant for ZHM5Item_EUseTypes {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5Item_EUseTypes")
+        interner.get_or_intern_static("ZHM5Item.EUseTypes")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5Item_EUseTypes".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43346,24 +43832,24 @@ impl Bin1Serialize for ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteraction
 }
 
 impl StaticVariant for ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteractionEvent {
-     const TYPE_ID: &str = "ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteractionEvent";
+     const TYPE_ID: &str = "ZHM5ItemInteractionEventConsumer.EHM5SoundItemInteractionEvent";
 }
 
 impl StaticVariant for Vec<ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteractionEvent> {
-     const TYPE_ID: &str = "TArray<ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteractionEvent>";
+     const TYPE_ID: &str = "TArray<ZHM5ItemInteractionEventConsumer.EHM5SoundItemInteractionEvent>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteractionEvent>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteractionEvent>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5ItemInteractionEventConsumer.EHM5SoundItemInteractionEvent>>";
 }
 
 impl Variant for ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteractionEvent {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteractionEvent")
+        interner.get_or_intern_static("ZHM5ItemInteractionEventConsumer.EHM5SoundItemInteractionEvent")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5ItemInteractionEventConsumer_EHM5SoundItemInteractionEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43401,24 +43887,24 @@ impl Bin1Serialize for ZHM5LedgeMount_EFaceDirection {
 }
 
 impl StaticVariant for ZHM5LedgeMount_EFaceDirection {
-     const TYPE_ID: &str = "ZHM5LedgeMount_EFaceDirection";
+     const TYPE_ID: &str = "ZHM5LedgeMount.EFaceDirection";
 }
 
 impl StaticVariant for Vec<ZHM5LedgeMount_EFaceDirection> {
-     const TYPE_ID: &str = "TArray<ZHM5LedgeMount_EFaceDirection>";
+     const TYPE_ID: &str = "TArray<ZHM5LedgeMount.EFaceDirection>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5LedgeMount_EFaceDirection>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5LedgeMount_EFaceDirection>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5LedgeMount.EFaceDirection>>";
 }
 
 impl Variant for ZHM5LedgeMount_EFaceDirection {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5LedgeMount_EFaceDirection")
+        interner.get_or_intern_static("ZHM5LedgeMount.EFaceDirection")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5LedgeMount_EFaceDirection".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43454,24 +43940,24 @@ impl Bin1Serialize for ZHM5LedgeMount_ELedgeEndState {
 }
 
 impl StaticVariant for ZHM5LedgeMount_ELedgeEndState {
-     const TYPE_ID: &str = "ZHM5LedgeMount_ELedgeEndState";
+     const TYPE_ID: &str = "ZHM5LedgeMount.ELedgeEndState";
 }
 
 impl StaticVariant for Vec<ZHM5LedgeMount_ELedgeEndState> {
-     const TYPE_ID: &str = "TArray<ZHM5LedgeMount_ELedgeEndState>";
+     const TYPE_ID: &str = "TArray<ZHM5LedgeMount.ELedgeEndState>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5LedgeMount_ELedgeEndState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5LedgeMount_ELedgeEndState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5LedgeMount.ELedgeEndState>>";
 }
 
 impl Variant for ZHM5LedgeMount_ELedgeEndState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5LedgeMount_ELedgeEndState")
+        interner.get_or_intern_static("ZHM5LedgeMount.ELedgeEndState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5LedgeMount_ELedgeEndState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43507,24 +43993,24 @@ impl Bin1Serialize for ZHM5ValueEntity_bool_EForwardRule {
 }
 
 impl StaticVariant for ZHM5ValueEntity_bool_EForwardRule {
-     const TYPE_ID: &str = "ZHM5ValueEntity_bool_EForwardRule";
+     const TYPE_ID: &str = "ZHM5ValueEntity_bool.EForwardRule";
 }
 
 impl StaticVariant for Vec<ZHM5ValueEntity_bool_EForwardRule> {
-     const TYPE_ID: &str = "TArray<ZHM5ValueEntity_bool_EForwardRule>";
+     const TYPE_ID: &str = "TArray<ZHM5ValueEntity_bool.EForwardRule>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5ValueEntity_bool_EForwardRule>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5ValueEntity_bool_EForwardRule>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5ValueEntity_bool.EForwardRule>>";
 }
 
 impl Variant for ZHM5ValueEntity_bool_EForwardRule {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5ValueEntity_bool_EForwardRule")
+        interner.get_or_intern_static("ZHM5ValueEntity_bool.EForwardRule")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5ValueEntity_bool_EForwardRule".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43566,24 +44052,24 @@ impl Bin1Serialize for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass 
 }
 
 impl StaticVariant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass {
-     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass";
+     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioClass";
 }
 
 impl StaticVariant for Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass> {
-     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass>";
+     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioClass>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioClass>>";
 }
 
 impl Variant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass")
+        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioClass")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioClass".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43627,24 +44113,24 @@ impl Bin1Serialize for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExotic
 }
 
 impl StaticVariant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExoticType {
-     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExoticType";
+     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioExoticType";
 }
 
 impl StaticVariant for Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExoticType> {
-     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExoticType>";
+     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioExoticType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExoticType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExoticType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioExoticType>>";
 }
 
 impl Variant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExoticType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExoticType")
+        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioExoticType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioExoticType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43686,24 +44172,24 @@ impl Bin1Serialize for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily
 }
 
 impl StaticVariant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily {
-     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily";
+     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioFamily";
 }
 
 impl StaticVariant for Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily> {
-     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily>";
+     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioFamily>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioFamily>>";
 }
 
 impl Variant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily")
+        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioFamily")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFamily".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43739,24 +44225,24 @@ impl Bin1Serialize for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireTy
 }
 
 impl StaticVariant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireType {
-     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireType";
+     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioFireType";
 }
 
 impl StaticVariant for Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireType> {
-     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireType>";
+     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioFireType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioFireType>>";
 }
 
 impl Variant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireType")
+        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioFireType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioFireType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43798,24 +44284,24 @@ impl Bin1Serialize for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTa
 }
 
 impl StaticVariant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTailType {
-     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTailType";
+     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioHeadTailType";
 }
 
 impl StaticVariant for Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTailType> {
-     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTailType>";
+     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioHeadTailType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTailType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTailType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioHeadTailType>>";
 }
 
 impl Variant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTailType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTailType")
+        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioHeadTailType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioHeadTailType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43851,24 +44337,24 @@ impl Bin1Serialize for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpact
 }
 
 impl StaticVariant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpactType {
-     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpactType";
+     const TYPE_ID: &str = "ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioImpactType";
 }
 
 impl StaticVariant for Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpactType> {
-     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpactType>";
+     const TYPE_ID: &str = "TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioImpactType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpactType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpactType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioImpactType>>";
 }
 
 impl Variant for ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpactType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpactType")
+        interner.get_or_intern_static("ZHM5WeaponBasicConfigEntity.EWeaponBasicConfigAudioImpactType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5WeaponBasicConfigEntity_EWeaponBasicConfigAudioImpactType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43908,24 +44394,24 @@ impl Bin1Serialize for ZHM5WeaponEventConsumer_EAnimWeapon {
 }
 
 impl StaticVariant for ZHM5WeaponEventConsumer_EAnimWeapon {
-     const TYPE_ID: &str = "ZHM5WeaponEventConsumer_EAnimWeapon";
+     const TYPE_ID: &str = "ZHM5WeaponEventConsumer.EAnimWeapon";
 }
 
 impl StaticVariant for Vec<ZHM5WeaponEventConsumer_EAnimWeapon> {
-     const TYPE_ID: &str = "TArray<ZHM5WeaponEventConsumer_EAnimWeapon>";
+     const TYPE_ID: &str = "TArray<ZHM5WeaponEventConsumer.EAnimWeapon>";
 }
 
 impl StaticVariant for Vec<Vec<ZHM5WeaponEventConsumer_EAnimWeapon>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponEventConsumer_EAnimWeapon>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHM5WeaponEventConsumer.EAnimWeapon>>";
 }
 
 impl Variant for ZHM5WeaponEventConsumer_EAnimWeapon {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHM5WeaponEventConsumer_EAnimWeapon")
+        interner.get_or_intern_static("ZHM5WeaponEventConsumer.EAnimWeapon")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHM5WeaponEventConsumer_EAnimWeapon".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -43963,24 +44449,24 @@ impl Bin1Serialize for ZHUDCamera3DControllerEntity_EMode {
 }
 
 impl StaticVariant for ZHUDCamera3DControllerEntity_EMode {
-     const TYPE_ID: &str = "ZHUDCamera3DControllerEntity_EMode";
+     const TYPE_ID: &str = "ZHUDCamera3DControllerEntity.EMode";
 }
 
 impl StaticVariant for Vec<ZHUDCamera3DControllerEntity_EMode> {
-     const TYPE_ID: &str = "TArray<ZHUDCamera3DControllerEntity_EMode>";
+     const TYPE_ID: &str = "TArray<ZHUDCamera3DControllerEntity.EMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZHUDCamera3DControllerEntity_EMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHUDCamera3DControllerEntity_EMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHUDCamera3DControllerEntity.EMode>>";
 }
 
 impl Variant for ZHUDCamera3DControllerEntity_EMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHUDCamera3DControllerEntity_EMode")
+        interner.get_or_intern_static("ZHUDCamera3DControllerEntity.EMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHUDCamera3DControllerEntity_EMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44020,24 +44506,24 @@ impl Bin1Serialize for ZHUDCamera3DControllerEntity_ESpace {
 }
 
 impl StaticVariant for ZHUDCamera3DControllerEntity_ESpace {
-     const TYPE_ID: &str = "ZHUDCamera3DControllerEntity_ESpace";
+     const TYPE_ID: &str = "ZHUDCamera3DControllerEntity.ESpace";
 }
 
 impl StaticVariant for Vec<ZHUDCamera3DControllerEntity_ESpace> {
-     const TYPE_ID: &str = "TArray<ZHUDCamera3DControllerEntity_ESpace>";
+     const TYPE_ID: &str = "TArray<ZHUDCamera3DControllerEntity.ESpace>";
 }
 
 impl StaticVariant for Vec<Vec<ZHUDCamera3DControllerEntity_ESpace>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHUDCamera3DControllerEntity_ESpace>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHUDCamera3DControllerEntity.ESpace>>";
 }
 
 impl Variant for ZHUDCamera3DControllerEntity_ESpace {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHUDCamera3DControllerEntity_ESpace")
+        interner.get_or_intern_static("ZHUDCamera3DControllerEntity.ESpace")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHUDCamera3DControllerEntity_ESpace".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44073,24 +44559,24 @@ impl Bin1Serialize for ZHUDCamera3DControllerEntity_EType {
 }
 
 impl StaticVariant for ZHUDCamera3DControllerEntity_EType {
-     const TYPE_ID: &str = "ZHUDCamera3DControllerEntity_EType";
+     const TYPE_ID: &str = "ZHUDCamera3DControllerEntity.EType";
 }
 
 impl StaticVariant for Vec<ZHUDCamera3DControllerEntity_EType> {
-     const TYPE_ID: &str = "TArray<ZHUDCamera3DControllerEntity_EType>";
+     const TYPE_ID: &str = "TArray<ZHUDCamera3DControllerEntity.EType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHUDCamera3DControllerEntity_EType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHUDCamera3DControllerEntity_EType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHUDCamera3DControllerEntity.EType>>";
 }
 
 impl Variant for ZHUDCamera3DControllerEntity_EType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHUDCamera3DControllerEntity_EType")
+        interner.get_or_intern_static("ZHUDCamera3DControllerEntity.EType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHUDCamera3DControllerEntity_EType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44144,24 +44630,24 @@ impl Bin1Serialize for ZHUDOccluderTriggerEntity_EOccluderTestBit {
 }
 
 impl StaticVariant for ZHUDOccluderTriggerEntity_EOccluderTestBit {
-     const TYPE_ID: &str = "ZHUDOccluderTriggerEntity_EOccluderTestBit";
+     const TYPE_ID: &str = "ZHUDOccluderTriggerEntity.EOccluderTestBit";
 }
 
 impl StaticVariant for Vec<ZHUDOccluderTriggerEntity_EOccluderTestBit> {
-     const TYPE_ID: &str = "TArray<ZHUDOccluderTriggerEntity_EOccluderTestBit>";
+     const TYPE_ID: &str = "TArray<ZHUDOccluderTriggerEntity.EOccluderTestBit>";
 }
 
 impl StaticVariant for Vec<Vec<ZHUDOccluderTriggerEntity_EOccluderTestBit>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHUDOccluderTriggerEntity_EOccluderTestBit>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHUDOccluderTriggerEntity.EOccluderTestBit>>";
 }
 
 impl Variant for ZHUDOccluderTriggerEntity_EOccluderTestBit {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHUDOccluderTriggerEntity_EOccluderTestBit")
+        interner.get_or_intern_static("ZHUDOccluderTriggerEntity.EOccluderTestBit")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHUDOccluderTriggerEntity_EOccluderTestBit".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44197,24 +44683,24 @@ impl Bin1Serialize for ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy {
 }
 
 impl StaticVariant for ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy {
-     const TYPE_ID: &str = "ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy";
+     const TYPE_ID: &str = "ZHUDOutfitWidgetControllerEntity.EVisibilityPolicy";
 }
 
 impl StaticVariant for Vec<ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy> {
-     const TYPE_ID: &str = "TArray<ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy>";
+     const TYPE_ID: &str = "TArray<ZHUDOutfitWidgetControllerEntity.EVisibilityPolicy>";
 }
 
 impl StaticVariant for Vec<Vec<ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHUDOutfitWidgetControllerEntity.EVisibilityPolicy>>";
 }
 
 impl Variant for ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy")
+        interner.get_or_intern_static("ZHUDOutfitWidgetControllerEntity.EVisibilityPolicy")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHUDOutfitWidgetControllerEntity_EVisibilityPolicy".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44252,24 +44738,24 @@ impl Bin1Serialize for ZHUDTimerInstance_ETimeFormatChoice {
 }
 
 impl StaticVariant for ZHUDTimerInstance_ETimeFormatChoice {
-     const TYPE_ID: &str = "ZHUDTimerInstance_ETimeFormatChoice";
+     const TYPE_ID: &str = "ZHUDTimerInstance.ETimeFormatChoice";
 }
 
 impl StaticVariant for Vec<ZHUDTimerInstance_ETimeFormatChoice> {
-     const TYPE_ID: &str = "TArray<ZHUDTimerInstance_ETimeFormatChoice>";
+     const TYPE_ID: &str = "TArray<ZHUDTimerInstance.ETimeFormatChoice>";
 }
 
 impl StaticVariant for Vec<Vec<ZHUDTimerInstance_ETimeFormatChoice>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHUDTimerInstance_ETimeFormatChoice>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHUDTimerInstance.ETimeFormatChoice>>";
 }
 
 impl Variant for ZHUDTimerInstance_ETimeFormatChoice {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHUDTimerInstance_ETimeFormatChoice")
+        interner.get_or_intern_static("ZHUDTimerInstance.ETimeFormatChoice")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHUDTimerInstance_ETimeFormatChoice".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44315,24 +44801,24 @@ impl Bin1Serialize for ZHUDWorldSpatialAttachEntity_EOrientation {
 }
 
 impl StaticVariant for ZHUDWorldSpatialAttachEntity_EOrientation {
-     const TYPE_ID: &str = "ZHUDWorldSpatialAttachEntity_EOrientation";
+     const TYPE_ID: &str = "ZHUDWorldSpatialAttachEntity.EOrientation";
 }
 
 impl StaticVariant for Vec<ZHUDWorldSpatialAttachEntity_EOrientation> {
-     const TYPE_ID: &str = "TArray<ZHUDWorldSpatialAttachEntity_EOrientation>";
+     const TYPE_ID: &str = "TArray<ZHUDWorldSpatialAttachEntity.EOrientation>";
 }
 
 impl StaticVariant for Vec<Vec<ZHUDWorldSpatialAttachEntity_EOrientation>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHUDWorldSpatialAttachEntity_EOrientation>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHUDWorldSpatialAttachEntity.EOrientation>>";
 }
 
 impl Variant for ZHUDWorldSpatialAttachEntity_EOrientation {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHUDWorldSpatialAttachEntity_EOrientation")
+        interner.get_or_intern_static("ZHUDWorldSpatialAttachEntity.EOrientation")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHUDWorldSpatialAttachEntity_EOrientation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44368,24 +44854,24 @@ impl Bin1Serialize for ZHeroBoneAttachEntity_EResetMode {
 }
 
 impl StaticVariant for ZHeroBoneAttachEntity_EResetMode {
-     const TYPE_ID: &str = "ZHeroBoneAttachEntity_EResetMode";
+     const TYPE_ID: &str = "ZHeroBoneAttachEntity.EResetMode";
 }
 
 impl StaticVariant for Vec<ZHeroBoneAttachEntity_EResetMode> {
-     const TYPE_ID: &str = "TArray<ZHeroBoneAttachEntity_EResetMode>";
+     const TYPE_ID: &str = "TArray<ZHeroBoneAttachEntity.EResetMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZHeroBoneAttachEntity_EResetMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHeroBoneAttachEntity_EResetMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHeroBoneAttachEntity.EResetMode>>";
 }
 
 impl Variant for ZHeroBoneAttachEntity_EResetMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHeroBoneAttachEntity_EResetMode")
+        interner.get_or_intern_static("ZHeroBoneAttachEntity.EResetMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHeroBoneAttachEntity_EResetMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44423,24 +44909,24 @@ impl Bin1Serialize for ZHeroInventoryAction_EEvaluationType {
 }
 
 impl StaticVariant for ZHeroInventoryAction_EEvaluationType {
-     const TYPE_ID: &str = "ZHeroInventoryAction_EEvaluationType";
+     const TYPE_ID: &str = "ZHeroInventoryAction.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZHeroInventoryAction_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZHeroInventoryAction_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZHeroInventoryAction.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHeroInventoryAction_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHeroInventoryAction_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHeroInventoryAction.EEvaluationType>>";
 }
 
 impl Variant for ZHeroInventoryAction_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHeroInventoryAction_EEvaluationType")
+        interner.get_or_intern_static("ZHeroInventoryAction.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHeroInventoryAction_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44480,24 +44966,24 @@ impl Bin1Serialize for ZHeroKeywordCondition_EEvaluationType {
 }
 
 impl StaticVariant for ZHeroKeywordCondition_EEvaluationType {
-     const TYPE_ID: &str = "ZHeroKeywordCondition_EEvaluationType";
+     const TYPE_ID: &str = "ZHeroKeywordCondition.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZHeroKeywordCondition_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZHeroKeywordCondition_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZHeroKeywordCondition.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZHeroKeywordCondition_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHeroKeywordCondition_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHeroKeywordCondition.EEvaluationType>>";
 }
 
 impl Variant for ZHeroKeywordCondition_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHeroKeywordCondition_EEvaluationType")
+        interner.get_or_intern_static("ZHeroKeywordCondition.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHeroKeywordCondition_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44539,24 +45025,24 @@ impl Bin1Serialize for ZHttpUrl_EVerb {
 }
 
 impl StaticVariant for ZHttpUrl_EVerb {
-     const TYPE_ID: &str = "ZHttpUrl_EVerb";
+     const TYPE_ID: &str = "ZHttpUrl.EVerb";
 }
 
 impl StaticVariant for Vec<ZHttpUrl_EVerb> {
-     const TYPE_ID: &str = "TArray<ZHttpUrl_EVerb>";
+     const TYPE_ID: &str = "TArray<ZHttpUrl.EVerb>";
 }
 
 impl StaticVariant for Vec<Vec<ZHttpUrl_EVerb>> {
-     const TYPE_ID: &str = "TArray<TArray<ZHttpUrl_EVerb>>";
+     const TYPE_ID: &str = "TArray<TArray<ZHttpUrl.EVerb>>";
 }
 
 impl Variant for ZHttpUrl_EVerb {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZHttpUrl_EVerb")
+        interner.get_or_intern_static("ZHttpUrl.EVerb")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZHttpUrl_EVerb".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44596,24 +45082,24 @@ impl Bin1Serialize for ZInputListenerActorPool_eInputListenerButtons {
 }
 
 impl StaticVariant for ZInputListenerActorPool_eInputListenerButtons {
-     const TYPE_ID: &str = "ZInputListenerActorPool_eInputListenerButtons";
+     const TYPE_ID: &str = "ZInputListenerActorPool.eInputListenerButtons";
 }
 
 impl StaticVariant for Vec<ZInputListenerActorPool_eInputListenerButtons> {
-     const TYPE_ID: &str = "TArray<ZInputListenerActorPool_eInputListenerButtons>";
+     const TYPE_ID: &str = "TArray<ZInputListenerActorPool.eInputListenerButtons>";
 }
 
 impl StaticVariant for Vec<Vec<ZInputListenerActorPool_eInputListenerButtons>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInputListenerActorPool_eInputListenerButtons>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInputListenerActorPool.eInputListenerButtons>>";
 }
 
 impl Variant for ZInputListenerActorPool_eInputListenerButtons {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInputListenerActorPool_eInputListenerButtons")
+        interner.get_or_intern_static("ZInputListenerActorPool.eInputListenerButtons")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInputListenerActorPool_eInputListenerButtons".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44653,24 +45139,24 @@ impl Bin1Serialize for ZInputListenerAxisEntity_eInputListenerAxes {
 }
 
 impl StaticVariant for ZInputListenerAxisEntity_eInputListenerAxes {
-     const TYPE_ID: &str = "ZInputListenerAxisEntity_eInputListenerAxes";
+     const TYPE_ID: &str = "ZInputListenerAxisEntity.eInputListenerAxes";
 }
 
 impl StaticVariant for Vec<ZInputListenerAxisEntity_eInputListenerAxes> {
-     const TYPE_ID: &str = "TArray<ZInputListenerAxisEntity_eInputListenerAxes>";
+     const TYPE_ID: &str = "TArray<ZInputListenerAxisEntity.eInputListenerAxes>";
 }
 
 impl StaticVariant for Vec<Vec<ZInputListenerAxisEntity_eInputListenerAxes>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInputListenerAxisEntity_eInputListenerAxes>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInputListenerAxisEntity.eInputListenerAxes>>";
 }
 
 impl Variant for ZInputListenerAxisEntity_eInputListenerAxes {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInputListenerAxisEntity_eInputListenerAxes")
+        interner.get_or_intern_static("ZInputListenerAxisEntity.eInputListenerAxes")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInputListenerAxisEntity_eInputListenerAxes".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44714,24 +45200,24 @@ impl Bin1Serialize for ZInputListenerButtonEntity_eInputListenerButtons {
 }
 
 impl StaticVariant for ZInputListenerButtonEntity_eInputListenerButtons {
-     const TYPE_ID: &str = "ZInputListenerButtonEntity_eInputListenerButtons";
+     const TYPE_ID: &str = "ZInputListenerButtonEntity.eInputListenerButtons";
 }
 
 impl StaticVariant for Vec<ZInputListenerButtonEntity_eInputListenerButtons> {
-     const TYPE_ID: &str = "TArray<ZInputListenerButtonEntity_eInputListenerButtons>";
+     const TYPE_ID: &str = "TArray<ZInputListenerButtonEntity.eInputListenerButtons>";
 }
 
 impl StaticVariant for Vec<Vec<ZInputListenerButtonEntity_eInputListenerButtons>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInputListenerButtonEntity_eInputListenerButtons>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInputListenerButtonEntity.eInputListenerButtons>>";
 }
 
 impl Variant for ZInputListenerButtonEntity_eInputListenerButtons {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInputListenerButtonEntity_eInputListenerButtons")
+        interner.get_or_intern_static("ZInputListenerButtonEntity.eInputListenerButtons")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInputListenerButtonEntity_eInputListenerButtons".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44771,24 +45257,24 @@ impl Bin1Serialize for ZInputListenerDpadEntity_eInputListenerDpad {
 }
 
 impl StaticVariant for ZInputListenerDpadEntity_eInputListenerDpad {
-     const TYPE_ID: &str = "ZInputListenerDpadEntity_eInputListenerDpad";
+     const TYPE_ID: &str = "ZInputListenerDpadEntity.eInputListenerDpad";
 }
 
 impl StaticVariant for Vec<ZInputListenerDpadEntity_eInputListenerDpad> {
-     const TYPE_ID: &str = "TArray<ZInputListenerDpadEntity_eInputListenerDpad>";
+     const TYPE_ID: &str = "TArray<ZInputListenerDpadEntity.eInputListenerDpad>";
 }
 
 impl StaticVariant for Vec<Vec<ZInputListenerDpadEntity_eInputListenerDpad>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInputListenerDpadEntity_eInputListenerDpad>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInputListenerDpadEntity.eInputListenerDpad>>";
 }
 
 impl Variant for ZInputListenerDpadEntity_eInputListenerDpad {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInputListenerDpadEntity_eInputListenerDpad")
+        interner.get_or_intern_static("ZInputListenerDpadEntity.eInputListenerDpad")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInputListenerDpadEntity_eInputListenerDpad".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44850,24 +45336,24 @@ impl Bin1Serialize for ZInteractionData_EFilterResult {
 }
 
 impl StaticVariant for ZInteractionData_EFilterResult {
-     const TYPE_ID: &str = "ZInteractionData_EFilterResult";
+     const TYPE_ID: &str = "ZInteractionData.EFilterResult";
 }
 
 impl StaticVariant for Vec<ZInteractionData_EFilterResult> {
-     const TYPE_ID: &str = "TArray<ZInteractionData_EFilterResult>";
+     const TYPE_ID: &str = "TArray<ZInteractionData.EFilterResult>";
 }
 
 impl StaticVariant for Vec<Vec<ZInteractionData_EFilterResult>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInteractionData_EFilterResult>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInteractionData.EFilterResult>>";
 }
 
 impl Variant for ZInteractionData_EFilterResult {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInteractionData_EFilterResult")
+        interner.get_or_intern_static("ZInteractionData.EFilterResult")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInteractionData_EFilterResult".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44937,24 +45423,24 @@ impl Bin1Serialize for ZInteractionEventConsumer_EEvent {
 }
 
 impl StaticVariant for ZInteractionEventConsumer_EEvent {
-     const TYPE_ID: &str = "ZInteractionEventConsumer_EEvent";
+     const TYPE_ID: &str = "ZInteractionEventConsumer.EEvent";
 }
 
 impl StaticVariant for Vec<ZInteractionEventConsumer_EEvent> {
-     const TYPE_ID: &str = "TArray<ZInteractionEventConsumer_EEvent>";
+     const TYPE_ID: &str = "TArray<ZInteractionEventConsumer.EEvent>";
 }
 
 impl StaticVariant for Vec<Vec<ZInteractionEventConsumer_EEvent>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInteractionEventConsumer_EEvent>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInteractionEventConsumer.EEvent>>";
 }
 
 impl Variant for ZInteractionEventConsumer_EEvent {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInteractionEventConsumer_EEvent")
+        interner.get_or_intern_static("ZInteractionEventConsumer.EEvent")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInteractionEventConsumer_EEvent".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -44994,24 +45480,24 @@ impl Bin1Serialize for ZInteractionGuideData_EDirection {
 }
 
 impl StaticVariant for ZInteractionGuideData_EDirection {
-     const TYPE_ID: &str = "ZInteractionGuideData_EDirection";
+     const TYPE_ID: &str = "ZInteractionGuideData.EDirection";
 }
 
 impl StaticVariant for Vec<ZInteractionGuideData_EDirection> {
-     const TYPE_ID: &str = "TArray<ZInteractionGuideData_EDirection>";
+     const TYPE_ID: &str = "TArray<ZInteractionGuideData.EDirection>";
 }
 
 impl StaticVariant for Vec<Vec<ZInteractionGuideData_EDirection>> {
-     const TYPE_ID: &str = "TArray<TArray<ZInteractionGuideData_EDirection>>";
+     const TYPE_ID: &str = "TArray<TArray<ZInteractionGuideData.EDirection>>";
 }
 
 impl Variant for ZInteractionGuideData_EDirection {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZInteractionGuideData_EDirection")
+        interner.get_or_intern_static("ZInteractionGuideData.EDirection")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZInteractionGuideData_EDirection".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45051,24 +45537,24 @@ impl Bin1Serialize for ZItemSpawner_EPhysicsMode {
 }
 
 impl StaticVariant for ZItemSpawner_EPhysicsMode {
-     const TYPE_ID: &str = "ZItemSpawner_EPhysicsMode";
+     const TYPE_ID: &str = "ZItemSpawner.EPhysicsMode";
 }
 
 impl StaticVariant for Vec<ZItemSpawner_EPhysicsMode> {
-     const TYPE_ID: &str = "TArray<ZItemSpawner_EPhysicsMode>";
+     const TYPE_ID: &str = "TArray<ZItemSpawner.EPhysicsMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZItemSpawner_EPhysicsMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZItemSpawner_EPhysicsMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZItemSpawner.EPhysicsMode>>";
 }
 
 impl Variant for ZItemSpawner_EPhysicsMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZItemSpawner_EPhysicsMode")
+        interner.get_or_intern_static("ZItemSpawner.EPhysicsMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZItemSpawner_EPhysicsMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45114,24 +45600,24 @@ impl Bin1Serialize for ZKeywordCondition_EEvaluationType {
 }
 
 impl StaticVariant for ZKeywordCondition_EEvaluationType {
-     const TYPE_ID: &str = "ZKeywordCondition_EEvaluationType";
+     const TYPE_ID: &str = "ZKeywordCondition.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZKeywordCondition_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZKeywordCondition_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZKeywordCondition.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZKeywordCondition_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZKeywordCondition_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZKeywordCondition.EEvaluationType>>";
 }
 
 impl Variant for ZKeywordCondition_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZKeywordCondition_EEvaluationType")
+        interner.get_or_intern_static("ZKeywordCondition.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZKeywordCondition_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45169,24 +45655,24 @@ impl Bin1Serialize for ZLogicMultipleGate_EGateType {
 }
 
 impl StaticVariant for ZLogicMultipleGate_EGateType {
-     const TYPE_ID: &str = "ZLogicMultipleGate_EGateType";
+     const TYPE_ID: &str = "ZLogicMultipleGate.EGateType";
 }
 
 impl StaticVariant for Vec<ZLogicMultipleGate_EGateType> {
-     const TYPE_ID: &str = "TArray<ZLogicMultipleGate_EGateType>";
+     const TYPE_ID: &str = "TArray<ZLogicMultipleGate.EGateType>";
 }
 
 impl StaticVariant for Vec<Vec<ZLogicMultipleGate_EGateType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZLogicMultipleGate_EGateType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZLogicMultipleGate.EGateType>>";
 }
 
 impl Variant for ZLogicMultipleGate_EGateType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZLogicMultipleGate_EGateType")
+        interner.get_or_intern_static("ZLogicMultipleGate.EGateType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZLogicMultipleGate_EGateType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45230,24 +45716,24 @@ impl Bin1Serialize for ZLookAtLogic_EAxisSelect {
 }
 
 impl StaticVariant for ZLookAtLogic_EAxisSelect {
-     const TYPE_ID: &str = "ZLookAtLogic_EAxisSelect";
+     const TYPE_ID: &str = "ZLookAtLogic.EAxisSelect";
 }
 
 impl StaticVariant for Vec<ZLookAtLogic_EAxisSelect> {
-     const TYPE_ID: &str = "TArray<ZLookAtLogic_EAxisSelect>";
+     const TYPE_ID: &str = "TArray<ZLookAtLogic.EAxisSelect>";
 }
 
 impl StaticVariant for Vec<Vec<ZLookAtLogic_EAxisSelect>> {
-     const TYPE_ID: &str = "TArray<TArray<ZLookAtLogic_EAxisSelect>>";
+     const TYPE_ID: &str = "TArray<TArray<ZLookAtLogic.EAxisSelect>>";
 }
 
 impl Variant for ZLookAtLogic_EAxisSelect {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZLookAtLogic_EAxisSelect")
+        interner.get_or_intern_static("ZLookAtLogic.EAxisSelect")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZLookAtLogic_EAxisSelect".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45283,24 +45769,24 @@ impl Bin1Serialize for ZMenuSliderNavigationEntity_ESliderInputMode {
 }
 
 impl StaticVariant for ZMenuSliderNavigationEntity_ESliderInputMode {
-     const TYPE_ID: &str = "ZMenuSliderNavigationEntity_ESliderInputMode";
+     const TYPE_ID: &str = "ZMenuSliderNavigationEntity.ESliderInputMode";
 }
 
 impl StaticVariant for Vec<ZMenuSliderNavigationEntity_ESliderInputMode> {
-     const TYPE_ID: &str = "TArray<ZMenuSliderNavigationEntity_ESliderInputMode>";
+     const TYPE_ID: &str = "TArray<ZMenuSliderNavigationEntity.ESliderInputMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZMenuSliderNavigationEntity_ESliderInputMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZMenuSliderNavigationEntity_ESliderInputMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZMenuSliderNavigationEntity.ESliderInputMode>>";
 }
 
 impl Variant for ZMenuSliderNavigationEntity_ESliderInputMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZMenuSliderNavigationEntity_ESliderInputMode")
+        interner.get_or_intern_static("ZMenuSliderNavigationEntity.ESliderInputMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZMenuSliderNavigationEntity_ESliderInputMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45344,24 +45830,24 @@ impl Bin1Serialize for ZMinimapDirectionProvider_EAxis {
 }
 
 impl StaticVariant for ZMinimapDirectionProvider_EAxis {
-     const TYPE_ID: &str = "ZMinimapDirectionProvider_EAxis";
+     const TYPE_ID: &str = "ZMinimapDirectionProvider.EAxis";
 }
 
 impl StaticVariant for Vec<ZMinimapDirectionProvider_EAxis> {
-     const TYPE_ID: &str = "TArray<ZMinimapDirectionProvider_EAxis>";
+     const TYPE_ID: &str = "TArray<ZMinimapDirectionProvider.EAxis>";
 }
 
 impl StaticVariant for Vec<Vec<ZMinimapDirectionProvider_EAxis>> {
-     const TYPE_ID: &str = "TArray<TArray<ZMinimapDirectionProvider_EAxis>>";
+     const TYPE_ID: &str = "TArray<TArray<ZMinimapDirectionProvider.EAxis>>";
 }
 
 impl Variant for ZMinimapDirectionProvider_EAxis {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZMinimapDirectionProvider_EAxis")
+        interner.get_or_intern_static("ZMinimapDirectionProvider.EAxis")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZMinimapDirectionProvider_EAxis".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45397,24 +45883,24 @@ impl Bin1Serialize for ZMinimapDirectionProvider_EProviderType {
 }
 
 impl StaticVariant for ZMinimapDirectionProvider_EProviderType {
-     const TYPE_ID: &str = "ZMinimapDirectionProvider_EProviderType";
+     const TYPE_ID: &str = "ZMinimapDirectionProvider.EProviderType";
 }
 
 impl StaticVariant for Vec<ZMinimapDirectionProvider_EProviderType> {
-     const TYPE_ID: &str = "TArray<ZMinimapDirectionProvider_EProviderType>";
+     const TYPE_ID: &str = "TArray<ZMinimapDirectionProvider.EProviderType>";
 }
 
 impl StaticVariant for Vec<Vec<ZMinimapDirectionProvider_EProviderType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZMinimapDirectionProvider_EProviderType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZMinimapDirectionProvider.EProviderType>>";
 }
 
 impl Variant for ZMinimapDirectionProvider_EProviderType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZMinimapDirectionProvider_EProviderType")
+        interner.get_or_intern_static("ZMinimapDirectionProvider.EProviderType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZMinimapDirectionProvider_EProviderType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45454,24 +45940,24 @@ impl Bin1Serialize for ZMirrorEntity_EMirrorQuality {
 }
 
 impl StaticVariant for ZMirrorEntity_EMirrorQuality {
-     const TYPE_ID: &str = "ZMirrorEntity_EMirrorQuality";
+     const TYPE_ID: &str = "ZMirrorEntity.EMirrorQuality";
 }
 
 impl StaticVariant for Vec<ZMirrorEntity_EMirrorQuality> {
-     const TYPE_ID: &str = "TArray<ZMirrorEntity_EMirrorQuality>";
+     const TYPE_ID: &str = "TArray<ZMirrorEntity.EMirrorQuality>";
 }
 
 impl StaticVariant for Vec<Vec<ZMirrorEntity_EMirrorQuality>> {
-     const TYPE_ID: &str = "TArray<TArray<ZMirrorEntity_EMirrorQuality>>";
+     const TYPE_ID: &str = "TArray<TArray<ZMirrorEntity.EMirrorQuality>>";
 }
 
 impl Variant for ZMirrorEntity_EMirrorQuality {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZMirrorEntity_EMirrorQuality")
+        interner.get_or_intern_static("ZMirrorEntity.EMirrorQuality")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZMirrorEntity_EMirrorQuality".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45517,24 +46003,24 @@ impl Bin1Serialize for ZModalDialogCondition_EPriorityBit {
 }
 
 impl StaticVariant for ZModalDialogCondition_EPriorityBit {
-     const TYPE_ID: &str = "ZModalDialogCondition_EPriorityBit";
+     const TYPE_ID: &str = "ZModalDialogCondition.EPriorityBit";
 }
 
 impl StaticVariant for Vec<ZModalDialogCondition_EPriorityBit> {
-     const TYPE_ID: &str = "TArray<ZModalDialogCondition_EPriorityBit>";
+     const TYPE_ID: &str = "TArray<ZModalDialogCondition.EPriorityBit>";
 }
 
 impl StaticVariant for Vec<Vec<ZModalDialogCondition_EPriorityBit>> {
-     const TYPE_ID: &str = "TArray<TArray<ZModalDialogCondition_EPriorityBit>>";
+     const TYPE_ID: &str = "TArray<TArray<ZModalDialogCondition.EPriorityBit>>";
 }
 
 impl Variant for ZModalDialogCondition_EPriorityBit {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZModalDialogCondition_EPriorityBit")
+        interner.get_or_intern_static("ZModalDialogCondition.EPriorityBit")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZModalDialogCondition_EPriorityBit".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45570,24 +46056,24 @@ impl Bin1Serialize for ZMoveToPositionBehaviorEntity_EApproachAlignment {
 }
 
 impl StaticVariant for ZMoveToPositionBehaviorEntity_EApproachAlignment {
-     const TYPE_ID: &str = "ZMoveToPositionBehaviorEntity_EApproachAlignment";
+     const TYPE_ID: &str = "ZMoveToPositionBehaviorEntity.EApproachAlignment";
 }
 
 impl StaticVariant for Vec<ZMoveToPositionBehaviorEntity_EApproachAlignment> {
-     const TYPE_ID: &str = "TArray<ZMoveToPositionBehaviorEntity_EApproachAlignment>";
+     const TYPE_ID: &str = "TArray<ZMoveToPositionBehaviorEntity.EApproachAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZMoveToPositionBehaviorEntity_EApproachAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZMoveToPositionBehaviorEntity_EApproachAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZMoveToPositionBehaviorEntity.EApproachAlignment>>";
 }
 
 impl Variant for ZMoveToPositionBehaviorEntity_EApproachAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZMoveToPositionBehaviorEntity_EApproachAlignment")
+        interner.get_or_intern_static("ZMoveToPositionBehaviorEntity.EApproachAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZMoveToPositionBehaviorEntity_EApproachAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45625,24 +46111,24 @@ impl Bin1Serialize for ZMoveToPositionBehaviorEntity_EMovementType {
 }
 
 impl StaticVariant for ZMoveToPositionBehaviorEntity_EMovementType {
-     const TYPE_ID: &str = "ZMoveToPositionBehaviorEntity_EMovementType";
+     const TYPE_ID: &str = "ZMoveToPositionBehaviorEntity.EMovementType";
 }
 
 impl StaticVariant for Vec<ZMoveToPositionBehaviorEntity_EMovementType> {
-     const TYPE_ID: &str = "TArray<ZMoveToPositionBehaviorEntity_EMovementType>";
+     const TYPE_ID: &str = "TArray<ZMoveToPositionBehaviorEntity.EMovementType>";
 }
 
 impl StaticVariant for Vec<Vec<ZMoveToPositionBehaviorEntity_EMovementType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZMoveToPositionBehaviorEntity_EMovementType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZMoveToPositionBehaviorEntity.EMovementType>>";
 }
 
 impl Variant for ZMoveToPositionBehaviorEntity_EMovementType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZMoveToPositionBehaviorEntity_EMovementType")
+        interner.get_or_intern_static("ZMoveToPositionBehaviorEntity.EMovementType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZMoveToPositionBehaviorEntity_EMovementType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45680,24 +46166,24 @@ impl Bin1Serialize for ZMoveToPositionBehaviorEntity_ERotationAlignment {
 }
 
 impl StaticVariant for ZMoveToPositionBehaviorEntity_ERotationAlignment {
-     const TYPE_ID: &str = "ZMoveToPositionBehaviorEntity_ERotationAlignment";
+     const TYPE_ID: &str = "ZMoveToPositionBehaviorEntity.ERotationAlignment";
 }
 
 impl StaticVariant for Vec<ZMoveToPositionBehaviorEntity_ERotationAlignment> {
-     const TYPE_ID: &str = "TArray<ZMoveToPositionBehaviorEntity_ERotationAlignment>";
+     const TYPE_ID: &str = "TArray<ZMoveToPositionBehaviorEntity.ERotationAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZMoveToPositionBehaviorEntity_ERotationAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZMoveToPositionBehaviorEntity_ERotationAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZMoveToPositionBehaviorEntity.ERotationAlignment>>";
 }
 
 impl Variant for ZMoveToPositionBehaviorEntity_ERotationAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZMoveToPositionBehaviorEntity_ERotationAlignment")
+        interner.get_or_intern_static("ZMoveToPositionBehaviorEntity.ERotationAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZMoveToPositionBehaviorEntity_ERotationAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45807,24 +46293,24 @@ impl Bin1Serialize for ZOnlineManager_EError {
 }
 
 impl StaticVariant for ZOnlineManager_EError {
-     const TYPE_ID: &str = "ZOnlineManager_EError";
+     const TYPE_ID: &str = "ZOnlineManager.EError";
 }
 
 impl StaticVariant for Vec<ZOnlineManager_EError> {
-     const TYPE_ID: &str = "TArray<ZOnlineManager_EError>";
+     const TYPE_ID: &str = "TArray<ZOnlineManager.EError>";
 }
 
 impl StaticVariant for Vec<Vec<ZOnlineManager_EError>> {
-     const TYPE_ID: &str = "TArray<TArray<ZOnlineManager_EError>>";
+     const TYPE_ID: &str = "TArray<TArray<ZOnlineManager.EError>>";
 }
 
 impl Variant for ZOnlineManager_EError {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZOnlineManager_EError")
+        interner.get_or_intern_static("ZOnlineManager.EError")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZOnlineManager_EError".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -45862,24 +46348,24 @@ impl Bin1Serialize for ZOnlineManager_EIoiAccountState {
 }
 
 impl StaticVariant for ZOnlineManager_EIoiAccountState {
-     const TYPE_ID: &str = "ZOnlineManager_EIoiAccountState";
+     const TYPE_ID: &str = "ZOnlineManager.EIoiAccountState";
 }
 
 impl StaticVariant for Vec<ZOnlineManager_EIoiAccountState> {
-     const TYPE_ID: &str = "TArray<ZOnlineManager_EIoiAccountState>";
+     const TYPE_ID: &str = "TArray<ZOnlineManager.EIoiAccountState>";
 }
 
 impl StaticVariant for Vec<Vec<ZOnlineManager_EIoiAccountState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZOnlineManager_EIoiAccountState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZOnlineManager.EIoiAccountState>>";
 }
 
 impl Variant for ZOnlineManager_EIoiAccountState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZOnlineManager_EIoiAccountState")
+        interner.get_or_intern_static("ZOnlineManager.EIoiAccountState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZOnlineManager_EIoiAccountState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46001,24 +46487,24 @@ impl Bin1Serialize for ZOnlineManager_EState {
 }
 
 impl StaticVariant for ZOnlineManager_EState {
-     const TYPE_ID: &str = "ZOnlineManager_EState";
+     const TYPE_ID: &str = "ZOnlineManager.EState";
 }
 
 impl StaticVariant for Vec<ZOnlineManager_EState> {
-     const TYPE_ID: &str = "TArray<ZOnlineManager_EState>";
+     const TYPE_ID: &str = "TArray<ZOnlineManager.EState>";
 }
 
 impl StaticVariant for Vec<Vec<ZOnlineManager_EState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZOnlineManager_EState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZOnlineManager.EState>>";
 }
 
 impl Variant for ZOnlineManager_EState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZOnlineManager_EState")
+        interner.get_or_intern_static("ZOnlineManager.EState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZOnlineManager_EState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46056,24 +46542,24 @@ impl Bin1Serialize for ZOperatorBool_EEvaluationType {
 }
 
 impl StaticVariant for ZOperatorBool_EEvaluationType {
-     const TYPE_ID: &str = "ZOperatorBool_EEvaluationType";
+     const TYPE_ID: &str = "ZOperatorBool.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZOperatorBool_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZOperatorBool_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZOperatorBool.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZOperatorBool_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZOperatorBool_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZOperatorBool.EEvaluationType>>";
 }
 
 impl Variant for ZOperatorBool_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZOperatorBool_EEvaluationType")
+        interner.get_or_intern_static("ZOperatorBool.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZOperatorBool_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46123,24 +46609,24 @@ impl Bin1Serialize for ZPIPMessageEntity_EIcon {
 }
 
 impl StaticVariant for ZPIPMessageEntity_EIcon {
-     const TYPE_ID: &str = "ZPIPMessageEntity_EIcon";
+     const TYPE_ID: &str = "ZPIPMessageEntity.EIcon";
 }
 
 impl StaticVariant for Vec<ZPIPMessageEntity_EIcon> {
-     const TYPE_ID: &str = "TArray<ZPIPMessageEntity_EIcon>";
+     const TYPE_ID: &str = "TArray<ZPIPMessageEntity.EIcon>";
 }
 
 impl StaticVariant for Vec<Vec<ZPIPMessageEntity_EIcon>> {
-     const TYPE_ID: &str = "TArray<TArray<ZPIPMessageEntity_EIcon>>";
+     const TYPE_ID: &str = "TArray<TArray<ZPIPMessageEntity.EIcon>>";
 }
 
 impl Variant for ZPIPMessageEntity_EIcon {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZPIPMessageEntity_EIcon")
+        interner.get_or_intern_static("ZPIPMessageEntity.EIcon")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZPIPMessageEntity_EIcon".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46180,24 +46666,24 @@ impl Bin1Serialize for ZPathfinderDebugEntity_EDebugTestType {
 }
 
 impl StaticVariant for ZPathfinderDebugEntity_EDebugTestType {
-     const TYPE_ID: &str = "ZPathfinderDebugEntity_EDebugTestType";
+     const TYPE_ID: &str = "ZPathfinderDebugEntity.EDebugTestType";
 }
 
 impl StaticVariant for Vec<ZPathfinderDebugEntity_EDebugTestType> {
-     const TYPE_ID: &str = "TArray<ZPathfinderDebugEntity_EDebugTestType>";
+     const TYPE_ID: &str = "TArray<ZPathfinderDebugEntity.EDebugTestType>";
 }
 
 impl StaticVariant for Vec<Vec<ZPathfinderDebugEntity_EDebugTestType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZPathfinderDebugEntity_EDebugTestType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZPathfinderDebugEntity.EDebugTestType>>";
 }
 
 impl Variant for ZPathfinderDebugEntity_EDebugTestType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZPathfinderDebugEntity_EDebugTestType")
+        interner.get_or_intern_static("ZPathfinderDebugEntity.EDebugTestType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZPathfinderDebugEntity_EDebugTestType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46235,24 +46721,24 @@ impl Bin1Serialize for ZPatrolBehaviorEntity_EMovementType {
 }
 
 impl StaticVariant for ZPatrolBehaviorEntity_EMovementType {
-     const TYPE_ID: &str = "ZPatrolBehaviorEntity_EMovementType";
+     const TYPE_ID: &str = "ZPatrolBehaviorEntity.EMovementType";
 }
 
 impl StaticVariant for Vec<ZPatrolBehaviorEntity_EMovementType> {
-     const TYPE_ID: &str = "TArray<ZPatrolBehaviorEntity_EMovementType>";
+     const TYPE_ID: &str = "TArray<ZPatrolBehaviorEntity.EMovementType>";
 }
 
 impl StaticVariant for Vec<Vec<ZPatrolBehaviorEntity_EMovementType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZPatrolBehaviorEntity_EMovementType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZPatrolBehaviorEntity.EMovementType>>";
 }
 
 impl Variant for ZPatrolBehaviorEntity_EMovementType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZPatrolBehaviorEntity_EMovementType")
+        interner.get_or_intern_static("ZPatrolBehaviorEntity.EMovementType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZPatrolBehaviorEntity_EMovementType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46290,24 +46776,24 @@ impl Bin1Serialize for ZPatrolBehaviorEntity_ERotationAlignment {
 }
 
 impl StaticVariant for ZPatrolBehaviorEntity_ERotationAlignment {
-     const TYPE_ID: &str = "ZPatrolBehaviorEntity_ERotationAlignment";
+     const TYPE_ID: &str = "ZPatrolBehaviorEntity.ERotationAlignment";
 }
 
 impl StaticVariant for Vec<ZPatrolBehaviorEntity_ERotationAlignment> {
-     const TYPE_ID: &str = "TArray<ZPatrolBehaviorEntity_ERotationAlignment>";
+     const TYPE_ID: &str = "TArray<ZPatrolBehaviorEntity.ERotationAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZPatrolBehaviorEntity_ERotationAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZPatrolBehaviorEntity_ERotationAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZPatrolBehaviorEntity.ERotationAlignment>>";
 }
 
 impl Variant for ZPatrolBehaviorEntity_ERotationAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZPatrolBehaviorEntity_ERotationAlignment")
+        interner.get_or_intern_static("ZPatrolBehaviorEntity.ERotationAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZPatrolBehaviorEntity_ERotationAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46345,24 +46831,24 @@ impl Bin1Serialize for ZPhotoModeMenuDataProvider_EMenuEntryType {
 }
 
 impl StaticVariant for ZPhotoModeMenuDataProvider_EMenuEntryType {
-     const TYPE_ID: &str = "ZPhotoModeMenuDataProvider_EMenuEntryType";
+     const TYPE_ID: &str = "ZPhotoModeMenuDataProvider.EMenuEntryType";
 }
 
 impl StaticVariant for Vec<ZPhotoModeMenuDataProvider_EMenuEntryType> {
-     const TYPE_ID: &str = "TArray<ZPhotoModeMenuDataProvider_EMenuEntryType>";
+     const TYPE_ID: &str = "TArray<ZPhotoModeMenuDataProvider.EMenuEntryType>";
 }
 
 impl StaticVariant for Vec<Vec<ZPhotoModeMenuDataProvider_EMenuEntryType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZPhotoModeMenuDataProvider_EMenuEntryType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZPhotoModeMenuDataProvider.EMenuEntryType>>";
 }
 
 impl Variant for ZPhotoModeMenuDataProvider_EMenuEntryType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZPhotoModeMenuDataProvider_EMenuEntryType")
+        interner.get_or_intern_static("ZPhotoModeMenuDataProvider.EMenuEntryType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZPhotoModeMenuDataProvider_EMenuEntryType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46402,24 +46888,24 @@ impl Bin1Serialize for ZPointOfInterestEntity_EPOIType {
 }
 
 impl StaticVariant for ZPointOfInterestEntity_EPOIType {
-     const TYPE_ID: &str = "ZPointOfInterestEntity_EPOIType";
+     const TYPE_ID: &str = "ZPointOfInterestEntity.EPOIType";
 }
 
 impl StaticVariant for Vec<ZPointOfInterestEntity_EPOIType> {
-     const TYPE_ID: &str = "TArray<ZPointOfInterestEntity_EPOIType>";
+     const TYPE_ID: &str = "TArray<ZPointOfInterestEntity.EPOIType>";
 }
 
 impl StaticVariant for Vec<Vec<ZPointOfInterestEntity_EPOIType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZPointOfInterestEntity_EPOIType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZPointOfInterestEntity.EPOIType>>";
 }
 
 impl Variant for ZPointOfInterestEntity_EPOIType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZPointOfInterestEntity_EPOIType")
+        interner.get_or_intern_static("ZPointOfInterestEntity.EPOIType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZPointOfInterestEntity_EPOIType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46455,24 +46941,24 @@ impl Bin1Serialize for ZPreferenceItemEntity_EBoolOptions {
 }
 
 impl StaticVariant for ZPreferenceItemEntity_EBoolOptions {
-     const TYPE_ID: &str = "ZPreferenceItemEntity_EBoolOptions";
+     const TYPE_ID: &str = "ZPreferenceItemEntity.EBoolOptions";
 }
 
 impl StaticVariant for Vec<ZPreferenceItemEntity_EBoolOptions> {
-     const TYPE_ID: &str = "TArray<ZPreferenceItemEntity_EBoolOptions>";
+     const TYPE_ID: &str = "TArray<ZPreferenceItemEntity.EBoolOptions>";
 }
 
 impl StaticVariant for Vec<Vec<ZPreferenceItemEntity_EBoolOptions>> {
-     const TYPE_ID: &str = "TArray<TArray<ZPreferenceItemEntity_EBoolOptions>>";
+     const TYPE_ID: &str = "TArray<TArray<ZPreferenceItemEntity.EBoolOptions>>";
 }
 
 impl Variant for ZPreferenceItemEntity_EBoolOptions {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZPreferenceItemEntity_EBoolOptions")
+        interner.get_or_intern_static("ZPreferenceItemEntity.EBoolOptions")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZPreferenceItemEntity_EBoolOptions".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46508,24 +46994,24 @@ impl Bin1Serialize for ZRagdollAttacherEntity_EResetMode {
 }
 
 impl StaticVariant for ZRagdollAttacherEntity_EResetMode {
-     const TYPE_ID: &str = "ZRagdollAttacherEntity_EResetMode";
+     const TYPE_ID: &str = "ZRagdollAttacherEntity.EResetMode";
 }
 
 impl StaticVariant for Vec<ZRagdollAttacherEntity_EResetMode> {
-     const TYPE_ID: &str = "TArray<ZRagdollAttacherEntity_EResetMode>";
+     const TYPE_ID: &str = "TArray<ZRagdollAttacherEntity.EResetMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZRagdollAttacherEntity_EResetMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZRagdollAttacherEntity_EResetMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZRagdollAttacherEntity.EResetMode>>";
 }
 
 impl Variant for ZRagdollAttacherEntity_EResetMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZRagdollAttacherEntity_EResetMode")
+        interner.get_or_intern_static("ZRagdollAttacherEntity.EResetMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZRagdollAttacherEntity_EResetMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46571,24 +47057,24 @@ impl Bin1Serialize for ZRecoverUnconsciousGroup_EInvestigateGroupState {
 }
 
 impl StaticVariant for ZRecoverUnconsciousGroup_EInvestigateGroupState {
-     const TYPE_ID: &str = "ZRecoverUnconsciousGroup_EInvestigateGroupState";
+     const TYPE_ID: &str = "ZRecoverUnconsciousGroup.EInvestigateGroupState";
 }
 
 impl StaticVariant for Vec<ZRecoverUnconsciousGroup_EInvestigateGroupState> {
-     const TYPE_ID: &str = "TArray<ZRecoverUnconsciousGroup_EInvestigateGroupState>";
+     const TYPE_ID: &str = "TArray<ZRecoverUnconsciousGroup.EInvestigateGroupState>";
 }
 
 impl StaticVariant for Vec<Vec<ZRecoverUnconsciousGroup_EInvestigateGroupState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZRecoverUnconsciousGroup_EInvestigateGroupState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZRecoverUnconsciousGroup.EInvestigateGroupState>>";
 }
 
 impl Variant for ZRecoverUnconsciousGroup_EInvestigateGroupState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZRecoverUnconsciousGroup_EInvestigateGroupState")
+        interner.get_or_intern_static("ZRecoverUnconsciousGroup.EInvestigateGroupState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZRecoverUnconsciousGroup_EInvestigateGroupState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46628,24 +47114,24 @@ impl Bin1Serialize for ZRenderPostfilterParametersEntity_EDOFBlurType {
 }
 
 impl StaticVariant for ZRenderPostfilterParametersEntity_EDOFBlurType {
-     const TYPE_ID: &str = "ZRenderPostfilterParametersEntity_EDOFBlurType";
+     const TYPE_ID: &str = "ZRenderPostfilterParametersEntity.EDOFBlurType";
 }
 
 impl StaticVariant for Vec<ZRenderPostfilterParametersEntity_EDOFBlurType> {
-     const TYPE_ID: &str = "TArray<ZRenderPostfilterParametersEntity_EDOFBlurType>";
+     const TYPE_ID: &str = "TArray<ZRenderPostfilterParametersEntity.EDOFBlurType>";
 }
 
 impl StaticVariant for Vec<Vec<ZRenderPostfilterParametersEntity_EDOFBlurType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZRenderPostfilterParametersEntity_EDOFBlurType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZRenderPostfilterParametersEntity.EDOFBlurType>>";
 }
 
 impl Variant for ZRenderPostfilterParametersEntity_EDOFBlurType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZRenderPostfilterParametersEntity_EDOFBlurType")
+        interner.get_or_intern_static("ZRenderPostfilterParametersEntity.EDOFBlurType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZRenderPostfilterParametersEntity_EDOFBlurType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46681,24 +47167,24 @@ impl Bin1Serialize for ZRenderPostfilterParametersEntity_EHDRAdaptationType {
 }
 
 impl StaticVariant for ZRenderPostfilterParametersEntity_EHDRAdaptationType {
-     const TYPE_ID: &str = "ZRenderPostfilterParametersEntity_EHDRAdaptationType";
+     const TYPE_ID: &str = "ZRenderPostfilterParametersEntity.EHDRAdaptationType";
 }
 
 impl StaticVariant for Vec<ZRenderPostfilterParametersEntity_EHDRAdaptationType> {
-     const TYPE_ID: &str = "TArray<ZRenderPostfilterParametersEntity_EHDRAdaptationType>";
+     const TYPE_ID: &str = "TArray<ZRenderPostfilterParametersEntity.EHDRAdaptationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZRenderPostfilterParametersEntity_EHDRAdaptationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZRenderPostfilterParametersEntity_EHDRAdaptationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZRenderPostfilterParametersEntity.EHDRAdaptationType>>";
 }
 
 impl Variant for ZRenderPostfilterParametersEntity_EHDRAdaptationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZRenderPostfilterParametersEntity_EHDRAdaptationType")
+        interner.get_or_intern_static("ZRenderPostfilterParametersEntity.EHDRAdaptationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZRenderPostfilterParametersEntity_EHDRAdaptationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46752,24 +47238,24 @@ impl Bin1Serialize for ZRenderPostfilterParametersEntity_EHDRGlareType {
 }
 
 impl StaticVariant for ZRenderPostfilterParametersEntity_EHDRGlareType {
-     const TYPE_ID: &str = "ZRenderPostfilterParametersEntity_EHDRGlareType";
+     const TYPE_ID: &str = "ZRenderPostfilterParametersEntity.EHDRGlareType";
 }
 
 impl StaticVariant for Vec<ZRenderPostfilterParametersEntity_EHDRGlareType> {
-     const TYPE_ID: &str = "TArray<ZRenderPostfilterParametersEntity_EHDRGlareType>";
+     const TYPE_ID: &str = "TArray<ZRenderPostfilterParametersEntity.EHDRGlareType>";
 }
 
 impl StaticVariant for Vec<Vec<ZRenderPostfilterParametersEntity_EHDRGlareType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZRenderPostfilterParametersEntity_EHDRGlareType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZRenderPostfilterParametersEntity.EHDRGlareType>>";
 }
 
 impl Variant for ZRenderPostfilterParametersEntity_EHDRGlareType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZRenderPostfilterParametersEntity_EHDRGlareType")
+        interner.get_or_intern_static("ZRenderPostfilterParametersEntity.EHDRGlareType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZRenderPostfilterParametersEntity_EHDRGlareType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46807,24 +47293,24 @@ impl Bin1Serialize for ZRenderPostfilterParametersEntity_EHDRToneMapType {
 }
 
 impl StaticVariant for ZRenderPostfilterParametersEntity_EHDRToneMapType {
-     const TYPE_ID: &str = "ZRenderPostfilterParametersEntity_EHDRToneMapType";
+     const TYPE_ID: &str = "ZRenderPostfilterParametersEntity.EHDRToneMapType";
 }
 
 impl StaticVariant for Vec<ZRenderPostfilterParametersEntity_EHDRToneMapType> {
-     const TYPE_ID: &str = "TArray<ZRenderPostfilterParametersEntity_EHDRToneMapType>";
+     const TYPE_ID: &str = "TArray<ZRenderPostfilterParametersEntity.EHDRToneMapType>";
 }
 
 impl StaticVariant for Vec<Vec<ZRenderPostfilterParametersEntity_EHDRToneMapType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZRenderPostfilterParametersEntity_EHDRToneMapType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZRenderPostfilterParametersEntity.EHDRToneMapType>>";
 }
 
 impl Variant for ZRenderPostfilterParametersEntity_EHDRToneMapType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZRenderPostfilterParametersEntity_EHDRToneMapType")
+        interner.get_or_intern_static("ZRenderPostfilterParametersEntity.EHDRToneMapType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZRenderPostfilterParametersEntity_EHDRToneMapType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46860,24 +47346,24 @@ impl Bin1Serialize for ZSecuritySystemCameraConfiguration_ECameraEscalationSitua
 }
 
 impl StaticVariant for ZSecuritySystemCameraConfiguration_ECameraEscalationSituations {
-     const TYPE_ID: &str = "ZSecuritySystemCameraConfiguration_ECameraEscalationSituations";
+     const TYPE_ID: &str = "ZSecuritySystemCameraConfiguration.ECameraEscalationSituations";
 }
 
 impl StaticVariant for Vec<ZSecuritySystemCameraConfiguration_ECameraEscalationSituations> {
-     const TYPE_ID: &str = "TArray<ZSecuritySystemCameraConfiguration_ECameraEscalationSituations>";
+     const TYPE_ID: &str = "TArray<ZSecuritySystemCameraConfiguration.ECameraEscalationSituations>";
 }
 
 impl StaticVariant for Vec<Vec<ZSecuritySystemCameraConfiguration_ECameraEscalationSituations>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSecuritySystemCameraConfiguration_ECameraEscalationSituations>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSecuritySystemCameraConfiguration.ECameraEscalationSituations>>";
 }
 
 impl Variant for ZSecuritySystemCameraConfiguration_ECameraEscalationSituations {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSecuritySystemCameraConfiguration_ECameraEscalationSituations")
+        interner.get_or_intern_static("ZSecuritySystemCameraConfiguration.ECameraEscalationSituations")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSecuritySystemCameraConfiguration_ECameraEscalationSituations".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46913,24 +47399,24 @@ impl Bin1Serialize for ZSequenceEntity_ELetterBoxAspect {
 }
 
 impl StaticVariant for ZSequenceEntity_ELetterBoxAspect {
-     const TYPE_ID: &str = "ZSequenceEntity_ELetterBoxAspect";
+     const TYPE_ID: &str = "ZSequenceEntity.ELetterBoxAspect";
 }
 
 impl StaticVariant for Vec<ZSequenceEntity_ELetterBoxAspect> {
-     const TYPE_ID: &str = "TArray<ZSequenceEntity_ELetterBoxAspect>";
+     const TYPE_ID: &str = "TArray<ZSequenceEntity.ELetterBoxAspect>";
 }
 
 impl StaticVariant for Vec<Vec<ZSequenceEntity_ELetterBoxAspect>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSequenceEntity_ELetterBoxAspect>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSequenceEntity.ELetterBoxAspect>>";
 }
 
 impl Variant for ZSequenceEntity_ELetterBoxAspect {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSequenceEntity_ELetterBoxAspect")
+        interner.get_or_intern_static("ZSequenceEntity.ELetterBoxAspect")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSequenceEntity_ELetterBoxAspect".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -46966,24 +47452,24 @@ impl Bin1Serialize for ZSetUIControlDisplayInfoEntity_EProjectionOp {
 }
 
 impl StaticVariant for ZSetUIControlDisplayInfoEntity_EProjectionOp {
-     const TYPE_ID: &str = "ZSetUIControlDisplayInfoEntity_EProjectionOp";
+     const TYPE_ID: &str = "ZSetUIControlDisplayInfoEntity.EProjectionOp";
 }
 
 impl StaticVariant for Vec<ZSetUIControlDisplayInfoEntity_EProjectionOp> {
-     const TYPE_ID: &str = "TArray<ZSetUIControlDisplayInfoEntity_EProjectionOp>";
+     const TYPE_ID: &str = "TArray<ZSetUIControlDisplayInfoEntity.EProjectionOp>";
 }
 
 impl StaticVariant for Vec<Vec<ZSetUIControlDisplayInfoEntity_EProjectionOp>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSetUIControlDisplayInfoEntity_EProjectionOp>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSetUIControlDisplayInfoEntity.EProjectionOp>>";
 }
 
 impl Variant for ZSetUIControlDisplayInfoEntity_EProjectionOp {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSetUIControlDisplayInfoEntity_EProjectionOp")
+        interner.get_or_intern_static("ZSetUIControlDisplayInfoEntity.EProjectionOp")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSetUIControlDisplayInfoEntity_EProjectionOp".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47021,24 +47507,24 @@ impl Bin1Serialize for ZSetUIControlDisplayInfoEntity_EVisibilityOp {
 }
 
 impl StaticVariant for ZSetUIControlDisplayInfoEntity_EVisibilityOp {
-     const TYPE_ID: &str = "ZSetUIControlDisplayInfoEntity_EVisibilityOp";
+     const TYPE_ID: &str = "ZSetUIControlDisplayInfoEntity.EVisibilityOp";
 }
 
 impl StaticVariant for Vec<ZSetUIControlDisplayInfoEntity_EVisibilityOp> {
-     const TYPE_ID: &str = "TArray<ZSetUIControlDisplayInfoEntity_EVisibilityOp>";
+     const TYPE_ID: &str = "TArray<ZSetUIControlDisplayInfoEntity.EVisibilityOp>";
 }
 
 impl StaticVariant for Vec<Vec<ZSetUIControlDisplayInfoEntity_EVisibilityOp>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSetUIControlDisplayInfoEntity_EVisibilityOp>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSetUIControlDisplayInfoEntity.EVisibilityOp>>";
 }
 
 impl Variant for ZSetUIControlDisplayInfoEntity_EVisibilityOp {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSetUIControlDisplayInfoEntity_EVisibilityOp")
+        interner.get_or_intern_static("ZSetUIControlDisplayInfoEntity.EVisibilityOp")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSetUIControlDisplayInfoEntity_EVisibilityOp".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47076,24 +47562,24 @@ impl Bin1Serialize for ZSetVisibleEntity_StartBehavior {
 }
 
 impl StaticVariant for ZSetVisibleEntity_StartBehavior {
-     const TYPE_ID: &str = "ZSetVisibleEntity_StartBehavior";
+     const TYPE_ID: &str = "ZSetVisibleEntity.StartBehavior";
 }
 
 impl StaticVariant for Vec<ZSetVisibleEntity_StartBehavior> {
-     const TYPE_ID: &str = "TArray<ZSetVisibleEntity_StartBehavior>";
+     const TYPE_ID: &str = "TArray<ZSetVisibleEntity.StartBehavior>";
 }
 
 impl StaticVariant for Vec<Vec<ZSetVisibleEntity_StartBehavior>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSetVisibleEntity_StartBehavior>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSetVisibleEntity.StartBehavior>>";
 }
 
 impl Variant for ZSetVisibleEntity_StartBehavior {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSetVisibleEntity_StartBehavior")
+        interner.get_or_intern_static("ZSetVisibleEntity.StartBehavior")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSetVisibleEntity_StartBehavior".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47135,24 +47621,24 @@ impl Bin1Serialize for ZSniperCombatGroup_EGroupState {
 }
 
 impl StaticVariant for ZSniperCombatGroup_EGroupState {
-     const TYPE_ID: &str = "ZSniperCombatGroup_EGroupState";
+     const TYPE_ID: &str = "ZSniperCombatGroup.EGroupState";
 }
 
 impl StaticVariant for Vec<ZSniperCombatGroup_EGroupState> {
-     const TYPE_ID: &str = "TArray<ZSniperCombatGroup_EGroupState>";
+     const TYPE_ID: &str = "TArray<ZSniperCombatGroup.EGroupState>";
 }
 
 impl StaticVariant for Vec<Vec<ZSniperCombatGroup_EGroupState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSniperCombatGroup_EGroupState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSniperCombatGroup.EGroupState>>";
 }
 
 impl Variant for ZSniperCombatGroup_EGroupState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSniperCombatGroup_EGroupState")
+        interner.get_or_intern_static("ZSniperCombatGroup.EGroupState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSniperCombatGroup_EGroupState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47190,24 +47676,24 @@ impl Bin1Serialize for ZSniperCombatSituation_ESituationState {
 }
 
 impl StaticVariant for ZSniperCombatSituation_ESituationState {
-     const TYPE_ID: &str = "ZSniperCombatSituation_ESituationState";
+     const TYPE_ID: &str = "ZSniperCombatSituation.ESituationState";
 }
 
 impl StaticVariant for Vec<ZSniperCombatSituation_ESituationState> {
-     const TYPE_ID: &str = "TArray<ZSniperCombatSituation_ESituationState>";
+     const TYPE_ID: &str = "TArray<ZSniperCombatSituation.ESituationState>";
 }
 
 impl StaticVariant for Vec<Vec<ZSniperCombatSituation_ESituationState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSniperCombatSituation_ESituationState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSniperCombatSituation.ESituationState>>";
 }
 
 impl Variant for ZSniperCombatSituation_ESituationState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSniperCombatSituation_ESituationState")
+        interner.get_or_intern_static("ZSniperCombatSituation.ESituationState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSniperCombatSituation_ESituationState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47247,24 +47733,24 @@ impl Bin1Serialize for ZSoundAmbienceGroup_ESoundCollisionType {
 }
 
 impl StaticVariant for ZSoundAmbienceGroup_ESoundCollisionType {
-     const TYPE_ID: &str = "ZSoundAmbienceGroup_ESoundCollisionType";
+     const TYPE_ID: &str = "ZSoundAmbienceGroup.ESoundCollisionType";
 }
 
 impl StaticVariant for Vec<ZSoundAmbienceGroup_ESoundCollisionType> {
-     const TYPE_ID: &str = "TArray<ZSoundAmbienceGroup_ESoundCollisionType>";
+     const TYPE_ID: &str = "TArray<ZSoundAmbienceGroup.ESoundCollisionType>";
 }
 
 impl StaticVariant for Vec<Vec<ZSoundAmbienceGroup_ESoundCollisionType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSoundAmbienceGroup_ESoundCollisionType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSoundAmbienceGroup.ESoundCollisionType>>";
 }
 
 impl Variant for ZSoundAmbienceGroup_ESoundCollisionType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSoundAmbienceGroup_ESoundCollisionType")
+        interner.get_or_intern_static("ZSoundAmbienceGroup.ESoundCollisionType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSoundAmbienceGroup_ESoundCollisionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47302,24 +47788,24 @@ impl Bin1Serialize for ZSpatialEntity_ERoomBehaviour {
 }
 
 impl StaticVariant for ZSpatialEntity_ERoomBehaviour {
-     const TYPE_ID: &str = "ZSpatialEntity_ERoomBehaviour";
+     const TYPE_ID: &str = "ZSpatialEntity.ERoomBehaviour";
 }
 
 impl StaticVariant for Vec<ZSpatialEntity_ERoomBehaviour> {
-     const TYPE_ID: &str = "TArray<ZSpatialEntity_ERoomBehaviour>";
+     const TYPE_ID: &str = "TArray<ZSpatialEntity.ERoomBehaviour>";
 }
 
 impl StaticVariant for Vec<Vec<ZSpatialEntity_ERoomBehaviour>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSpatialEntity_ERoomBehaviour>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSpatialEntity.ERoomBehaviour>>";
 }
 
 impl Variant for ZSpatialEntity_ERoomBehaviour {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSpatialEntity_ERoomBehaviour")
+        interner.get_or_intern_static("ZSpatialEntity.ERoomBehaviour")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSpatialEntity_ERoomBehaviour".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47369,24 +47855,24 @@ impl Bin1Serialize for ZStandOffSituation_EDialogState {
 }
 
 impl StaticVariant for ZStandOffSituation_EDialogState {
-     const TYPE_ID: &str = "ZStandOffSituation_EDialogState";
+     const TYPE_ID: &str = "ZStandOffSituation.EDialogState";
 }
 
 impl StaticVariant for Vec<ZStandOffSituation_EDialogState> {
-     const TYPE_ID: &str = "TArray<ZStandOffSituation_EDialogState>";
+     const TYPE_ID: &str = "TArray<ZStandOffSituation.EDialogState>";
 }
 
 impl StaticVariant for Vec<Vec<ZStandOffSituation_EDialogState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZStandOffSituation_EDialogState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZStandOffSituation.EDialogState>>";
 }
 
 impl Variant for ZStandOffSituation_EDialogState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZStandOffSituation_EDialogState")
+        interner.get_or_intern_static("ZStandOffSituation.EDialogState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZStandOffSituation_EDialogState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47432,24 +47918,24 @@ impl Bin1Serialize for ZStandOffSituation_ESituationState {
 }
 
 impl StaticVariant for ZStandOffSituation_ESituationState {
-     const TYPE_ID: &str = "ZStandOffSituation_ESituationState";
+     const TYPE_ID: &str = "ZStandOffSituation.ESituationState";
 }
 
 impl StaticVariant for Vec<ZStandOffSituation_ESituationState> {
-     const TYPE_ID: &str = "TArray<ZStandOffSituation_ESituationState>";
+     const TYPE_ID: &str = "TArray<ZStandOffSituation.ESituationState>";
 }
 
 impl StaticVariant for Vec<Vec<ZStandOffSituation_ESituationState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZStandOffSituation_ESituationState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZStandOffSituation.ESituationState>>";
 }
 
 impl Variant for ZStandOffSituation_ESituationState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZStandOffSituation_ESituationState")
+        interner.get_or_intern_static("ZStandOffSituation.ESituationState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZStandOffSituation_ESituationState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47485,24 +47971,24 @@ impl Bin1Serialize for ZStateControllerEntity_WrapMode {
 }
 
 impl StaticVariant for ZStateControllerEntity_WrapMode {
-     const TYPE_ID: &str = "ZStateControllerEntity_WrapMode";
+     const TYPE_ID: &str = "ZStateControllerEntity.WrapMode";
 }
 
 impl StaticVariant for Vec<ZStateControllerEntity_WrapMode> {
-     const TYPE_ID: &str = "TArray<ZStateControllerEntity_WrapMode>";
+     const TYPE_ID: &str = "TArray<ZStateControllerEntity.WrapMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZStateControllerEntity_WrapMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZStateControllerEntity_WrapMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZStateControllerEntity.WrapMode>>";
 }
 
 impl Variant for ZStateControllerEntity_WrapMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZStateControllerEntity_WrapMode")
+        interner.get_or_intern_static("ZStateControllerEntity.WrapMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZStateControllerEntity_WrapMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47538,24 +48024,24 @@ impl Bin1Serialize for ZSubtitleSpeakerAliasEntity_EApplicabilityBit {
 }
 
 impl StaticVariant for ZSubtitleSpeakerAliasEntity_EApplicabilityBit {
-     const TYPE_ID: &str = "ZSubtitleSpeakerAliasEntity_EApplicabilityBit";
+     const TYPE_ID: &str = "ZSubtitleSpeakerAliasEntity.EApplicabilityBit";
 }
 
 impl StaticVariant for Vec<ZSubtitleSpeakerAliasEntity_EApplicabilityBit> {
-     const TYPE_ID: &str = "TArray<ZSubtitleSpeakerAliasEntity_EApplicabilityBit>";
+     const TYPE_ID: &str = "TArray<ZSubtitleSpeakerAliasEntity.EApplicabilityBit>";
 }
 
 impl StaticVariant for Vec<Vec<ZSubtitleSpeakerAliasEntity_EApplicabilityBit>> {
-     const TYPE_ID: &str = "TArray<TArray<ZSubtitleSpeakerAliasEntity_EApplicabilityBit>>";
+     const TYPE_ID: &str = "TArray<TArray<ZSubtitleSpeakerAliasEntity.EApplicabilityBit>>";
 }
 
 impl Variant for ZSubtitleSpeakerAliasEntity_EApplicabilityBit {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZSubtitleSpeakerAliasEntity_EApplicabilityBit")
+        interner.get_or_intern_static("ZSubtitleSpeakerAliasEntity.EApplicabilityBit")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZSubtitleSpeakerAliasEntity_EApplicabilityBit".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47591,24 +48077,24 @@ impl Bin1Serialize for ZTestGroupPath_EModifierType {
 }
 
 impl StaticVariant for ZTestGroupPath_EModifierType {
-     const TYPE_ID: &str = "ZTestGroupPath_EModifierType";
+     const TYPE_ID: &str = "ZTestGroupPath.EModifierType";
 }
 
 impl StaticVariant for Vec<ZTestGroupPath_EModifierType> {
-     const TYPE_ID: &str = "TArray<ZTestGroupPath_EModifierType>";
+     const TYPE_ID: &str = "TArray<ZTestGroupPath.EModifierType>";
 }
 
 impl StaticVariant for Vec<Vec<ZTestGroupPath_EModifierType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZTestGroupPath_EModifierType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZTestGroupPath.EModifierType>>";
 }
 
 impl Variant for ZTestGroupPath_EModifierType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZTestGroupPath_EModifierType")
+        interner.get_or_intern_static("ZTestGroupPath.EModifierType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZTestGroupPath_EModifierType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47646,24 +48132,24 @@ impl Bin1Serialize for ZTrackDollyControllerQueryEntity_ETrackPointQueryType {
 }
 
 impl StaticVariant for ZTrackDollyControllerQueryEntity_ETrackPointQueryType {
-     const TYPE_ID: &str = "ZTrackDollyControllerQueryEntity_ETrackPointQueryType";
+     const TYPE_ID: &str = "ZTrackDollyControllerQueryEntity.ETrackPointQueryType";
 }
 
 impl StaticVariant for Vec<ZTrackDollyControllerQueryEntity_ETrackPointQueryType> {
-     const TYPE_ID: &str = "TArray<ZTrackDollyControllerQueryEntity_ETrackPointQueryType>";
+     const TYPE_ID: &str = "TArray<ZTrackDollyControllerQueryEntity.ETrackPointQueryType>";
 }
 
 impl StaticVariant for Vec<Vec<ZTrackDollyControllerQueryEntity_ETrackPointQueryType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZTrackDollyControllerQueryEntity_ETrackPointQueryType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZTrackDollyControllerQueryEntity.ETrackPointQueryType>>";
 }
 
 impl Variant for ZTrackDollyControllerQueryEntity_ETrackPointQueryType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZTrackDollyControllerQueryEntity_ETrackPointQueryType")
+        interner.get_or_intern_static("ZTrackDollyControllerQueryEntity.ETrackPointQueryType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZTrackDollyControllerQueryEntity_ETrackPointQueryType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47701,24 +48187,24 @@ impl Bin1Serialize for ZTrespassingSituation_ESituationState {
 }
 
 impl StaticVariant for ZTrespassingSituation_ESituationState {
-     const TYPE_ID: &str = "ZTrespassingSituation_ESituationState";
+     const TYPE_ID: &str = "ZTrespassingSituation.ESituationState";
 }
 
 impl StaticVariant for Vec<ZTrespassingSituation_ESituationState> {
-     const TYPE_ID: &str = "TArray<ZTrespassingSituation_ESituationState>";
+     const TYPE_ID: &str = "TArray<ZTrespassingSituation.ESituationState>";
 }
 
 impl StaticVariant for Vec<Vec<ZTrespassingSituation_ESituationState>> {
-     const TYPE_ID: &str = "TArray<TArray<ZTrespassingSituation_ESituationState>>";
+     const TYPE_ID: &str = "TArray<TArray<ZTrespassingSituation.ESituationState>>";
 }
 
 impl Variant for ZTrespassingSituation_ESituationState {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZTrespassingSituation_ESituationState")
+        interner.get_or_intern_static("ZTrespassingSituation.ESituationState")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZTrespassingSituation_ESituationState".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47782,24 +48268,24 @@ impl Bin1Serialize for ZUIControlEntity_EAlignment {
 }
 
 impl StaticVariant for ZUIControlEntity_EAlignment {
-     const TYPE_ID: &str = "ZUIControlEntity_EAlignment";
+     const TYPE_ID: &str = "ZUIControlEntity.EAlignment";
 }
 
 impl StaticVariant for Vec<ZUIControlEntity_EAlignment> {
-     const TYPE_ID: &str = "TArray<ZUIControlEntity_EAlignment>";
+     const TYPE_ID: &str = "TArray<ZUIControlEntity.EAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIControlEntity_EAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIControlEntity_EAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIControlEntity.EAlignment>>";
 }
 
 impl Variant for ZUIControlEntity_EAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIControlEntity_EAlignment")
+        interner.get_or_intern_static("ZUIControlEntity.EAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIControlEntity_EAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47839,24 +48325,24 @@ impl Bin1Serialize for ZUIControlEntity_EScaleMode {
 }
 
 impl StaticVariant for ZUIControlEntity_EScaleMode {
-     const TYPE_ID: &str = "ZUIControlEntity_EScaleMode";
+     const TYPE_ID: &str = "ZUIControlEntity.EScaleMode";
 }
 
 impl StaticVariant for Vec<ZUIControlEntity_EScaleMode> {
-     const TYPE_ID: &str = "TArray<ZUIControlEntity_EScaleMode>";
+     const TYPE_ID: &str = "TArray<ZUIControlEntity.EScaleMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIControlEntity_EScaleMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIControlEntity_EScaleMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIControlEntity.EScaleMode>>";
 }
 
 impl Variant for ZUIControlEntity_EScaleMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIControlEntity_EScaleMode")
+        interner.get_or_intern_static("ZUIControlEntity.EScaleMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIControlEntity_EScaleMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47906,24 +48392,24 @@ impl Bin1Serialize for ZUIControlLayoutLegacyAspect_EAlignmentType {
 }
 
 impl StaticVariant for ZUIControlLayoutLegacyAspect_EAlignmentType {
-     const TYPE_ID: &str = "ZUIControlLayoutLegacyAspect_EAlignmentType";
+     const TYPE_ID: &str = "ZUIControlLayoutLegacyAspect.EAlignmentType";
 }
 
 impl StaticVariant for Vec<ZUIControlLayoutLegacyAspect_EAlignmentType> {
-     const TYPE_ID: &str = "TArray<ZUIControlLayoutLegacyAspect_EAlignmentType>";
+     const TYPE_ID: &str = "TArray<ZUIControlLayoutLegacyAspect.EAlignmentType>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIControlLayoutLegacyAspect_EAlignmentType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIControlLayoutLegacyAspect_EAlignmentType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIControlLayoutLegacyAspect.EAlignmentType>>";
 }
 
 impl Variant for ZUIControlLayoutLegacyAspect_EAlignmentType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIControlLayoutLegacyAspect_EAlignmentType")
+        interner.get_or_intern_static("ZUIControlLayoutLegacyAspect.EAlignmentType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIControlLayoutLegacyAspect_EAlignmentType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -47969,24 +48455,24 @@ impl Bin1Serialize for ZUIControlLayoutLegacyAspect_ELayoutMode {
 }
 
 impl StaticVariant for ZUIControlLayoutLegacyAspect_ELayoutMode {
-     const TYPE_ID: &str = "ZUIControlLayoutLegacyAspect_ELayoutMode";
+     const TYPE_ID: &str = "ZUIControlLayoutLegacyAspect.ELayoutMode";
 }
 
 impl StaticVariant for Vec<ZUIControlLayoutLegacyAspect_ELayoutMode> {
-     const TYPE_ID: &str = "TArray<ZUIControlLayoutLegacyAspect_ELayoutMode>";
+     const TYPE_ID: &str = "TArray<ZUIControlLayoutLegacyAspect.ELayoutMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIControlLayoutLegacyAspect_ELayoutMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIControlLayoutLegacyAspect_ELayoutMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIControlLayoutLegacyAspect.ELayoutMode>>";
 }
 
 impl Variant for ZUIControlLayoutLegacyAspect_ELayoutMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIControlLayoutLegacyAspect_ELayoutMode")
+        interner.get_or_intern_static("ZUIControlLayoutLegacyAspect.ELayoutMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIControlLayoutLegacyAspect_ELayoutMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48022,24 +48508,24 @@ impl Bin1Serialize for ZUIControlPositionLayoutFlowListAspect_EFlowMode {
 }
 
 impl StaticVariant for ZUIControlPositionLayoutFlowListAspect_EFlowMode {
-     const TYPE_ID: &str = "ZUIControlPositionLayoutFlowListAspect_EFlowMode";
+     const TYPE_ID: &str = "ZUIControlPositionLayoutFlowListAspect.EFlowMode";
 }
 
 impl StaticVariant for Vec<ZUIControlPositionLayoutFlowListAspect_EFlowMode> {
-     const TYPE_ID: &str = "TArray<ZUIControlPositionLayoutFlowListAspect_EFlowMode>";
+     const TYPE_ID: &str = "TArray<ZUIControlPositionLayoutFlowListAspect.EFlowMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIControlPositionLayoutFlowListAspect_EFlowMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIControlPositionLayoutFlowListAspect_EFlowMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIControlPositionLayoutFlowListAspect.EFlowMode>>";
 }
 
 impl Variant for ZUIControlPositionLayoutFlowListAspect_EFlowMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIControlPositionLayoutFlowListAspect_EFlowMode")
+        interner.get_or_intern_static("ZUIControlPositionLayoutFlowListAspect.EFlowMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIControlPositionLayoutFlowListAspect_EFlowMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48079,24 +48565,24 @@ impl Bin1Serialize for ZUIControlPositionLayoutListBaseAspect_EDirection {
 }
 
 impl StaticVariant for ZUIControlPositionLayoutListBaseAspect_EDirection {
-     const TYPE_ID: &str = "ZUIControlPositionLayoutListBaseAspect_EDirection";
+     const TYPE_ID: &str = "ZUIControlPositionLayoutListBaseAspect.EDirection";
 }
 
 impl StaticVariant for Vec<ZUIControlPositionLayoutListBaseAspect_EDirection> {
-     const TYPE_ID: &str = "TArray<ZUIControlPositionLayoutListBaseAspect_EDirection>";
+     const TYPE_ID: &str = "TArray<ZUIControlPositionLayoutListBaseAspect.EDirection>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIControlPositionLayoutListBaseAspect_EDirection>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIControlPositionLayoutListBaseAspect_EDirection>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIControlPositionLayoutListBaseAspect.EDirection>>";
 }
 
 impl Variant for ZUIControlPositionLayoutListBaseAspect_EDirection {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIControlPositionLayoutListBaseAspect_EDirection")
+        interner.get_or_intern_static("ZUIControlPositionLayoutListBaseAspect.EDirection")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIControlPositionLayoutListBaseAspect_EDirection".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48134,24 +48620,24 @@ impl Bin1Serialize for ZUIControlPositionLayoutListBaseAspect_EItemSizeMode {
 }
 
 impl StaticVariant for ZUIControlPositionLayoutListBaseAspect_EItemSizeMode {
-     const TYPE_ID: &str = "ZUIControlPositionLayoutListBaseAspect_EItemSizeMode";
+     const TYPE_ID: &str = "ZUIControlPositionLayoutListBaseAspect.EItemSizeMode";
 }
 
 impl StaticVariant for Vec<ZUIControlPositionLayoutListBaseAspect_EItemSizeMode> {
-     const TYPE_ID: &str = "TArray<ZUIControlPositionLayoutListBaseAspect_EItemSizeMode>";
+     const TYPE_ID: &str = "TArray<ZUIControlPositionLayoutListBaseAspect.EItemSizeMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIControlPositionLayoutListBaseAspect_EItemSizeMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIControlPositionLayoutListBaseAspect_EItemSizeMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIControlPositionLayoutListBaseAspect.EItemSizeMode>>";
 }
 
 impl Variant for ZUIControlPositionLayoutListBaseAspect_EItemSizeMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIControlPositionLayoutListBaseAspect_EItemSizeMode")
+        interner.get_or_intern_static("ZUIControlPositionLayoutListBaseAspect.EItemSizeMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIControlPositionLayoutListBaseAspect_EItemSizeMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48189,24 +48675,24 @@ impl Bin1Serialize for ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode {
 }
 
 impl StaticVariant for ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode {
-     const TYPE_ID: &str = "ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode";
+     const TYPE_ID: &str = "ZUIControlSizeLayoutScaleboxAspect.EContentSizeMode";
 }
 
 impl StaticVariant for Vec<ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode> {
-     const TYPE_ID: &str = "TArray<ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode>";
+     const TYPE_ID: &str = "TArray<ZUIControlSizeLayoutScaleboxAspect.EContentSizeMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIControlSizeLayoutScaleboxAspect.EContentSizeMode>>";
 }
 
 impl Variant for ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode")
+        interner.get_or_intern_static("ZUIControlSizeLayoutScaleboxAspect.EContentSizeMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIControlSizeLayoutScaleboxAspect_EContentSizeMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48246,24 +48732,24 @@ impl Bin1Serialize for ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode {
 }
 
 impl StaticVariant for ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode {
-     const TYPE_ID: &str = "ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode";
+     const TYPE_ID: &str = "ZUIControlSizeLayoutScaleboxAspect.EScaleboxMode";
 }
 
 impl StaticVariant for Vec<ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode> {
-     const TYPE_ID: &str = "TArray<ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode>";
+     const TYPE_ID: &str = "TArray<ZUIControlSizeLayoutScaleboxAspect.EScaleboxMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIControlSizeLayoutScaleboxAspect.EScaleboxMode>>";
 }
 
 impl Variant for ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode")
+        interner.get_or_intern_static("ZUIControlSizeLayoutScaleboxAspect.EScaleboxMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIControlSizeLayoutScaleboxAspect_EScaleboxMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48299,24 +48785,24 @@ impl Bin1Serialize for ZUIFlowLayoutEntity_EFlowType {
 }
 
 impl StaticVariant for ZUIFlowLayoutEntity_EFlowType {
-     const TYPE_ID: &str = "ZUIFlowLayoutEntity_EFlowType";
+     const TYPE_ID: &str = "ZUIFlowLayoutEntity.EFlowType";
 }
 
 impl StaticVariant for Vec<ZUIFlowLayoutEntity_EFlowType> {
-     const TYPE_ID: &str = "TArray<ZUIFlowLayoutEntity_EFlowType>";
+     const TYPE_ID: &str = "TArray<ZUIFlowLayoutEntity.EFlowType>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIFlowLayoutEntity_EFlowType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIFlowLayoutEntity_EFlowType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIFlowLayoutEntity.EFlowType>>";
 }
 
 impl Variant for ZUIFlowLayoutEntity_EFlowType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIFlowLayoutEntity_EFlowType")
+        interner.get_or_intern_static("ZUIFlowLayoutEntity.EFlowType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIFlowLayoutEntity_EFlowType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48356,24 +48842,24 @@ impl Bin1Serialize for ZUIGlobalSubtitleCondition_ESpatialType {
 }
 
 impl StaticVariant for ZUIGlobalSubtitleCondition_ESpatialType {
-     const TYPE_ID: &str = "ZUIGlobalSubtitleCondition_ESpatialType";
+     const TYPE_ID: &str = "ZUIGlobalSubtitleCondition.ESpatialType";
 }
 
 impl StaticVariant for Vec<ZUIGlobalSubtitleCondition_ESpatialType> {
-     const TYPE_ID: &str = "TArray<ZUIGlobalSubtitleCondition_ESpatialType>";
+     const TYPE_ID: &str = "TArray<ZUIGlobalSubtitleCondition.ESpatialType>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIGlobalSubtitleCondition_ESpatialType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIGlobalSubtitleCondition_ESpatialType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIGlobalSubtitleCondition.ESpatialType>>";
 }
 
 impl Variant for ZUIGlobalSubtitleCondition_ESpatialType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIGlobalSubtitleCondition_ESpatialType")
+        interner.get_or_intern_static("ZUIGlobalSubtitleCondition.ESpatialType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIGlobalSubtitleCondition_ESpatialType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48413,24 +48899,24 @@ impl Bin1Serialize for ZUIListNavigationEntity_ENavigationInputMode {
 }
 
 impl StaticVariant for ZUIListNavigationEntity_ENavigationInputMode {
-     const TYPE_ID: &str = "ZUIListNavigationEntity_ENavigationInputMode";
+     const TYPE_ID: &str = "ZUIListNavigationEntity.ENavigationInputMode";
 }
 
 impl StaticVariant for Vec<ZUIListNavigationEntity_ENavigationInputMode> {
-     const TYPE_ID: &str = "TArray<ZUIListNavigationEntity_ENavigationInputMode>";
+     const TYPE_ID: &str = "TArray<ZUIListNavigationEntity.ENavigationInputMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIListNavigationEntity_ENavigationInputMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIListNavigationEntity_ENavigationInputMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIListNavigationEntity.ENavigationInputMode>>";
 }
 
 impl Variant for ZUIListNavigationEntity_ENavigationInputMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIListNavigationEntity_ENavigationInputMode")
+        interner.get_or_intern_static("ZUIListNavigationEntity.ENavigationInputMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIListNavigationEntity_ENavigationInputMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48470,24 +48956,24 @@ impl Bin1Serialize for ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy {
 }
 
 impl StaticVariant for ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy {
-     const TYPE_ID: &str = "ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy";
+     const TYPE_ID: &str = "ZUIPerformanceTestMetricsCollectorEntity.EVsyncPolicy";
 }
 
 impl StaticVariant for Vec<ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy> {
-     const TYPE_ID: &str = "TArray<ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy>";
+     const TYPE_ID: &str = "TArray<ZUIPerformanceTestMetricsCollectorEntity.EVsyncPolicy>";
 }
 
 impl StaticVariant for Vec<Vec<ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUIPerformanceTestMetricsCollectorEntity.EVsyncPolicy>>";
 }
 
 impl Variant for ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy")
+        interner.get_or_intern_static("ZUIPerformanceTestMetricsCollectorEntity.EVsyncPolicy")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUIPerformanceTestMetricsCollectorEntity_EVsyncPolicy".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48525,24 +49011,24 @@ impl Bin1Serialize for ZUISplashHintDataProviderEntity_ESplashHintType {
 }
 
 impl StaticVariant for ZUISplashHintDataProviderEntity_ESplashHintType {
-     const TYPE_ID: &str = "ZUISplashHintDataProviderEntity_ESplashHintType";
+     const TYPE_ID: &str = "ZUISplashHintDataProviderEntity.ESplashHintType";
 }
 
 impl StaticVariant for Vec<ZUISplashHintDataProviderEntity_ESplashHintType> {
-     const TYPE_ID: &str = "TArray<ZUISplashHintDataProviderEntity_ESplashHintType>";
+     const TYPE_ID: &str = "TArray<ZUISplashHintDataProviderEntity.ESplashHintType>";
 }
 
 impl StaticVariant for Vec<Vec<ZUISplashHintDataProviderEntity_ESplashHintType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUISplashHintDataProviderEntity_ESplashHintType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUISplashHintDataProviderEntity.ESplashHintType>>";
 }
 
 impl Variant for ZUISplashHintDataProviderEntity_ESplashHintType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUISplashHintDataProviderEntity_ESplashHintType")
+        interner.get_or_intern_static("ZUISplashHintDataProviderEntity.ESplashHintType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUISplashHintDataProviderEntity_ESplashHintType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48578,24 +49064,24 @@ impl Bin1Serialize for ZUISubtitleDataProvider_EAlignment {
 }
 
 impl StaticVariant for ZUISubtitleDataProvider_EAlignment {
-     const TYPE_ID: &str = "ZUISubtitleDataProvider_EAlignment";
+     const TYPE_ID: &str = "ZUISubtitleDataProvider.EAlignment";
 }
 
 impl StaticVariant for Vec<ZUISubtitleDataProvider_EAlignment> {
-     const TYPE_ID: &str = "TArray<ZUISubtitleDataProvider_EAlignment>";
+     const TYPE_ID: &str = "TArray<ZUISubtitleDataProvider.EAlignment>";
 }
 
 impl StaticVariant for Vec<Vec<ZUISubtitleDataProvider_EAlignment>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUISubtitleDataProvider_EAlignment>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUISubtitleDataProvider.EAlignment>>";
 }
 
 impl Variant for ZUISubtitleDataProvider_EAlignment {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUISubtitleDataProvider_EAlignment")
+        interner.get_or_intern_static("ZUISubtitleDataProvider.EAlignment")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUISubtitleDataProvider_EAlignment".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48631,24 +49117,24 @@ impl Bin1Serialize for ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode {
 }
 
 impl StaticVariant for ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode {
-     const TYPE_ID: &str = "ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode";
+     const TYPE_ID: &str = "ZUISubtitleSpeakerCinematicModeOverrideEntity.EMode";
 }
 
 impl StaticVariant for Vec<ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode> {
-     const TYPE_ID: &str = "TArray<ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode>";
+     const TYPE_ID: &str = "TArray<ZUISubtitleSpeakerCinematicModeOverrideEntity.EMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUISubtitleSpeakerCinematicModeOverrideEntity.EMode>>";
 }
 
 impl Variant for ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode")
+        interner.get_or_intern_static("ZUISubtitleSpeakerCinematicModeOverrideEntity.EMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUISubtitleSpeakerCinematicModeOverrideEntity_EMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48684,24 +49170,24 @@ impl Bin1Serialize for ZUISubtitleSpeakerDefaultIconEntity_EEmitterType {
 }
 
 impl StaticVariant for ZUISubtitleSpeakerDefaultIconEntity_EEmitterType {
-     const TYPE_ID: &str = "ZUISubtitleSpeakerDefaultIconEntity_EEmitterType";
+     const TYPE_ID: &str = "ZUISubtitleSpeakerDefaultIconEntity.EEmitterType";
 }
 
 impl StaticVariant for Vec<ZUISubtitleSpeakerDefaultIconEntity_EEmitterType> {
-     const TYPE_ID: &str = "TArray<ZUISubtitleSpeakerDefaultIconEntity_EEmitterType>";
+     const TYPE_ID: &str = "TArray<ZUISubtitleSpeakerDefaultIconEntity.EEmitterType>";
 }
 
 impl StaticVariant for Vec<Vec<ZUISubtitleSpeakerDefaultIconEntity_EEmitterType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZUISubtitleSpeakerDefaultIconEntity_EEmitterType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZUISubtitleSpeakerDefaultIconEntity.EEmitterType>>";
 }
 
 impl Variant for ZUISubtitleSpeakerDefaultIconEntity_EEmitterType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZUISubtitleSpeakerDefaultIconEntity_EEmitterType")
+        interner.get_or_intern_static("ZUISubtitleSpeakerDefaultIconEntity.EEmitterType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZUISubtitleSpeakerDefaultIconEntity_EEmitterType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48737,24 +49223,24 @@ impl Bin1Serialize for ZVRCameraEntity_EEye {
 }
 
 impl StaticVariant for ZVRCameraEntity_EEye {
-     const TYPE_ID: &str = "ZVRCameraEntity_EEye";
+     const TYPE_ID: &str = "ZVRCameraEntity.EEye";
 }
 
 impl StaticVariant for Vec<ZVRCameraEntity_EEye> {
-     const TYPE_ID: &str = "TArray<ZVRCameraEntity_EEye>";
+     const TYPE_ID: &str = "TArray<ZVRCameraEntity.EEye>";
 }
 
 impl StaticVariant for Vec<Vec<ZVRCameraEntity_EEye>> {
-     const TYPE_ID: &str = "TArray<TArray<ZVRCameraEntity_EEye>>";
+     const TYPE_ID: &str = "TArray<TArray<ZVRCameraEntity.EEye>>";
 }
 
 impl Variant for ZVRCameraEntity_EEye {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZVRCameraEntity_EEye")
+        interner.get_or_intern_static("ZVRCameraEntity.EEye")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZVRCameraEntity_EEye".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48792,24 +49278,24 @@ impl Bin1Serialize for ZVRCameraEntity_ETurnMode {
 }
 
 impl StaticVariant for ZVRCameraEntity_ETurnMode {
-     const TYPE_ID: &str = "ZVRCameraEntity_ETurnMode";
+     const TYPE_ID: &str = "ZVRCameraEntity.ETurnMode";
 }
 
 impl StaticVariant for Vec<ZVRCameraEntity_ETurnMode> {
-     const TYPE_ID: &str = "TArray<ZVRCameraEntity_ETurnMode>";
+     const TYPE_ID: &str = "TArray<ZVRCameraEntity.ETurnMode>";
 }
 
 impl StaticVariant for Vec<Vec<ZVRCameraEntity_ETurnMode>> {
-     const TYPE_ID: &str = "TArray<TArray<ZVRCameraEntity_ETurnMode>>";
+     const TYPE_ID: &str = "TArray<TArray<ZVRCameraEntity.ETurnMode>>";
 }
 
 impl Variant for ZVRCameraEntity_ETurnMode {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZVRCameraEntity_ETurnMode")
+        interner.get_or_intern_static("ZVRCameraEntity.ETurnMode")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZVRCameraEntity_ETurnMode".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48847,24 +49333,24 @@ impl Bin1Serialize for ZVRHUDWristAlignmentController_EAxis {
 }
 
 impl StaticVariant for ZVRHUDWristAlignmentController_EAxis {
-     const TYPE_ID: &str = "ZVRHUDWristAlignmentController_EAxis";
+     const TYPE_ID: &str = "ZVRHUDWristAlignmentController.EAxis";
 }
 
 impl StaticVariant for Vec<ZVRHUDWristAlignmentController_EAxis> {
-     const TYPE_ID: &str = "TArray<ZVRHUDWristAlignmentController_EAxis>";
+     const TYPE_ID: &str = "TArray<ZVRHUDWristAlignmentController.EAxis>";
 }
 
 impl StaticVariant for Vec<Vec<ZVRHUDWristAlignmentController_EAxis>> {
-     const TYPE_ID: &str = "TArray<TArray<ZVRHUDWristAlignmentController_EAxis>>";
+     const TYPE_ID: &str = "TArray<TArray<ZVRHUDWristAlignmentController.EAxis>>";
 }
 
 impl Variant for ZVRHUDWristAlignmentController_EAxis {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZVRHUDWristAlignmentController_EAxis")
+        interner.get_or_intern_static("ZVRHUDWristAlignmentController.EAxis")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZVRHUDWristAlignmentController_EAxis".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48908,24 +49394,24 @@ impl Bin1Serialize for ZValueBool_Operation_EEvaluationType {
 }
 
 impl StaticVariant for ZValueBool_Operation_EEvaluationType {
-     const TYPE_ID: &str = "ZValueBool_Operation_EEvaluationType";
+     const TYPE_ID: &str = "ZValueBool_Operation.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZValueBool_Operation_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZValueBool_Operation_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZValueBool_Operation.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZValueBool_Operation_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZValueBool_Operation_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZValueBool_Operation.EEvaluationType>>";
 }
 
 impl Variant for ZValueBool_Operation_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZValueBool_Operation_EEvaluationType")
+        interner.get_or_intern_static("ZValueBool_Operation.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZValueBool_Operation_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -48969,24 +49455,24 @@ impl Bin1Serialize for ZValueBool_OperationRecalc_EEvaluationType {
 }
 
 impl StaticVariant for ZValueBool_OperationRecalc_EEvaluationType {
-     const TYPE_ID: &str = "ZValueBool_OperationRecalc_EEvaluationType";
+     const TYPE_ID: &str = "ZValueBool_OperationRecalc.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZValueBool_OperationRecalc_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZValueBool_OperationRecalc_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZValueBool_OperationRecalc.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZValueBool_OperationRecalc_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZValueBool_OperationRecalc_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZValueBool_OperationRecalc.EEvaluationType>>";
 }
 
 impl Variant for ZValueBool_OperationRecalc_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZValueBool_OperationRecalc_EEvaluationType")
+        interner.get_or_intern_static("ZValueBool_OperationRecalc.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZValueBool_OperationRecalc_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49030,24 +49516,24 @@ impl Bin1Serialize for ZValueBool_Operation_Signal_EEvaluationType {
 }
 
 impl StaticVariant for ZValueBool_Operation_Signal_EEvaluationType {
-     const TYPE_ID: &str = "ZValueBool_Operation_Signal_EEvaluationType";
+     const TYPE_ID: &str = "ZValueBool_Operation_Signal.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZValueBool_Operation_Signal_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZValueBool_Operation_Signal_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZValueBool_Operation_Signal.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZValueBool_Operation_Signal_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZValueBool_Operation_Signal_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZValueBool_Operation_Signal.EEvaluationType>>";
 }
 
 impl Variant for ZValueBool_Operation_Signal_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZValueBool_Operation_Signal_EEvaluationType")
+        interner.get_or_intern_static("ZValueBool_Operation_Signal.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZValueBool_Operation_Signal_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49091,24 +49577,24 @@ impl Bin1Serialize for ZValueInt_Comparator_EEvaluationType {
 }
 
 impl StaticVariant for ZValueInt_Comparator_EEvaluationType {
-     const TYPE_ID: &str = "ZValueInt_Comparator_EEvaluationType";
+     const TYPE_ID: &str = "ZValueInt_Comparator.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZValueInt_Comparator_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZValueInt_Comparator_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZValueInt_Comparator.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZValueInt_Comparator_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZValueInt_Comparator_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZValueInt_Comparator.EEvaluationType>>";
 }
 
 impl Variant for ZValueInt_Comparator_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZValueInt_Comparator_EEvaluationType")
+        interner.get_or_intern_static("ZValueInt_Comparator.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZValueInt_Comparator_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49152,24 +49638,24 @@ impl Bin1Serialize for ZValueInt_Comparator_Poll_EEvaluationType {
 }
 
 impl StaticVariant for ZValueInt_Comparator_Poll_EEvaluationType {
-     const TYPE_ID: &str = "ZValueInt_Comparator_Poll_EEvaluationType";
+     const TYPE_ID: &str = "ZValueInt_Comparator_Poll.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZValueInt_Comparator_Poll_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZValueInt_Comparator_Poll_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZValueInt_Comparator_Poll.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZValueInt_Comparator_Poll_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZValueInt_Comparator_Poll_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZValueInt_Comparator_Poll.EEvaluationType>>";
 }
 
 impl Variant for ZValueInt_Comparator_Poll_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZValueInt_Comparator_Poll_EEvaluationType")
+        interner.get_or_intern_static("ZValueInt_Comparator_Poll.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZValueInt_Comparator_Poll_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49213,24 +49699,24 @@ impl Bin1Serialize for ZValueInt_Evaluation_EEvaluationType {
 }
 
 impl StaticVariant for ZValueInt_Evaluation_EEvaluationType {
-     const TYPE_ID: &str = "ZValueInt_Evaluation_EEvaluationType";
+     const TYPE_ID: &str = "ZValueInt_Evaluation.EEvaluationType";
 }
 
 impl StaticVariant for Vec<ZValueInt_Evaluation_EEvaluationType> {
-     const TYPE_ID: &str = "TArray<ZValueInt_Evaluation_EEvaluationType>";
+     const TYPE_ID: &str = "TArray<ZValueInt_Evaluation.EEvaluationType>";
 }
 
 impl StaticVariant for Vec<Vec<ZValueInt_Evaluation_EEvaluationType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZValueInt_Evaluation_EEvaluationType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZValueInt_Evaluation.EEvaluationType>>";
 }
 
 impl Variant for ZValueInt_Evaluation_EEvaluationType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZValueInt_Evaluation_EEvaluationType")
+        interner.get_or_intern_static("ZValueInt_Evaluation.EEvaluationType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZValueInt_Evaluation_EEvaluationType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49268,24 +49754,24 @@ impl Bin1Serialize for ZVsTargetPicker_ETargetSelectionType {
 }
 
 impl StaticVariant for ZVsTargetPicker_ETargetSelectionType {
-     const TYPE_ID: &str = "ZVsTargetPicker_ETargetSelectionType";
+     const TYPE_ID: &str = "ZVsTargetPicker.ETargetSelectionType";
 }
 
 impl StaticVariant for Vec<ZVsTargetPicker_ETargetSelectionType> {
-     const TYPE_ID: &str = "TArray<ZVsTargetPicker_ETargetSelectionType>";
+     const TYPE_ID: &str = "TArray<ZVsTargetPicker.ETargetSelectionType>";
 }
 
 impl StaticVariant for Vec<Vec<ZVsTargetPicker_ETargetSelectionType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZVsTargetPicker_ETargetSelectionType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZVsTargetPicker.ETargetSelectionType>>";
 }
 
 impl Variant for ZVsTargetPicker_ETargetSelectionType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZVsTargetPicker_ETargetSelectionType")
+        interner.get_or_intern_static("ZVsTargetPicker.ETargetSelectionType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZVsTargetPicker_ETargetSelectionType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49327,24 +49813,24 @@ impl Bin1Serialize for ZWaveformGeneratorEntity_ECurveType {
 }
 
 impl StaticVariant for ZWaveformGeneratorEntity_ECurveType {
-     const TYPE_ID: &str = "ZWaveformGeneratorEntity_ECurveType";
+     const TYPE_ID: &str = "ZWaveformGeneratorEntity.ECurveType";
 }
 
 impl StaticVariant for Vec<ZWaveformGeneratorEntity_ECurveType> {
-     const TYPE_ID: &str = "TArray<ZWaveformGeneratorEntity_ECurveType>";
+     const TYPE_ID: &str = "TArray<ZWaveformGeneratorEntity.ECurveType>";
 }
 
 impl StaticVariant for Vec<Vec<ZWaveformGeneratorEntity_ECurveType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZWaveformGeneratorEntity_ECurveType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZWaveformGeneratorEntity.ECurveType>>";
 }
 
 impl Variant for ZWaveformGeneratorEntity_ECurveType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZWaveformGeneratorEntity_ECurveType")
+        interner.get_or_intern_static("ZWaveformGeneratorEntity.ECurveType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZWaveformGeneratorEntity_ECurveType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49384,24 +49870,24 @@ impl Bin1Serialize for ZWaypointEntity_EMovementType {
 }
 
 impl StaticVariant for ZWaypointEntity_EMovementType {
-     const TYPE_ID: &str = "ZWaypointEntity_EMovementType";
+     const TYPE_ID: &str = "ZWaypointEntity.EMovementType";
 }
 
 impl StaticVariant for Vec<ZWaypointEntity_EMovementType> {
-     const TYPE_ID: &str = "TArray<ZWaypointEntity_EMovementType>";
+     const TYPE_ID: &str = "TArray<ZWaypointEntity.EMovementType>";
 }
 
 impl StaticVariant for Vec<Vec<ZWaypointEntity_EMovementType>> {
-     const TYPE_ID: &str = "TArray<TArray<ZWaypointEntity_EMovementType>>";
+     const TYPE_ID: &str = "TArray<TArray<ZWaypointEntity.EMovementType>>";
 }
 
 impl Variant for ZWaypointEntity_EMovementType {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZWaypointEntity_EMovementType")
+        interner.get_or_intern_static("ZWaypointEntity.EMovementType")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZWaypointEntity_EMovementType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49443,24 +49929,24 @@ impl Bin1Serialize for ZWorldUIElementInstanceBase_EVisibility {
 }
 
 impl StaticVariant for ZWorldUIElementInstanceBase_EVisibility {
-     const TYPE_ID: &str = "ZWorldUIElementInstanceBase_EVisibility";
+     const TYPE_ID: &str = "ZWorldUIElementInstanceBase.EVisibility";
 }
 
 impl StaticVariant for Vec<ZWorldUIElementInstanceBase_EVisibility> {
-     const TYPE_ID: &str = "TArray<ZWorldUIElementInstanceBase_EVisibility>";
+     const TYPE_ID: &str = "TArray<ZWorldUIElementInstanceBase.EVisibility>";
 }
 
 impl StaticVariant for Vec<Vec<ZWorldUIElementInstanceBase_EVisibility>> {
-     const TYPE_ID: &str = "TArray<TArray<ZWorldUIElementInstanceBase_EVisibility>>";
+     const TYPE_ID: &str = "TArray<TArray<ZWorldUIElementInstanceBase.EVisibility>>";
 }
 
 impl Variant for ZWorldUIElementInstanceBase_EVisibility {
     fn type_id(&self, interner: &mut string_interner::StringInterner<string_interner::backend::BucketBackend>) -> string_interner::DefaultSymbol {
-        interner.get_or_intern_static("ZWorldUIElementInstanceBase_EVisibility")
+        interner.get_or_intern_static("ZWorldUIElementInstanceBase.EVisibility")
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("ZWorldUIElementInstanceBase_EVisibility".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49517,7 +50003,7 @@ impl Variant for eActionRewardType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eActionRewardType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49572,7 +50058,7 @@ impl Variant for eBurstPatternType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eBurstPatternType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49639,7 +50125,7 @@ impl Variant for eContractSessionStartError {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eContractSessionStartError".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49708,7 +50194,7 @@ impl Variant for eHitmanPermissionReason {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eHitmanPermissionReason".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49769,7 +50255,7 @@ impl Variant for eHolsterAbility {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eHolsterAbility".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49824,7 +50310,7 @@ impl Variant for eItemHands {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eItemHands".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49879,7 +50365,7 @@ impl Variant for eItemRarity {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eItemRarity".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49934,7 +50420,7 @@ impl Variant for eItemSize {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eItemSize".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -49993,7 +50479,7 @@ impl Variant for eParticleEmitterBoxEntity_SpawnModes {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eParticleEmitterBoxEntity_SpawnModes".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -50048,7 +50534,7 @@ impl Variant for eParticleEmitterMeshEntity_SpawnModes {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eParticleEmitterMeshEntity_SpawnModes".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -50111,7 +50597,7 @@ impl Variant for eVRFadeType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eVRFadeType".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -50164,7 +50650,7 @@ impl Variant for eWeaponOperation {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eWeaponOperation".into()))
+        serde_json::to_value(self)
     }
 }
 
@@ -50231,7 +50717,7 @@ impl Variant for eWeaponType {
     }
 
     fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-        Ok(serde_json::Value::String("eWeaponType".into()))
+        serde_json::to_value(self)
     }
 }
 

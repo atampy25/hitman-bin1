@@ -27,6 +27,33 @@ impl<T: Bin1Serialize + Aligned> Bin1Serialize for &[T] {
 	}
 }
 
+impl<T: Bin1Serialize + Aligned, const N: usize> Aligned for [T; N] {
+	const ALIGNMENT: usize = T::ALIGNMENT;
+}
+
+/// Serialisation of arrays as TFixedArray values (no length specified).
+impl<T: Bin1Serialize + Aligned, const N: usize> Bin1Serialize for [T; N] {
+	fn alignment(&self) -> usize {
+		Self::ALIGNMENT
+	}
+
+	fn write(&self, ser: &mut crate::ser::Bin1Serializer) -> Result<(), crate::ser::SerializeError> {
+		for item in self {
+			item.write_aligned(ser)?;
+		}
+
+		Ok(())
+	}
+
+	fn resolve(&self, ser: &mut crate::ser::Bin1Serializer) -> Result<(), crate::ser::SerializeError> {
+		for item in self {
+			item.resolve(ser)?;
+		}
+
+		Ok(())
+	}
+}
+
 impl<T: Bin1Serialize> Aligned for Vec<T> {
 	const ALIGNMENT: usize = 8;
 }

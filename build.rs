@@ -4,18 +4,26 @@ use std::{collections::VecDeque, fs};
 
 use anyhow::Result;
 use codegen::{Block, Scope};
+use edit_distance::edit_distance;
 use inflector::Inflector;
 use lazy_regex::{regex_captures, regex_is_match, regex_replace};
+use rayon::prelude::*;
 
 pub enum Member {
 	Padding(usize),
 	Field(String, String, String)
 }
 
-fn parse_enums(enums: &str) -> Vec<(String, usize, Vec<(String, i64)>)> {
-	let enums = enums.replace('\r', "");
-	let enums = enums.split_once("#pragma pack(push, 1)\n\n").unwrap().1;
-	enums
+fn parse_enums(classes: &str, enums: &str) -> Vec<(String, String, usize, Vec<(String, i64)>)> {
+	let enums = enums
+		.lines()
+		.filter(|x| x.trim().starts_with("(*g_Enums)["))
+		.map(|x| regex_captures!(r#"\(\*g_Enums\)\["(.*?)"] ="#, x).unwrap().1)
+		.collect::<Vec<_>>();
+
+	let classes = classes.replace('\r', "");
+	let classes = classes.split_once("#pragma pack(push, 1)\n\n").unwrap().1;
+	classes
 		.split("};\n\n")
 		.filter(|section| section.starts_with("// Size:"))
 		.filter_map(|section| {
@@ -43,7 +51,12 @@ fn parse_enums(enums: &str) -> Vec<(String, usize, Vec<(String, i64)>)> {
 					})
 					.collect();
 
-				Some((name.to_owned(), size, members))
+				let enum_name = *enums
+					.par_iter()
+					.min_by_key(|x| edit_distance(name, x))
+					.unwrap_or(&name);
+
+				Some((name.to_owned(), enum_name.to_owned(), size, members))
 			} else {
 				None
 			}
@@ -148,6 +161,16 @@ fn parse_classes(classes: &str) -> Vec<(String, Vec<Member>)> {
 										)
 									),
 
+									x if x.starts_with("TFixedArray<") => format!(
+										"[{}; {}]",
+										process_type_name(regex_captures!(r"TFixedArray<(.*), *(.*)>", x).unwrap().1),
+										regex_captures!(r"TFixedArray<(.*), *(.*)>", x)
+											.unwrap()
+											.2
+											.parse::<usize>()
+											.unwrap()
+									),
+
 									x if x.starts_with("TPair<") => format!(
 										"({}, {})",
 										process_type_name(regex_captures!(r"TPair<(.*), *(.*)>", x).unwrap().1),
@@ -177,7 +200,7 @@ fn parse_classes(classes: &str) -> Vec<(String, Vec<Member>)> {
 		.collect()
 }
 
-fn generate(scope: &mut Scope, code: &str) {
+fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str) {
 	scope.import("crate::ser", "Aligned");
 	scope.import("crate::ser", "Bin1Serialize");
 	scope.import("crate::ser", "Bin1Serializer");
@@ -188,20 +211,35 @@ fn generate(scope: &mut Scope, code: &str) {
 	scope.import("crate::types::variant", "DeserializeVariant");
 	scope.raw("use crate as hitman_bin1;");
 
-	let mut classes = parse_classes(code);
+	let mut classes = parse_classes(classes_code);
 
 	// Special cased
 	classes.remove(classes.iter().position(|x| x.0 == "ZRuntimeResourceID").unwrap());
 	classes.remove(classes.iter().position(|x| x.0 == "SEntityTemplateProperty").unwrap());
 
 	let mut class_queue = VecDeque::new();
-	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "STemplateEntityFactory").unwrap()));
-	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "STemplateEntityBlueprint").unwrap()));
-	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "SEntityTemplateReference").unwrap()));
-	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "SColorRGB").unwrap()));
-	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "SColorRGBA").unwrap()));
-	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "ZGameTime").unwrap()));
-	class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == "SMatrix43").unwrap()));
+
+	for ty in [
+		"STemplateEntityFactory",
+		"STemplateEntityBlueprint",
+		"SColorRGB",
+		"SColorRGBA",
+		"ZGuid",
+		"ZGameTime",
+		"SVector2",
+		"SVector3",
+		"SVector4",
+		"SMatrix43",
+		"SWorldSpaceSettings",
+		"S25DProjectionSettings",
+		"SBodyPartDamageMultipliers",
+		"SCCEffectSet",
+		"SSCCuriousConfiguration",
+		"ZCurve",
+		"SMapMarkerData"
+	] {
+		class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == ty).unwrap()));
+	}
 
 	while let Some((name, members)) = class_queue.pop_front() {
 		for member in &members {
@@ -317,7 +355,7 @@ fn generate(scope: &mut Scope, code: &str) {
 		));
 	}
 
-	for (name, size, members) in parse_enums(code) {
+	for (name, type_id, size, members) in parse_enums(classes_code, enums_code) {
 		if members.is_empty() {
 			continue;
 		}
@@ -382,19 +420,19 @@ fn generate(scope: &mut Scope, code: &str) {
 		scope.new_impl(&name).impl_trait("StaticVariant").associate_const(
 			"TYPE_ID",
 			"&str",
-			format!(r#""{name}""#),
+			format!(r#""{type_id}""#),
 			""
 		);
 
 		scope
 			.new_impl(&format!("Vec<{name}>"))
 			.impl_trait("StaticVariant")
-			.associate_const("TYPE_ID", "&str", format!(r#""TArray<{name}>""#), "");
+			.associate_const("TYPE_ID", "&str", format!(r#""TArray<{type_id}>""#), "");
 
 		scope
 			.new_impl(&format!("Vec<Vec<{name}>>"))
 			.impl_trait("StaticVariant")
-			.associate_const("TYPE_ID", "&str", format!(r#""TArray<TArray<{name}>>""#), "");
+			.associate_const("TYPE_ID", "&str", format!(r#""TArray<TArray<{type_id}>>""#), "");
 
 		let variant_impl = scope.new_impl(&name).impl_trait("Variant");
 
@@ -406,13 +444,13 @@ fn generate(scope: &mut Scope, code: &str) {
 				"&mut string_interner::StringInterner<string_interner::backend::BucketBackend>"
 			)
 			.ret("string_interner::DefaultSymbol")
-			.line(format!(r#"interner.get_or_intern_static("{name}")"#));
+			.line(format!(r#"interner.get_or_intern_static("{type_id}")"#));
 
 		variant_impl
 			.new_fn("to_serde")
 			.arg_ref_self()
 			.ret("Result<serde_json::Value, serde_json::Error>")
-			.line(format!(r#"Ok(serde_json::Value::String("{name}".into()))"#));
+			.line("serde_json::to_value(self)");
 
 		scope.raw(format!(
 			"inventory::submit!(&VariantDeserializer::<{name}>::new() as &dyn DeserializeVariant);"
@@ -429,7 +467,11 @@ fn generate(scope: &mut Scope, code: &str) {
 pub fn main() -> Result<()> {
 	let mut h3 = Scope::new();
 
-	generate(&mut h3, &fs::read_to_string("h3.txt")?);
+	generate(
+		&mut h3,
+		&fs::read_to_string("h3.txt")?,
+		&fs::read_to_string("h3-enums.txt")?
+	);
 
 	fs::write(
 		"src/generated/h3.rs",

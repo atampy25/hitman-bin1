@@ -236,6 +236,8 @@ impl_primitive!(i64, "int64");
 impl_primitive!(f32, "float32");
 impl_primitive!(f64, "float64");
 
+impl_primitive!(bool, "bool");
+
 impl StaticVariant for () {
 	const TYPE_ID: &'static str = "void";
 }

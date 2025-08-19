@@ -8,6 +8,7 @@ use serde::{
 use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
 
 use crate::{
+	de::{Bin1Deserialize, Bin1Deserializer, DeserializeError},
 	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError},
 	types::variant::{DeserializeVariant, StaticVariant, Variant, VariantDeserializer, ZVariant}
 };
@@ -48,6 +49,14 @@ impl Bin1Serialize for PropertyID {
 
 	fn write(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
 		self.0.write(ser)
+	}
+}
+
+impl Bin1Deserialize for PropertyID {
+	const SIZE: usize = u32::SIZE;
+
+	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
+		u32::read(de).map(Self)
 	}
 }
 
@@ -131,7 +140,7 @@ impl<'de> Deserialize<'de> for PropertyID {
 	}
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Bin1Serialize)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Bin1Serialize, Bin1Deserialize)]
 pub struct SEntityTemplateProperty {
 	#[serde(rename = "nPropertyID")]
 	pub property_id: PropertyID,

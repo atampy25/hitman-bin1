@@ -3,23 +3,6 @@ use std::sync::{Arc, Weak};
 use crate::ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError};
 
 macro_rules! impl_primitive {
-	($ty:ty, $alignment:literal, $type_id:literal) => {
-		impl Aligned for $ty {
-			const ALIGNMENT: usize = $alignment;
-		}
-
-		impl Bin1Serialize for $ty {
-			fn alignment(&self) -> usize {
-				$alignment
-			}
-
-			fn write(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
-				ser.write_unaligned(&self.to_le_bytes());
-				Ok(())
-			}
-		}
-	};
-
 	($ty:ty, $alignment:literal) => {
 		impl Aligned for $ty {
 			const ALIGNMENT: usize = $alignment;
@@ -38,20 +21,20 @@ macro_rules! impl_primitive {
 	};
 }
 
-impl_primitive!(u8, 1, "uint8");
-impl_primitive!(u16, 2, "uint16");
-impl_primitive!(u32, 4, "uint32");
-impl_primitive!(u64, 8, "uint64");
+impl_primitive!(u8, 1);
+impl_primitive!(u16, 2);
+impl_primitive!(u32, 4);
+impl_primitive!(u64, 8);
 impl_primitive!(usize, 8);
 
-impl_primitive!(i8, 1, "int8");
-impl_primitive!(i16, 2, "int16");
-impl_primitive!(i32, 4, "int32");
-impl_primitive!(i64, 8, "int64");
+impl_primitive!(i8, 1);
+impl_primitive!(i16, 2);
+impl_primitive!(i32, 4);
+impl_primitive!(i64, 8);
 impl_primitive!(isize, 8);
 
-impl_primitive!(f32, 4, "float32");
-impl_primitive!(f64, 8, "float64");
+impl_primitive!(f32, 4);
+impl_primitive!(f64, 8);
 
 impl Aligned for bool {
 	const ALIGNMENT: usize = 1;
@@ -68,7 +51,7 @@ impl Bin1Serialize for bool {
 	}
 }
 
-impl<T: Bin1Serialize> Aligned for Arc<T> {
+impl<T> Aligned for Arc<T> {
 	const ALIGNMENT: usize = 8;
 }
 
@@ -89,7 +72,7 @@ impl<T: Bin1Serialize> Bin1Serialize for Arc<T> {
 	}
 }
 
-impl<T: Bin1Serialize> Aligned for Option<Arc<T>> {
+impl<T> Aligned for Option<Arc<T>> {
 	const ALIGNMENT: usize = 8;
 }
 
@@ -119,7 +102,7 @@ impl<T: Bin1Serialize> Bin1Serialize for Option<Arc<T>> {
 	}
 }
 
-impl<T: Bin1Serialize> Aligned for Weak<T> {
+impl<T> Aligned for Weak<T> {
 	const ALIGNMENT: usize = 8;
 }
 
@@ -139,8 +122,12 @@ impl<T: Bin1Serialize> Bin1Serialize for Weak<T> {
 	}
 }
 
-impl<T: Aligned, U> Aligned for (T, U) {
-	const ALIGNMENT: usize = T::ALIGNMENT;
+impl<T: Aligned, U: Aligned> Aligned for (T, U) {
+	const ALIGNMENT: usize = if U::ALIGNMENT > T::ALIGNMENT {
+		U::ALIGNMENT
+	} else {
+		T::ALIGNMENT
+	};
 }
 
 impl<T: Bin1Serialize, U: Bin1Serialize> Bin1Serialize for (T, U) {

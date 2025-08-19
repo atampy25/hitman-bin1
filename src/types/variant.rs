@@ -8,8 +8,12 @@ use const_format::concatcp;
 use ecow::EcoString;
 use serde::{Deserialize, Serialize, de::DeserializeOwned, ser::SerializeStruct};
 use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
+use tryvial::try_fn;
 
-use crate::ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError};
+use crate::{
+	de::{Bin1Deserialize, Bin1Deserializer, DeserializeError},
+	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError}
+};
 
 pub trait StaticVariant {
 	const TYPE_ID: &'static str;
@@ -23,7 +27,8 @@ pub trait Variant: Bin1Serialize + Send + Sync + Debug + Clone + PartialEq {
 
 pub trait DeserializeVariant: Send + Sync {
 	fn type_id(&self) -> &str;
-	fn deserialize(&self, type_id: &str, value: serde_json::Value) -> Result<Box<dyn Variant>, String>;
+	fn deserialize_serde(&self, type_id: &str, value: serde_json::Value) -> Result<Box<dyn Variant>, String>;
+	fn deserialize_bin1(&self, type_id: &str, de: &mut Bin1Deserializer) -> Result<Box<dyn Variant>, DeserializeError>;
 }
 
 pub struct VariantDeserializer<T: StaticVariant + Variant + DeserializeOwned + 'static + Send + Sync>(
@@ -37,14 +42,14 @@ impl<T: StaticVariant + Variant + DeserializeOwned + 'static + Send + Sync> Vari
 	}
 }
 
-impl<T: StaticVariant + Variant + DeserializeOwned + 'static + Send + Sync> DeserializeVariant
+impl<T: StaticVariant + Variant + Bin1Deserialize + DeserializeOwned + 'static + Send + Sync> DeserializeVariant
 	for VariantDeserializer<T>
 {
 	fn type_id(&self) -> &str {
 		T::TYPE_ID
 	}
 
-	fn deserialize(&self, type_id: &str, value: serde_json::Value) -> Result<Box<dyn Variant>, String> {
+	fn deserialize_serde(&self, type_id: &str, value: serde_json::Value) -> Result<Box<dyn Variant>, String> {
 		if type_id != T::TYPE_ID {
 			return Err(format!("Cannot deserialize {} into {}", type_id, T::TYPE_ID));
 		}
@@ -52,6 +57,17 @@ impl<T: StaticVariant + Variant + DeserializeOwned + 'static + Send + Sync> Dese
 		serde_json::from_value::<T>(value)
 			.map(|v| Box::new(v) as Box<dyn Variant>)
 			.map_err(|e| format!("{e}"))
+	}
+
+	fn deserialize_bin1(&self, type_id: &str, de: &mut Bin1Deserializer) -> Result<Box<dyn Variant>, DeserializeError> {
+		if type_id != T::TYPE_ID {
+			return Err(DeserializeError::TypeMismatch {
+				expected: T::TYPE_ID,
+				found: type_id.to_owned()
+			});
+		}
+
+		de.read::<T>().map(|v| Box::new(v) as Box<dyn Variant>)
 	}
 }
 
@@ -134,6 +150,35 @@ impl Bin1Serialize for ZVariant {
 	}
 }
 
+impl Bin1Deserialize for ZVariant {
+	const SIZE: usize = 8 * 2;
+
+	#[try_fn]
+	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
+		let type_id = de.read_type()?;
+
+		if type_id == "void" {
+			de.seek_relative(8)?; // skip pointer
+			Self::new(())
+		} else {
+			de.align_to(8)?;
+			let ptr = de.read_u64()?;
+			let pos = de.position();
+
+			de.seek_from_start(ptr + 0x10)?;
+
+			let result = DESERIALIZERS
+				.get(type_id.as_str())
+				.ok_or_else(|| DeserializeError::UnknownType(type_id.to_string()))?
+				.deserialize_bin1(&type_id, de)?;
+
+			de.seek_from_start(pos)?;
+
+			result.into()
+		}
+	}
+}
+
 impl Serialize for ZVariant {
 	fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
 	where
@@ -184,7 +229,7 @@ impl<'de> Deserialize<'de> for ZVariant {
 
 		if let Some(deserializer) = DESERIALIZERS.get(type_id.as_str()) {
 			Ok(deserializer
-				.deserialize(&type_id, value)
+				.deserialize_serde(&type_id, value)
 				.map_err(serde::de::Error::custom)?
 				.into())
 		} else {

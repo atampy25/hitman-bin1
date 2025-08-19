@@ -9,7 +9,8 @@ struct Bin1Attrs {
 	#[darling(rename = "as")]
 	as_type: Option<syn::Type>,
 
-	pad: Option<usize>
+	pad: Option<usize>,
+	pad_end: Option<usize>
 }
 
 #[proc_macro_derive(Bin1Serialize, attributes(bin1))]
@@ -110,18 +111,29 @@ pub fn derive_serialize(input: TokenStream) -> TokenStream {
 			})
 			.unwrap_or(quote! {});
 
+		let padding_end = options
+			.pad_end
+			.map(|padding| {
+				quote! {
+					ser.write_unaligned(&[0u8; #padding]);
+				}
+			})
+			.unwrap_or(quote! {});
+
 		if options.as_type.is_some() {
 			let as_type = &field_types[idx];
 			quote! {
 				#acc
 				#padding
 				#as_type::from(self.#field.as_ref()).write(ser)?;
+				#padding_end
 			}
 		} else {
 			quote! {
 				#acc
 				#padding
 				self.#field.write(ser)?;
+				#padding_end
 			}
 		}
 	});
@@ -171,6 +183,156 @@ pub fn derive_serialize(input: TokenStream) -> TokenStream {
 			{
 				#resolve_fields
 				Ok(())
+			}
+		}
+	};
+
+	TokenStream::from(expanded)
+}
+
+#[proc_macro_derive(Bin1Deserialize, attributes(bin1))]
+pub fn derive_deserialize(input: TokenStream) -> TokenStream {
+	let input = syn::parse_macro_input!(input as syn::DeriveInput);
+
+	let name = input.ident;
+
+	let data = match input.data {
+		syn::Data::Struct(data) => data,
+		_ => panic!("Bin1Deserialize can only be derived for structs")
+	};
+
+	let field_types = data
+		.fields
+		.iter()
+		.map(|f| {
+			f.attrs
+				.iter()
+				.find_map(|attr| {
+					attr.meta
+						.path()
+						.is_ident("bin1")
+						.then(|| attr.parse_args::<Bin1Attrs>().unwrap())
+				})
+				.unwrap_or_default()
+				.as_type
+				.map(|ty| {
+					let ty = match ty {
+						Type::Path(path) => path,
+						_ => panic!("Unexpected type")
+					};
+
+					let path_without_generics = {
+						let mut path = ty.path.clone();
+						if let Some(seg) = path.segments.last_mut() {
+							seg.arguments = PathArguments::None;
+						}
+						path
+					};
+
+					let generics = ty
+						.path
+						.segments
+						.last()
+						.and_then(|seg| {
+							match &seg.arguments {
+								PathArguments::AngleBracketed(args) => Some(args),
+								_ => None
+							}
+							.map(|args| quote! { #args })
+						})
+						.unwrap_or_default();
+
+					quote! { #path_without_generics::De #generics }
+				})
+				.unwrap_or_else(|| {
+					let ty = &f.ty;
+					quote! { #ty }
+				})
+		})
+		.collect::<Vec<_>>();
+
+	let size = {
+		let total_padding = data.fields.iter().fold(0, |acc, f| {
+			let options: Bin1Attrs = f
+				.attrs
+				.iter()
+				.find_map(|attr| attr.meta.path().is_ident("bin1").then(|| attr.parse_args().unwrap()))
+				.unwrap_or_default();
+
+			acc + options.pad.unwrap_or(0) + options.pad_end.unwrap_or(0)
+		});
+
+		let iter = field_types.iter().map(|ty| {
+			quote! { <#ty as hitman_bin1::de::Bin1Deserialize>::SIZE }
+		});
+
+		quote! { #(#iter)+* + #total_padding }
+	};
+
+	let read_fields = data.fields.iter().enumerate().fold(quote! {}, |acc, (idx, f)| {
+		let field = f.ident.to_owned().unwrap();
+
+		let options: Bin1Attrs = f
+			.attrs
+			.iter()
+			.find_map(|attr| attr.meta.path().is_ident("bin1").then(|| attr.parse_args().unwrap()))
+			.unwrap_or_default();
+
+		let padding = options
+			.pad
+			.map(|padding| {
+				let padding = padding as i64;
+				quote! {
+					de.seek_relative(#padding)?;
+				}
+			})
+			.unwrap_or(quote! {});
+
+		let padding_end = options
+			.pad_end
+			.map(|padding| {
+				let padding = padding as i64;
+				quote! {
+					de.seek_relative(#padding)?;
+				}
+			})
+			.unwrap_or(quote! {});
+
+		if options.as_type.is_some() {
+			let as_type = &field_types[idx];
+			quote! {
+				#acc
+				#padding
+				let #field = #as_type::read(de)?.into();
+				#padding_end
+			}
+		} else {
+			quote! {
+				#acc
+				#padding
+				let #field = de.read()?;
+				#padding_end
+			}
+		}
+	});
+
+	let fields = data.fields.iter().map(|f| {
+		let field = f.ident.to_owned().unwrap();
+		quote! {
+			#field
+		}
+	});
+
+	let expanded = quote! {
+		impl hitman_bin1::de::Bin1Deserialize for #name {
+			const SIZE: usize = #size;
+
+			fn read(de: &mut hitman_bin1::de::Bin1Deserializer)
+				-> Result<Self, hitman_bin1::de::DeserializeError>
+			{
+				#read_fields
+
+				Ok(Self { #(#fields),* })
 			}
 		}
 	};

@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
 use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
+use tryvial::try_fn;
 
 use crate::{
+	de::{Bin1Deserialize, Bin1Deserializer, DeserializeError},
 	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError},
 	types::variant::{DeserializeVariant, StaticVariant, Variant, VariantDeserializer}
 };
@@ -50,6 +52,17 @@ impl Bin1Serialize for ZRuntimeResourceID {
 		ser.write_runtime_resource_id(self.high, self.low);
 
 		Ok(())
+	}
+}
+
+impl Bin1Deserialize for ZRuntimeResourceID {
+	const SIZE: usize = 8;
+
+	#[try_fn]
+	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
+		let high = de.read()?;
+		let low = de.read()?;
+		Self { high, low }
 	}
 }
 

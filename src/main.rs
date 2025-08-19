@@ -1,28 +1,49 @@
 use std::{env, fs};
 
 use hitman_bin1::{
-	generated::h3::{STemplateEntityFactory, STemplateEntityBlueprint},
-	ser::{SerializeError, serialize}
+	de::deserialize,
+	game::h3::{STemplateEntityBlueprint, STemplateEntityFactory},
+	ser::serialize
 };
 
-fn main() -> Result<(), SerializeError> {
+fn main() {
 	match env::args().nth(2).unwrap().as_ref() {
-		"TEMP" => {
-			let value: STemplateEntityFactory =
-				serde_json::from_slice(&fs::read(format!("{}.TEMP.json", env::args().nth(1).unwrap())).unwrap()).unwrap();
+		"convert" => match env::args().nth(3).unwrap().as_ref() {
+			"TEMP" => {
+				let value: STemplateEntityFactory =
+					deserialize(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
-			fs::write(format!("{}-roundtrip.TEMP", env::args().nth(1).unwrap()), serialize(&value)?).unwrap();
-		}
+				fs::write(env::args().nth(5).unwrap(), serde_json::to_vec(&value).unwrap()).unwrap();
+			}
 
-		"TBLU" => {
-			let value: STemplateEntityBlueprint =
-				serde_json::from_slice(&fs::read(format!("{}.TBLU.json", env::args().nth(1).unwrap())).unwrap()).unwrap();
+			"TBLU" => {
+				let value: STemplateEntityBlueprint =
+					deserialize(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
-			fs::write(format!("{}-roundtrip.TBLU", env::args().nth(1).unwrap()), serialize(&value)?).unwrap();
-		}
+				fs::write(env::args().nth(5).unwrap(), serde_json::to_vec(&value).unwrap()).unwrap();
+			}
 
-		_ => panic!("Invalid type")
+			_ => panic!("3rd argument must be TEMP or TBLU")
+		},
+
+		"generate" => match env::args().nth(3).unwrap().as_ref() {
+			"TEMP" => {
+				let value: STemplateEntityFactory =
+					serde_json::from_slice(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
+
+				fs::write(env::args().nth(5).unwrap(), serialize(&value).unwrap()).unwrap();
+			}
+
+			"TBLU" => {
+				let value: STemplateEntityBlueprint =
+					serde_json::from_slice(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
+
+				fs::write(env::args().nth(5).unwrap(), serialize(&value).unwrap()).unwrap();
+			}
+
+			_ => panic!("3rd argument must be TEMP or TBLU")
+		},
+
+		_ => panic!("2nd argument must be convert or generate")
 	}
-
-	Ok(())
 }

@@ -1,6 +1,9 @@
 use ecow::EcoString;
 
-use crate::ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError};
+use crate::{
+	de::{Bin1Deserialize, Bin1Deserializer, DeserializeError},
+	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError}
+};
 
 impl Aligned for EcoString {
 	const ALIGNMENT: usize = 8;
@@ -27,6 +30,15 @@ impl Bin1Serialize for EcoString {
 		ser.write_unaligned(&[0]); // Null terminator
 
 		Ok(())
+	}
+}
+
+impl Bin1Deserialize for EcoString {
+	// i32 + alignment padding + u64
+	const SIZE: usize = 16;
+
+	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
+		de.read_zstring()
 	}
 }
 

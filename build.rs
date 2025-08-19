@@ -10,7 +10,7 @@ use anyhow::Result;
 use codegen::{Block, Scope};
 use edit_distance::edit_distance;
 use inflector::Inflector;
-use lazy_regex::{regex_captures, regex_is_match, regex_replace};
+use lazy_regex::{regex_captures, regex_captures_iter, regex_is_match, regex_replace};
 use rayon::prelude::*;
 
 pub enum Member {
@@ -19,11 +19,12 @@ pub enum Member {
 }
 
 fn parse_enums(classes: &str, enums: &str) -> Vec<(String, String, usize, Vec<(String, i64)>)> {
-	let enums = enums
-		.lines()
-		.filter(|x| x.trim().starts_with("(*g_Enums)["))
-		.map(|x| regex_captures!(r#"\(\*g_Enums\)\["(.*?)"] ="#, x).unwrap().1)
-		.collect::<Vec<_>>();
+	let enums = enums.replace('\r', "");
+	let enums = regex_captures_iter!(
+		r#"\(\*g_Enums\)\["(.*?)"] = \{\n((?:\s+\{ -?\d+, ".*?" \},\n)*)\s+\};"#,
+		&enums
+	)
+	.collect::<Vec<_>>();
 
 	let classes = classes.replace('\r', "");
 	let classes = classes.split_once("#pragma pack(push, 1)\n\n").unwrap().1;
@@ -41,23 +42,19 @@ fn parse_enums(classes: &str, enums: &str) -> Vec<(String, String, usize, Vec<(S
 				.join("\n");
 
 			if section.starts_with("enum class") {
-				let (name, members) = section.split_once("\n{").unwrap();
+				let (name, _) = section.split_once("\n{").unwrap();
 
-				let name = name.trim_start_matches("enum class ");
+				let name = name.trim_start_matches("enum class ").trim();
 
-				let members = members
-					.trim()
+				let enum_entry = enums.par_iter().min_by_key(|x| edit_distance(name, &x[1])).unwrap();
+
+				let members = enum_entry[2]
 					.lines()
-					.map(|x| x.trim())
-					.map(|member| {
-						let (name, value) = member.split_once(" = ").unwrap();
-						(name.to_owned(), value.trim_end_matches(",").parse().unwrap())
-					})
-					.collect();
+					.map(|x| regex_captures!(r#"\{\s*(-?\d+),\s*"(.+?)"\s*\}"#, x))
+					.filter_map(|x| x.map(|x| (x.2.to_owned(), x.1.parse::<i64>().unwrap())))
+					.collect::<Vec<_>>();
 
-				let enum_name = *enums.par_iter().min_by_key(|x| edit_distance(name, x)).unwrap_or(&name);
-
-				Some((name.to_owned(), enum_name.to_owned(), size, members))
+				Some((name.to_owned(), enum_entry[1].to_owned(), size, members))
 			} else {
 				None
 			}
@@ -217,6 +214,9 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 	scope.import("crate::ser", "Bin1Serialize");
 	scope.import("crate::ser", "Bin1Serializer");
 	scope.import("crate::ser", "SerializeError");
+	scope.import("crate::de", "Bin1Deserialize");
+	scope.import("crate::de", "Bin1Deserializer");
+	scope.import("crate::de", "DeserializeError");
 	scope.import("crate::types::variant", "StaticVariant");
 	scope.import("crate::types::variant", "Variant");
 	scope.import("crate::types::variant", "VariantDeserializer");
@@ -306,11 +306,14 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.derive("Clone")
 			.derive("PartialEq")
 			.derive("Bin1Serialize")
+			.derive("Bin1Deserialize")
 			.derive("serde::Serialize")
 			.derive("serde::Deserialize")
 			.vis("pub");
 
 		let mut padding = 0;
+
+		let mut last_field = None;
 
 		for member in members {
 			match member {
@@ -319,18 +322,26 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 				}
 
 				Member::Field(orig_name, field_name, type_name) => {
-					let field = cls
-						.new_field(field_name, type_name)
-						.vis("pub")
-						.annotation(format!("#[serde(rename = \"{}\")]", orig_name));
+					last_field = Some({
+						let field = cls
+							.new_field(field_name, type_name)
+							.vis("pub")
+							.annotation(format!("#[serde(rename = \"{}\")]", orig_name));
 
-					if padding != 0 {
-						field.annotation(format!("#[bin1(pad = {padding})]"));
-					}
+						if padding != 0 {
+							field.annotation(format!("#[bin1(pad = {padding})]"));
+						}
+
+						field
+					});
 
 					padding = 0;
 				}
 			}
+		}
+
+		if padding != 0 {
+			last_field.unwrap().annotation(format!("#[bin1(pad_end = {padding})]"));
 		}
 
 		scope.new_impl(&name).impl_trait("StaticVariant").associate_const(
@@ -384,6 +395,7 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.new_enum(&name)
 			.derive("Debug")
 			.derive("Clone")
+			.derive("Copy")
 			.derive("PartialEq")
 			.derive("serde::Serialize")
 			.derive("serde::Deserialize")
@@ -421,6 +433,48 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.impl_trait("Aligned")
 			.associate_const("ALIGNMENT", "usize", size.to_string(), "");
 
+		scope
+			.new_impl(signed_size_ty)
+			.impl_trait(format!("From<{name}>"))
+			.new_fn("from")
+			.arg("value", &name)
+			.ret(signed_size_ty)
+			.push_block({
+				let mut block = Block::new("match value");
+				if members.is_empty() {
+					block.line(format!("{name}::Value => 1"));
+				} else {
+					for (variant_name, variant_value) in &members {
+						block.line(format!("{name}::{variant_name} => {variant_value},"));
+					}
+				}
+				block
+			});
+
+		scope
+			.new_impl(&name)
+			.impl_trait(format!("TryFrom<{signed_size_ty}>"))
+			.associate_type("Error", "()")
+			.new_fn("try_from")
+			.arg("value", signed_size_ty)
+			.ret(format!("Result<{name}, ()>"))
+			.push_block({
+				if members.is_empty() {
+					let mut block = Block::new("");
+					block.line(format!(r#"if value != 1 {{ eprintln!("Unexpected value for uninhabited enum {type_id}: {{}}", value); }}"#));
+					block.line("Ok(Self::Value)");
+					block
+				} else {
+					let mut block = Block::new("Ok(match value");
+					for (variant_name, variant_value) in &members {
+						block.line(format!("{variant_value} => Self::{variant_name},"));
+					}
+					block.line("_ => return Err(())");
+					block.after(")");
+					block
+				}
+			});
+
 		let ser_impl = scope.new_impl(&name).impl_trait("Bin1Serialize");
 		ser_impl
 			.new_fn("alignment")
@@ -432,19 +486,21 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.arg_ref_self()
 			.arg("ser", "&mut Bin1Serializer")
 			.ret("Result<(), SerializeError>")
-			.push_block({
-				let mut block = Block::new("ser.write_unaligned(&match self");
-				if members.is_empty() {
-					block.line(format!("Self::Value => 0{signed_size_ty}"));
-				} else {
-					for (variant_name, variant_value) in &members {
-						block.line(format!("Self::{variant_name} => {variant_value}{signed_size_ty},"));
-					}
-				}
-				block.after(".to_le_bytes());");
-				block
-			})
+			.line(format!(
+				"ser.write_unaligned(&{signed_size_ty}::from(*self).to_le_bytes());"
+			))
 			.line("Ok(())");
+
+		let de_impl = scope.new_impl(&name).impl_trait("Bin1Deserialize");
+		de_impl.associate_const("SIZE", "usize", size.to_string(), "");
+		de_impl
+			.new_fn("read")
+			.arg("de", "&mut Bin1Deserializer")
+			.ret(format!("Result<{name}, DeserializeError>"))
+			.line(format!(
+				r"let value = de.read_{signed_size_ty}()?;
+value.try_into().map_err(|_| DeserializeError::InvalidEnumValue(value as i64))"
+			));
 
 		scope.new_impl(&name).impl_trait("StaticVariant").associate_const(
 			"TYPE_ID",

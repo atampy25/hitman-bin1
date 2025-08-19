@@ -219,8 +219,6 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 	scope.import("crate::de", "DeserializeError");
 	scope.import("crate::types::variant", "StaticVariant");
 	scope.import("crate::types::variant", "Variant");
-	scope.import("crate::types::variant", "VariantDeserializer");
-	scope.import("crate::types::variant", "DeserializeVariant");
 	scope.raw("use crate as hitman_bin1;");
 
 	let mut classes = parse_classes(classes_code, types_code);
@@ -232,6 +230,7 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 	let mut class_queue = VecDeque::new();
 
 	for ty in [
+		"STemplateEntity",
 		"STemplateEntityFactory",
 		"STemplateEntityBlueprint",
 		"SColorRGB",
@@ -262,7 +261,9 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 		"AI_SFirePattern02",
 		"ZSecuritySystemCameraConfiguration_SDeadBodyVisibleEscalationRule"
 	] {
-		class_queue.push_back(classes.remove(classes.iter().position(|x| x.0 == ty).unwrap()));
+		if let Some(pos) = classes.iter().position(|x| x.0 == ty) {
+			class_queue.push_back(classes.remove(pos));
+		}
 	}
 
 	while let Some((name, type_id, members)) = class_queue.pop_front() {
@@ -272,10 +273,6 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 					scope.import("ecow", "EcoString");
 				} else if ty == "ZRuntimeResourceID" {
 					scope.import("crate::types::resource", "ZRuntimeResourceID");
-				} else if ty == "SEntityTemplateProperty" {
-					scope.import("crate::types::property", "SEntityTemplateProperty");
-				} else if ty == "ZVariant" {
-					scope.import("crate::types::variant", "ZVariant");
 				} else {
 					let mut tys = vec![ty.trim_start_matches("Vec<").trim_end_matches(">")];
 					for ty in tys.clone() {
@@ -379,15 +376,7 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.ret("Result<serde_json::Value, serde_json::Error>")
 			.line("serde_json::to_value(self)");
 
-		scope.raw(format!(
-			"inventory::submit!(&VariantDeserializer::<{name}>::new() as &dyn DeserializeVariant);"
-		));
-		scope.raw(format!(
-			"inventory::submit!(&VariantDeserializer::<Vec<{name}>>::new() as &dyn DeserializeVariant);"
-		));
-		scope.raw(format!(
-			"inventory::submit!(&VariantDeserializer::<Vec<Vec<{name}>>>::new() as &dyn DeserializeVariant);"
-		));
+		scope.raw(format!("submit!({name});"));
 	}
 
 	for (name, type_id, size, members) in parse_enums(classes_code, enums_code) {
@@ -461,7 +450,9 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.push_block({
 				if members.is_empty() {
 					let mut block = Block::new("");
-					block.line(format!(r#"if value != 1 {{ eprintln!("Unexpected value for uninhabited enum {type_id}: {{}}", value); }}"#));
+					block.line(format!(
+						r#"if value != 1 {{ eprintln!("Unexpected value for uninhabited enum {type_id}: {{}}", value); }}"#
+					));
 					block.line("Ok(Self::Value)");
 					block
 				} else {
@@ -537,20 +528,43 @@ value.try_into().map_err(|_| DeserializeError::InvalidEnumValue(value as i64))"
 			.ret("Result<serde_json::Value, serde_json::Error>")
 			.line("serde_json::to_value(self)");
 
-		scope.raw(format!(
-			"inventory::submit!(&VariantDeserializer::<{name}>::new() as &dyn DeserializeVariant);"
-		));
-		scope.raw(format!(
-			"inventory::submit!(&VariantDeserializer::<Vec<{name}>>::new() as &dyn DeserializeVariant);"
-		));
-		scope.raw(format!(
-			"inventory::submit!(&VariantDeserializer::<Vec<Vec<{name}>>>::new() as &dyn DeserializeVariant);"
-		));
+		scope.raw(format!("submit!({name});"));
 	}
 }
 
 pub fn main() -> Result<()> {
 	let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+
+	fs::write(
+		out_dir.join("properties-crc32.txt"),
+		fs::read_to_string("properties.txt")?
+			.lines()
+			.map(|x| crc32fast::hash(x.trim().as_bytes()).to_string())
+			.collect::<Vec<_>>()
+			.join("\n")
+	)?;
+
+	let mut h1 = Scope::new();
+
+	generate(
+		&mut h1,
+		&fs::read_to_string("h1.txt")?,
+		&fs::read_to_string("h1-enums.txt")?,
+		&fs::read_to_string("h1-types.txt")?
+	);
+
+	fs::write(out_dir.join("h1.rs"), h1.to_string())?;
+
+	let mut h2 = Scope::new();
+
+	generate(
+		&mut h2,
+		&fs::read_to_string("h2.txt")?,
+		&fs::read_to_string("h2-enums.txt")?,
+		&fs::read_to_string("h2-types.txt")?
+	);
+
+	fs::write(out_dir.join("h2.rs"), h2.to_string())?;
 
 	let mut h3 = Scope::new();
 
@@ -563,16 +577,13 @@ pub fn main() -> Result<()> {
 
 	fs::write(out_dir.join("h3.rs"), h3.to_string())?;
 
-	fs::write(
-		out_dir.join("properties-crc32.txt"),
-		fs::read_to_string("properties.txt")?
-			.lines()
-			.map(|x| crc32fast::hash(x.trim().as_bytes()).to_string())
-			.collect::<Vec<_>>()
-			.join("\n")
-	)?;
-
 	println!("cargo::rerun-if-changed=build.rs");
+	println!("cargo::rerun-if-changed=h1.txt");
+	println!("cargo::rerun-if-changed=h1-enums.txt");
+	println!("cargo::rerun-if-changed=h1-types.txt");
+	println!("cargo::rerun-if-changed=h2.txt");
+	println!("cargo::rerun-if-changed=h2-enums.txt");
+	println!("cargo::rerun-if-changed=h2-types.txt");
 	println!("cargo::rerun-if-changed=h3.txt");
 	println!("cargo::rerun-if-changed=h3-enums.txt");
 	println!("cargo::rerun-if-changed=h3-types.txt");

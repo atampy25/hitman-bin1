@@ -5,7 +5,7 @@ use tryvial::try_fn;
 use crate::{
 	de::{Bin1Deserialize, Bin1Deserializer, DeserializeError},
 	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError},
-	types::variant::{DeserializeVariant, StaticVariant, Variant, VariantDeserializer}
+	types::variant::{StaticVariant, Variant}
 };
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -65,7 +65,3 @@ impl Bin1Deserialize for ZRuntimeResourceID {
 		Self { high, low }
 	}
 }
-
-inventory::submit!(&VariantDeserializer::<ZRuntimeResourceID>::new() as &dyn DeserializeVariant);
-inventory::submit!(&VariantDeserializer::<Vec<ZRuntimeResourceID>>::new() as &dyn DeserializeVariant);
-inventory::submit!(&VariantDeserializer::<Vec<Vec<ZRuntimeResourceID>>>::new() as &dyn DeserializeVariant);

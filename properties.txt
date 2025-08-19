@@ -29,8 +29,8 @@ A_AudioOpenInitial
 A_LinkedEntity
 A_Volume
 a0
-a1
 A1
+a1
 a2
 aAlphaCurve
 aAmmoTypes
@@ -81,8 +81,8 @@ act
 Act
 Act_Aline
 act_false
-Act_Ready
 Act_ready
+Act_Ready
 Act_Spatial
 act_true
 Act1
@@ -133,8 +133,8 @@ ActivateTriggerBox
 ActivationPointZAxis
 ActivatorTransform
 ActivatorVolume
-active
 Active
+active
 Active_ID
 ActiveCamera
 ActiveCosmetic_ID
@@ -1192,8 +1192,8 @@ BRIGITTE_ENTOURAGE
 Broadcast_Back
 Broadcast_front
 BROADWAYACTOR
-Broken
 broken
+Broken
 BrokenDialog
 BrokenGlass
 bShouldRespawn
@@ -1253,8 +1253,8 @@ BULLDOG_PRIVATEINVESTIGATOR_M
 BULLDOG_REBECCACARLISLE_F
 BULLDOG_UNDERTAKER_M
 BumpReactionLanguageSwitch
-BumpScale
 Bumpscale
+BumpScale
 BumpScaleEnd
 BumpScaleStart
 BundlePos
@@ -1308,8 +1308,8 @@ Bystander_01_Enabled
 Bystander_02_Enabled
 Bystander_03_Enabled
 Bystander_04_Enabled
-c
 C
+c
 C_Act
 C_AudioCloseComplete
 C_AudioOpenComplete
@@ -1365,8 +1365,8 @@ CameraStickLength
 CameraTintColor
 CameraTransform
 CamMover
-Campaign
 campaign
+Campaign
 campaignActivatorInUse
 CampaignActive
 campaignActive
@@ -1423,6 +1423,7 @@ CanUnlockEvaluation
 CanUnlockWIthoutKeyword
 CanUpdate
 CanUse
+canUseContainer
 CapsuleColor
 CapsuleDiffusePower
 CapsuleFarAttenuation
@@ -1576,14 +1577,14 @@ Civ02
 civfem02
 civfem04
 CIVFEM05
-CIVFEM06
 CivFem06
+CIVFEM06
 CIVFEM07
 CIVFEM08
 CivFem09
 CIVFEM09
-CIVFEM10
 CivFem10
+CIVFEM10
 CIVFEMCH01
 CIVFEMCH02
 CIVFEMES01
@@ -1591,20 +1592,20 @@ CIVFEMES02
 CIVFEMHI01
 CIVFEMHI02
 CIVFEMHI03
-CIVMALE01
 civmale01
+CIVMALE01
 civmale02
 CIVMALE02
 civmale04
 CIVMALE05
-CIVMALE06
 civmale06
+CIVMALE06
 CivMale07
 CIVMALE07
 CIVMALE08
 CivMale08
-CIVMALE09
 CivMale09
+CIVMALE09
 CIVMALE10
 CIVMALE11
 CIVMALEES01
@@ -1732,8 +1733,8 @@ CollisionResponse
 CollisionScale
 CollisionSpheres
 CollisionTransform
-Color
 color
+Color
 Color_2
 Color_A
 Color_B
@@ -1837,8 +1838,8 @@ combatPosition
 ComHeroExplosionRule_Enabled
 ComHeroHeadshotRule_Enabled
 comment
-completed
 Completed
+completed
 Completed_ID
 CompletedConditions
 CompletedEvaluation
@@ -1858,8 +1859,8 @@ ConditionList
 conditionOkToReplaceBrokenBottle
 ConditionProperty
 ConditionRightSideHIP
-conditions
 Conditions
+conditions
 Conditions_000fdc3f624e4fe2939ccebe390d9bbd
 Conditions_0011968c9d9443f4b9b93b2df71ce82f
 Conditions_00123e7fb0c943729f4efa56d4153bfd
@@ -11338,6 +11339,9 @@ Consume_Duration
 ConsumeItemFromInventory
 containedIcon
 ContainedItem
+containedItemCategory
+containedItemCategoryLKey
+containedItemRepoId
 containedLabel
 Container_Sides_Colour01
 Container_Sides_Colour02
@@ -11528,17 +11532,17 @@ Darklight_Visible
 DarkLightBoxSize
 DarkLightDiffusePower
 DarkLightIntensity
-DarkLightON
 DarkLightOn
+DarkLightON
 DarkLights
 DarkLightsOn
 DarkLightsVideos
 DarklightsVisible
 DarkLightsVisible
 DarkLightVisble
-darklightVisible
-DarklightVisible
 DarkLightVisible
+DarklightVisible
+darklightVisible
 DarkLightVisible1
 DarkLightVisible2
 DarkLightVislbe
@@ -11660,8 +11664,8 @@ DelayTimeFalseToTrue
 DelayTimems
 DelayTimeTrueToFalse
 DelayToReady
-Delgado
 DELGADO
+Delgado
 DemoHasPlayedAlready
 Density
 Density_op
@@ -11736,8 +11740,8 @@ DifficultyIcon
 DifficultyIndicator
 difficultyLevel
 difficultyRank
-Diffuse
 diffuse
+Diffuse
 Diffuse_01
 Diffuse_01_dest
 Diffuse_01_enab
@@ -11840,9 +11844,9 @@ DisableHitmanBlockerPhysics
 DisableHUD
 DisableInContractsMode
 DisableIntel
-Disablephysics
 DisablePhysics
 disablePhysics
+Disablephysics
 DisablePhysics2
 DisablePhysics3
 DisablePhysics4
@@ -11971,8 +11975,8 @@ Door_Left_E
 Door_Left_Rotation
 Door_Left_Visibilty
 Door_Left_Visible
-door_material
 Door_Material
+door_material
 Door_Material_Front
 Door_Material_Swap
 Door_Open
@@ -12028,8 +12032,8 @@ DoorFrame_Visible
 doorfront
 DoorHacked
 DoorHandleLOD
-DoorhandlePosition
 DoorHandlePosition
+DoorhandlePosition
 DoorIsLocked
 DoorIsOpen
 DoorLocked
@@ -12086,8 +12090,8 @@ Driver_Char
 Drivers_Lounge_back
 Drivers_Lounge_Front
 DropConditions
-DropOffPoint
 DropoffPoint
+DropOffPoint
 DropShadow
 DrumRollDuration
 DryVolumes
@@ -12119,8 +12123,8 @@ DUGONG_VILLAGER_MHI03
 dummy
 DummyPaperVisible
 DumpPostion
-Duration
 duration
+Duration
 durationMax
 durationVariance
 DustAlpha
@@ -12302,8 +12306,8 @@ enableBaseMarkup
 EnableBaseMarkup
 EnableChannelToken
 EnableCollisionSpunge
-EnableCondition
 enableCondition
+EnableCondition
 EnableConditions
 EnableCuriousSoundEvent
 Enabled
@@ -12410,8 +12414,8 @@ EnterRange
 entities
 entity
 entity2
-entityID
 entityId
+entityID
 entityIndex
 entityName
 EntityReference
@@ -12854,8 +12858,8 @@ FixedAlphaCloud
 FixedAlphaSmoke
 FixedEmissionCount
 FixedEmissionCountSplashes
-FlagAllowed
 flagAllowed
+FlagAllowed
 FlagAlpha
 FlagCastShadows
 FlagColour
@@ -12927,8 +12931,8 @@ FlockBehaviorVelocity
 Floor
 Floor_EmissiveIntensity
 floor_hallway
-floor_material
 Floor_Material
+floor_material
 Floor_Rotation
 Floor2Position
 Floor3Position
@@ -13415,8 +13419,8 @@ GlobaNormalIntensityAddToVeretexcolor
 GlobaNormalIntensityAddToVeretexcolor_op
 Gloss
 Gloss_op
-glossiness
 Glossiness
+glossiness
 Glow
 Glow_Intensity
 Glow_Scale
@@ -13575,8 +13579,8 @@ HandlerWarningSpeech
 HandleTransform
 HandLockBoxOffset
 hardCondition
-Hardcore
 hardcore
+Hardcore
 HardcoreUnlocked
 HardExitBoxes
 HardExitSpheres
@@ -13700,8 +13704,8 @@ HeroRadius
 HeroSpatial
 HeroTransform
 hexIntel
-hidden
 Hidden
+hidden
 HiddenDoor_Transforms
 HiddenUntilRevealed
 Hide_Display
@@ -13924,8 +13928,8 @@ IconTransformParent
 IconType
 IconVisible
 IconVisibleEvaluation
-Id
 id
+Id
 iD_01
 iD_02
 iD_03
@@ -13973,8 +13977,8 @@ ImpuseWindStartTime
 includeWeapons
 Inclusive
 Incremental_Delay_Value
-Index
 index
+Index
 IndianTruckBackColor
 IndianTruckFrontColor
 IndicatorLightAttenuation
@@ -14154,8 +14158,8 @@ IsAirConSoundOn3
 IsAirConSoundOn4
 IsAirConSoundOn5
 IsAirConSoundOn6
-IsAlerted
 isAlerted
+IsAlerted
 isAllertedTerritory
 isAnotherSelectedToTravelNext
 isAssassinAlerted
@@ -14167,8 +14171,8 @@ IsBreakable
 IsBrownSoap
 IsBurger
 IsBurning
-isBusiness
 IsBusiness
+isBusiness
 IsCameraSequence
 IsClose_Channel
 IsClosedThreshold
@@ -14187,17 +14191,17 @@ isDroppable
 IsElectricityOn
 IsElevationDifferenceEnabled
 IsEmetic
-isEnabled
 IsEnabled
+isEnabled
 isEntitlementAvailable
 IsExitSequence
 isExplosive
 isExplosive_01
 isExplosive_02
 isExplosive_03
-Isfailed
-IsFailed
 isFailed
+IsFailed
+Isfailed
 IsFilled
 IsFilmShooting
 IsFired
@@ -14211,10 +14215,10 @@ IsGlitching
 IsGuardReady
 isHardcore
 IsHM3
-IsHot
 isHot
-isHotMission
+IsHot
 IsHotMission
+isHotMission
 isIconCutOut
 isIconFramed
 isIllegal
@@ -14259,8 +14263,8 @@ isLookoutAlerted
 isLookoutNearby
 IsLooped
 isMenuZoomedIn
-isMine
 IsMine
+isMine
 IsMoving
 IsMusicPlaying
 isNervous
@@ -14289,8 +14293,8 @@ IsRicoAvaliable
 IsRigged
 IsRinging
 IsRunning
-IsSafeHouse
 IsSafehouse
+IsSafeHouse
 IsSecret
 IsSedative
 isSelected
@@ -14322,8 +14326,8 @@ IsWaterOn
 IsWhite
 isWidgetEnabled
 Italian
-item
 Item
+item
 Item_01_MasteryLevel
 Item_01_RequiredEntitlement
 Item_02_MasteryLevel
@@ -14392,8 +14396,8 @@ ItemPosition
 ItemPresent
 ItemReady
 ItemRequirements
-ITEMS
 items
+ITEMS
 ItemSlitThroath
 ItemSpawnerSpatial
 ItemSpawnerTransform
@@ -14422,8 +14426,8 @@ Jukebox_Music_Start
 Jukebox_Music_Stop
 Kai_Emissive_Max
 Kai_Emissive_Min
-KAI_VoiceLevel
 Kai_VoiceLevel
+KAI_VoiceLevel
 KaiVoice_Emissive_Max
 KaiVoice_Emissive_Nax
 KARISMA
@@ -14436,8 +14440,8 @@ Key_Animation
 KeyboardPosition
 KeyCard_BoltOpen_Action
 KeypadDisplayVisible
-keyword
 Keyword
+keyword
 Keyword_BustUnlock
 Keyword_Dispatch
 Keyword_Legality
@@ -14575,8 +14579,8 @@ LampsGlowPower
 LampsVisible
 LampTextureEmissive
 LampTexutureColor
-LampTransform
 Lamptransform
+LampTransform
 LampVisible
 LampWiresTransform
 Landlord
@@ -14835,14 +14839,14 @@ LightOnConditions
 lightonoff
 LightOnResult
 LightPoleDebrisController
-Lightposition
 LightPosition
+Lightposition
 LightPosition0
 LightPosition1
 LightPosition2
 LightPower
-LightPowerBase
 LightPowerbase
+LightPowerBase
 LightPowerFlicker
 LightProp
 LightRadius
@@ -14959,8 +14963,8 @@ LOD_Emissive_Colour
 LOD_Emissive_Intensity
 LOD_SpecColor
 LOD_SpecColor_op
-LOD0_Color
 LOD0_color
+LOD0_Color
 LODOffset
 LODScale
 logic
@@ -14976,8 +14980,8 @@ longDescription
 LongLeftAvailable
 LongRightAvailable
 lookA
-lookAtTarget
 LookAtTarget
+lookAtTarget
 LookAtWorldUp
 lookB
 lookC
@@ -15288,8 +15292,8 @@ m_Active
 m_ActiveCampaign
 m_activeHint
 m_activeSafeRooms
-m_actor
 m_Actor
+m_actor
 m_ActorBoneAttachmentsData
 m_ActorDamageControlData
 m_ActorInstance
@@ -15484,6 +15488,7 @@ m_aGuardPoints
 m_aHandColliders
 m_aHandled
 m_aHandlers
+m_aHelpingActorRequests
 m_aHelpingActors
 m_aHiddenBodyVolumes
 m_aHide
@@ -15494,6 +15499,7 @@ m_AIAreaWorld
 m_AIEnvSaveData
 m_aIgnoreCollisionGeom
 m_aIgnoreCollisionGeomExit
+m_aIgnoredEntities
 m_aIgnoreEntities
 m_aIgnoreList
 m_aIllegalKeywords
@@ -15603,6 +15609,7 @@ m_animationName
 m_AnimationOrigin
 m_animationResourceID
 m_AnimationSetResource
+m_animationSetResourceID
 m_Animator
 m_AnimList
 m_AnimPlayer
@@ -15637,6 +15644,7 @@ m_aParameters
 m_aParents
 m_aParticleData
 m_aPathPoints
+m_aPaths
 m_aPatrolRoutes
 m_aPauseActions
 m_aPendingPickupItems
@@ -15751,6 +15759,8 @@ m_aSequenceSaveData
 m_aSetActions
 m_aShapes
 m_aShards
+m_aShardsData
+m_aShardTransforms
 m_aSharedKnowledgeSaveData
 m_aShowDumpPromptConditions
 m_aShowEnterClosetPromptConditions
@@ -15773,6 +15783,7 @@ m_aSpaces
 m_aSpaces_Below
 m_aSpatials
 m_aSpawnPoints
+m_aSpeakerMatrix
 m_aSplineFlows
 m_aSpreadingActors
 m_aSpreadingActorsAddedTime
@@ -15852,6 +15863,7 @@ m_AttachGlow0
 m_aTypeBlacklist
 m_aTypeDescripters
 m_AudioEmitter
+m_AudioNodeID
 m_AudioResource
 m_AudioSetup
 m_aUIElements
@@ -15919,6 +15931,7 @@ m_aVideDatabases
 m_aVideos
 m_aViewportLockedStates
 m_aViewportRatios
+m_aVIPInvestigationGroupIDs
 m_aVolumes
 m_aVRAgilityConfigs
 m_aVRConfigComponents
@@ -15993,6 +16006,7 @@ m_bAffectsFriskExemptDisguises
 m_bAffectVisibility
 m_bAgainstCrowds
 m_bAggressive
+m_bAggressiveMode
 m_bAgitated
 m_bAim
 m_bAimAt
@@ -16189,6 +16203,7 @@ m_bBodyDumpEnabled
 m_bBodyDumpEnabled_1
 m_bBodyDumpEnabled_2
 m_bBodyDumpEnabled_3
+m_bBodyguardNotFound
 m_bBodyInvestigated
 m_bBooleanValue
 m_bBottomEnabled
@@ -16275,6 +16290,7 @@ m_bCheckNonBlockedNeightbors
 m_bCheckRightHand
 m_bCheckRoomsCombined
 m_bCheckSuspects
+m_bCheckUntilPerceived
 m_bCivilian
 m_bCivilianToHitman
 m_bCivilianTransferredKnowledge
@@ -16333,6 +16349,7 @@ m_bConversationHelper
 m_bConversationHelperFast
 m_bConversationHelperFastTrans
 m_bConversationHelperPaused
+m_bCoreHasBody
 m_bCoreInitialIgnoreCharacters
 m_bCornerLeftEnabled
 m_bCornerRightEnabled
@@ -16737,6 +16754,7 @@ m_bGroupEngaged
 m_bGuard
 m_bGuardBodyBystander
 m_bGuarded
+m_bGuardInSituation
 m_bGuardsOnly
 m_bGuardToHitman
 m_bHairTrigger
@@ -16747,6 +16765,7 @@ m_bHandlerHasLOS
 m_bHardWarning
 m_bHarmlessImpact
 m_bHasBeenStarted
+m_bHasBody
 m_bHasCheckedLastKnownPosition
 m_bHasEnteredOnce
 m_bHasExited
@@ -16789,6 +16808,7 @@ m_bHighShadowPriority
 m_bHitmanAutoreload
 m_bHitmanBizarre
 m_bHitmanCanConceal
+m_bHitmanInvadingPrivacy
 m_bHitmanIsGuard
 m_bHitmanSuspectedInCurrentOutfit
 m_bHitmanWarned
@@ -16906,12 +16926,14 @@ m_bIsCompletable
 m_bIsComplete
 m_bIsContainer
 m_bIsControlPointsPathClosed
+m_bIsCoreKinematic
 m_bIsCounterVisibleInTile
 m_bIsCrowdAmbient
 m_bIsCrowdCharacter
 m_bIsCurrent
 m_bIsCurrentlyEnabled
 m_bIsCyclable
+m_bIsDirectConnectionToBus
 m_bIsDollyAttached
 m_bIsDone
 m_bIsDynamicallyCreated
@@ -16946,6 +16968,7 @@ m_bIsIllegal_03
 m_bIsIllegal_Key
 m_bIsIllegal_Tamper
 m_bIsInGameMenu
+m_bIsInitialCoreActive
 m_bIsInLockdown
 m_bIsInPhysicsWorld
 m_bIsInside
@@ -17014,6 +17037,7 @@ m_bIsSneaking
 m_bIsSnoring
 m_bIsSparse
 m_bIsSpeaking
+m_bIsSpreadingSickness
 m_bIsStandingStill
 m_bIsStartCondValid
 m_bIsStill
@@ -17359,9 +17383,10 @@ m_bOpenLogbook
 m_bOpenPauseMenu
 m_bOperateCPDoor
 m_bOpponent
+m_bOrderDialogStarted
 m_bOriginalCameraDisabled
-m_Boundary
 m_boundary
+m_Boundary
 m_bOuterPromptVisible
 m_bOutfitRelevant
 m_bOutside
@@ -17420,6 +17445,7 @@ m_bPerceivedAsWeapon
 m_bPerceptibleEnabled
 m_bPerception
 m_bPercievedAsWeapon
+m_bPFObstacleWhenFilled
 m_bPhoneMode
 m_bPhysicsEnabled
 m_bPhysicsEnabled2
@@ -17507,6 +17533,7 @@ m_bRaytracingVisibleShadows
 m_bReachedExitPosition
 m_bReachedOnNear
 m_bReachedSignalSent
+m_bReactedToWeaponPickup
 m_bReactOnlyIfNeeded
 m_bReasoning
 m_bReasonToFrisk
@@ -17539,8 +17566,8 @@ m_bRemovePhysics_02
 m_bRemovePhysics_Arm
 m_bRemovePhysics_Armrest
 m_bRemovePhysics_Arms
-m_bRemovePhysics_b
 m_bRemovePhysics_B
+m_bRemovePhysics_b
 m_bRemovePhysics_Candle
 m_bRemovePhysics_Candles
 m_bRemovePhysics_cloth
@@ -17556,8 +17583,8 @@ m_bRemovePhysics_Lid
 m_bRemovePhysics_Mic
 m_bRemovePhysics_Physics
 m_bRemovePhysics_Pillows
-m_bRemovePhysics_props
 m_bRemovePhysics_Props
+m_bRemovePhysics_props
 m_bRemovePhysics_Sink
 m_bRemovePhysics_Water
 m_bRemovePhysics_Weights
@@ -17592,6 +17619,7 @@ m_bReplicate
 m_bReplicateTransform
 m_bReportCollisions
 m_bReportedToGuard
+m_bReporting
 m_bReportingToHitman
 m_bRepositoryId
 m_bRepulsive
@@ -17699,12 +17727,14 @@ m_bShadows
 m_bShardStaticCollisionOnly
 m_bSharedHuntTarget
 m_bSharedResource
+m_bShatterFromExplosion
 m_bShooting
 m_bShootingBallet
 m_bShotIntoCrowdEnabled
 m_bShots
 m_bShouldBeStopped
 m_bShouldPauseWorld
+m_bShouldReactToWeaponPickup
 m_bShouldSave
 m_bShouldShow
 m_bShouldSubscribe
@@ -17861,18 +17891,22 @@ m_bStroke
 m_bSubscribe
 m_bSubscribeToKeywordChanges
 m_bSubstract
+m_bSubtitlesDisabled
 m_bSumSegments
+m_bSuperSilenced
 m_bSupportStreaming
 m_bSuppressSocialGreeting
 m_bSuppressSpatialIcons
 m_bSuppressTrespass
 m_bSuspendSearchOnInitialGetHelpGroup
+m_bSuspicionZone
 m_bSuspiciousItem
 m_bSwapHalfSpaces
 m_bSwitchState
 m_bSynchFrameTimeWhenHidden
 m_bSynchroniseSpeech
 m_bSynchronous
+m_bSystemEnabled
 m_bTAAJitter
 m_bTagExactMatch
 m_bTagged
@@ -18097,8 +18131,8 @@ m_bValueInfHi
 m_bValueInfLo
 m_bValueintegratedDrama
 m_bValueinteractionOn
-m_bValueinteractionOnBack
 m_bValueinteractionOnback
+m_bValueinteractionOnBack
 m_bValueinteractionOnback1
 m_bValueinteractionOnback2
 m_bValueinteractionOnback3
@@ -18118,8 +18152,8 @@ m_bValueLight
 m_bValueLights
 m_bValueLookLeft
 m_bValueLookRight
-m_bValueON
 m_bValueOn
+m_bValueON
 m_bValueOnNoOperators
 m_bValueOpenFromInside
 m_bValueOpenFromOutside
@@ -18195,6 +18229,7 @@ m_bVRNoAlignment
 m_bVRNoAlignmentOFF
 m_bVRNoAlignmentON
 m_bVRVisibilityBehavior
+m_bWait
 m_bWaitForBlendOut
 m_bWaitIfPending
 m_bWaitingForDistanceStanddown
@@ -18246,8 +18281,8 @@ m_bYawBlendOutRadius
 m_bystanderPoints
 m_bZ
 m_cachedAvailableSavesChanged
-m_camera
 m_Camera
+m_camera
 m_CameraBones
 m_CameraConfig
 m_cameraEntity
@@ -18360,8 +18395,8 @@ m_completed
 m_CompletedStringID
 m_compromisedOnEnter
 m_concealedItem
-m_Condition
 m_condition
+m_Condition
 m_ConditionList
 m_ConditionList_Usable
 m_ConditionList_Visible
@@ -18418,20 +18453,21 @@ m_CrowdAttentionCurve
 m_CrowdAttentionRangeCurve
 m_CrowdCoreIndex
 m_CrowdEntity
+m_CrowdServiceData
 m_CureActs
 m_CuriousEventServiceData
 m_CurrentBehaviorState
 m_cursorShape
 m_cursorWidget
 m_cursorWorldSpatial
-m_curve
 m_Curve
-m_curve0
+m_curve
 m_Curve0
-m_Curve1
+m_curve0
 m_curve1
-m_Curve2
+m_Curve1
 m_curve2
+m_Curve2
 m_curveBlue
 m_CurveEntity
 m_curveGreen
@@ -18508,8 +18544,8 @@ m_DialogueLine
 m_DialogueLines
 m_diegeticRoot
 m_DifficultyRank
-m_DiffuseColor
 m_diffuseColor
+m_DiffuseColor
 m_diffuseColor_b
 m_diffuseColorDirectional
 m_diffuseColorDown
@@ -18540,8 +18576,9 @@ m_displayDelay
 m_displayDuration
 m_Displays
 m_DisposalType
-m_distance
 m_Distance
+m_distance
+m_DistanceAttenuationCurve
 m_DistanceReferenceBone
 m_DistractedActor
 m_DistractionIsActive
@@ -18585,8 +18622,8 @@ m_dtZoomInDelayTime
 m_dtZoomOutBlendTime
 m_dtZoomPanBlendTime
 m_dummyProperty
-m_duration
 m_Duration
+m_duration
 m_DynamicDisguiseAttentionDuration
 m_DynamicDisguisePeripheralAttentionDuration
 m_DynamicEnforcerServiceData
@@ -18752,6 +18789,7 @@ m_eEmotionState
 m_eEnableEval
 m_eEnableValueCheck
 m_eEndEffectorID
+m_eEndReason
 m_eEnterPhase
 m_eEvaluation
 m_eEvaluation_
@@ -18847,6 +18885,7 @@ m_eidParentPromptPosInside
 m_eIllegalItemEval
 m_eIllegalityEval
 m_eIndicatorType
+m_eIndicatorTypeId
 m_eInputAction
 m_eInputActionFilter
 m_eInputEvaluation
@@ -18948,8 +18987,8 @@ m_EnteringConditions
 m_Entities
 m_EntitiesData
 m_entitlement
-m_entity
 m_Entity
+m_entity
 m_Entity1
 m_entityGroup
 m_EntityID
@@ -19114,6 +19153,7 @@ m_evacuateGroups
 m_eval
 m_Evaluation
 m_Evaluator
+m_eValue
 m_eVariationResourceMaxEmotionState
 m_eVariationResourceMaxTension
 m_EventConsumerCollection
@@ -19161,6 +19201,7 @@ m_fActDuration
 m_fActIdleTime
 m_fActionCooldownTime
 m_fActivationRadius
+m_fActivationTime
 m_fActTimeout
 m_fActTimeoutdistractiontime
 m_fActTimeoutdisttime
@@ -19438,8 +19479,8 @@ m_fConeDistanceFadeRange
 m_fConeSpringDamper
 m_fConeSpringForce
 m_fContactForce
-m_fCooldown
 m_fCoolDown
+m_fCooldown
 m_fCooldownForAny
 m_fCooldownForAnyRand
 m_fCooldownForThis
@@ -19587,6 +19628,7 @@ m_fDistanceAttenuation
 m_fDistanceFieldValue
 m_fDistanceFromActorInfluence
 m_fDistancePenalty
+m_fDistanceTargetMoved
 m_fDistanceToExit
 m_fDistanceToOthersFactor
 m_fDistanceToTarget
@@ -19627,6 +19669,7 @@ m_fDurability
 m_fDuration
 m_fDurationInterval
 m_fDurationSeconds
+m_fDurationTime
 m_fDurationVariance
 m_fDynamicFriction
 m_fEaseOutTime
@@ -20121,6 +20164,7 @@ m_fMaxInteractionRange
 m_fMaxLinearVelocity
 m_fMaxMirrorDistance
 m_fMaxOcclusion
+m_fMaxOcclusionRadius
 m_fMaxPitch
 m_fMaxPitchAngle
 m_fMaxPitchDeg
@@ -20175,6 +20219,7 @@ m_fMinimalDistance
 m_fMinimum
 m_fMinimumDisplayTime
 m_fMinimumDistance
+m_fMinimumSleepTime
 m_fMinimumSpeedMultiplier
 m_fMinimumTimeInPosition
 m_fMinimumTimeToReturn
@@ -20287,6 +20332,7 @@ m_fOuterConeAngle
 m_fOuterConeAngle_1
 m_fOutputScale
 m_fOverRelaxation
+m_fOverrideIndiciatorDrawDistance
 m_fOverrideInteractionRangeValue
 m_fOverrideInteractionRangeValue_CloseDoor
 m_fOverrideInteractionRangeValue_OpenDoor
@@ -21368,8 +21414,8 @@ m_lastStaticCombatReason
 m_LastVisible
 m_lateralShiftCriterion
 m_Layer
-m_leader
 m_Leader
+m_leader
 m_LeaderCodenameIndex
 m_Leaders
 m_Left
@@ -21645,8 +21691,8 @@ m_nBodyContainerSlot
 m_nBodyIndex
 m_nBodyObstacleTimeout
 m_nBodypartLODCutOff
-m_nBoneID
 m_nBoneId
+m_nBoneID
 m_nBooleanEvents
 m_nBooleanEventsHandled
 m_nBranchValue
@@ -21655,6 +21701,7 @@ m_nBrushMaterial
 m_nBulletDecalNumVariationsX
 m_nBulletDecalNumVariationsY
 m_nBulletImpactsHeard
+m_nBulletsInMagazine
 m_nBurstCount
 m_nCastShadowCSMMask
 m_nCellSizeX
@@ -21672,6 +21719,7 @@ m_nConditionOffset
 m_nContainerSize
 m_nCooldown
 m_nCooldownOnPause
+m_nCoreIndex
 m_nCount
 m_nCountdownFrom
 m_nCountFrom
@@ -21733,6 +21781,7 @@ m_nDramaType
 m_nDrawOrder
 m_nDrawTessellation
 m_nDurationTicks
+m_nDynamicParametersOffset
 m_NearBackOccluders
 m_NearDepth
 m_NearFrustums
@@ -21755,8 +21804,8 @@ m_nEscalatedActorCount
 m_nEscalation
 m_nEvent
 m_nEventAction
-m_nEventID
 m_nEventId
+m_nEventID
 m_newAimAssistConfiguration
 m_nExitSelection
 m_nExpirationTime
@@ -21823,8 +21872,8 @@ m_nGridNodeIndex
 m_nGridSizeX
 m_nGridSizeY
 m_nGroupFlowStartChannel
-m_nGroupID
 m_nGroupId
+m_nGroupID
 m_nGroupSize
 m_nGuards
 m_nHasEntered
@@ -21872,6 +21921,8 @@ m_nLeaderTargetNodeIndex
 m_nLengthTessellation
 m_nLifeSpan
 m_nLifetime
+m_nLineId
+m_nLocationKnowledgeIndex
 m_nLODCutOff
 m_nLODOffsetGeom
 m_nLODOffsetLinked
@@ -21994,8 +22045,8 @@ m_nObjectivesCounterType
 m_nObstacleActorIndex
 m_nObstacleBlockageFlags
 m_nOcclusionMaxAngleDeg
-m_Nodes
 m_nodes
+m_Nodes
 m_NoLOSMachineGunFirePatterns
 m_NoLOSPistolFirePatterns
 m_NoLOSShotgunFirePatterns
@@ -22122,9 +22173,11 @@ m_nSeparationMaxLOD
 m_nSetId
 m_nShadowMapMaxLOD
 m_nShardEffectInstances
+m_nShardIndex
 m_nShardPool
 m_nSharedIndex
 m_nShatterEffectInstances
+m_nShatterSteps
 m_nShieldHighlightPower
 m_nShotDelay
 m_nShotsCount
@@ -22274,10 +22327,10 @@ m_OSDCam
 m_Outfit
 m_OutfitEntity
 m_outfitId
-m_OutfitId
 m_OutfitID
-m_OutfitRepositoryId
+m_OutfitId
 m_OutfitRepositoryID
+m_OutfitRepositoryId
 m_OutfitResourceID
 m_Overpowered1Receivers
 m_Overpowered2Receivers
@@ -22510,6 +22563,7 @@ m_pDynamicObject
 m_pEmitter
 m_pEmitter1
 m_pEmitterHandler
+m_pEmitterListenerVolume
 m_pEmitterProxy
 m_pEmoteID
 m_pEnableBlindfire
@@ -22570,6 +22624,7 @@ m_pGeneric03Sound
 m_pGetHelpGroup
 m_pGettingHelpTextureRID
 m_pGizmo
+m_pGlobalDataBank
 m_pGlobalTextList
 m_pGreetingTextureRID
 m_pGrid
@@ -22653,6 +22708,7 @@ m_pLinkedEntity
 m_pListener
 m_pLoadGunpowder
 m_pLoadIndicator
+m_pLoadoutEnitty
 m_pLoadoutEntity
 m_pLocationController
 m_pLocationVolume
@@ -22909,6 +22965,7 @@ m_pTargetProp
 m_pTargetSpatial
 m_pTemplate
 m_pTemplateResource
+m_pTempLeader
 m_pText
 m_pTextLine
 m_pTextListResource
@@ -23034,10 +23091,12 @@ m_ragdoll
 m_ragdollBoneName
 m_RagdollPose
 m_rAgilityConfigs
+m_rAimAssist
 m_rAimAssistConfiguration
 m_rAimTarget
 m_rAlarm
 m_rAmmoEffectFactory
+m_rAmmoImpactEffectFactory
 m_rAnchorTransform
 m_RandomizeDefaultInfectedTime
 m_RandomSeed
@@ -23251,8 +23310,8 @@ m_recoverUnconsciousGroup
 m_RedOfBlue
 m_RedOfGreen
 m_RedOfRed
-m_reference
 m_Reference
+m_reference
 m_referenceObject
 m_references
 m_rEffects
@@ -23284,9 +23343,9 @@ m_replicaNSID
 m_replicationFrequency
 m_reportedTarget
 m_ReporterIsVIPWithAmbientEscort
-m_repositoryID
 m_RepositoryId
 m_repositoryId
+m_repositoryID
 m_RepositoryKey
 m_RequiredItem
 m_RequiredItemA
@@ -23300,9 +23359,9 @@ m_ResetEventValues
 m_ResetValue
 m_Resource
 m_ResourceGeometry
-m_ResourceID
-m_resourceID
 m_resourceId
+m_resourceID
+m_ResourceID
 m_ResourceID_150x220
 m_ResourceID_150x3
 m_ResourceID_150x600
@@ -23334,6 +23393,7 @@ m_rFemaleSequences
 m_rFilter
 m_rFirstValueInt
 m_rFlavorResource
+m_rFocusConfig
 m_rFollowEntity
 m_rForbiddenKeywords
 m_rFormationController
@@ -23684,6 +23744,8 @@ m_rSearchVolumePoison
 m_rSecondValueInt
 m_rSeed
 m_rSeedEntity
+m_rSelectedBodyguard
+m_rSelectedBodyguardActor
 m_rSelectedIndex
 m_rSelectionCheck
 m_rSentryZone
@@ -23691,8 +23753,8 @@ m_rSequence
 m_rSequenceEntity
 m_rSequenceEntityExplodeIn
 m_rSequenceEntityExplodeOut
-m_rSetpiece
 m_rSetPiece
+m_rSetpiece
 m_rSetpieceUsed
 m_rSharedKnowledge
 m_rSharedSensor
@@ -23734,6 +23796,7 @@ m_rSoundEvent_Push_Victim
 m_rSoundEvent_Take_Disguise
 m_rSoundEvent_Takedown
 m_rSoundEvent_Warning
+m_rSoundGate
 m_rSoundLocation
 m_rSource
 m_rSourceA
@@ -23957,14 +24020,15 @@ m_sClosePageButtonPromptLocaKeyOverride
 m_sCollection
 m_sColor
 m_sCommonName
+m_sCompletedIconId
 m_sComponentName
 m_sConfigType
 m_sConfigVariableID
 m_sConfigVarName
 m_sConsumerID
 m_sContainerInstanceId
-m_sContractId
 m_sContractID
+m_sContractId
 m_sContractSessionId
 m_sContractType
 m_ScopeCrossHair
@@ -24023,6 +24087,7 @@ m_sExpression
 m_sExtraDataTypeName
 m_sFaceExpression
 m_sFailedEventName
+m_sFailedIconId
 m_sFailSafeDisarmWeaponid
 m_sFinishRequest
 m_sFlavor
@@ -24047,6 +24112,7 @@ m_ShaderColor7
 m_ShardEffectID
 m_SharedEvent
 m_sharedTarget
+m_ShatterData
 m_ShatterEffectID
 m_ShatterEmitter
 m_ShatterResourceID
@@ -24155,8 +24221,8 @@ m_SoundAmbienceData
 m_SoundDefinitionID
 m_SoundGateAmbienceSide0
 m_SoundSetup
-m_Source
 m_source
+m_Source
 m_Source1
 m_Source2
 m_sourceA
@@ -24281,11 +24347,11 @@ m_started
 m_StartingConditions
 m_StartLine
 m_StartOn
-m_startTime
 m_StartTime
+m_startTime
 m_StartupDisguiseId
-m_state
 m_State
+m_state
 m_StateController
 m_StateData
 m_stateData
@@ -24361,6 +24427,7 @@ m_SwitchSetItemInviteRequirest
 m_T
 m_tActorSpeakEnd
 m_Tag
+m_tAggressiveModeTimer
 m_Tags
 m_tAmbientStartTime
 m_tAnnouncedHunt
@@ -24379,8 +24446,8 @@ m_TargetEntity
 m_targetEntityhitman
 m_TargetGaits
 m_TargetHasWeaponEquipped
-m_targetLocation
 m_TargetLocation
+m_targetLocation
 m_targetLOSField
 m_TargetRoom
 m_TargetRotation
@@ -24422,6 +24489,7 @@ m_TextLineResource
 m_TextLineStadia
 m_TextLineXB1
 m_TextLineXBS
+m_TextResource
 m_TextureBlockSize
 m_TextureMapID
 m_tFriskCooldown
@@ -24578,8 +24646,8 @@ m_userInputWeight
 m_vAAScreenSize
 m_vAlignment
 m_vAlphaAttenuationAngles
-m_Value
 m_value
+m_Value
 m_Value_1
 m_Value_A
 m_Value_Breadcrumb
@@ -24631,6 +24699,8 @@ m_vBobbingFrequencyY
 m_vBodypartBoundingMarginMax
 m_vBodypartBoundingMarginMin
 m_vBodyVelocity
+m_vBonePosition
+m_vBoneRotation
 m_vBounds
 m_vBoxFadeNeg
 m_vBoxFadePos
@@ -24801,6 +24871,7 @@ m_vLinkedQuaternionRotation
 m_vListenerAngularVelocity
 m_vListenerLinearVelocity
 m_vLocalSize
+m_vLocation
 m_vLookAtTarget
 m_vLowBoundPos
 m_vLowerRight
@@ -24824,6 +24895,7 @@ m_VolumeSphereTriggerThrown
 m_VolumeTriggersData
 m_vOriginalEntityTransform
 m_vOriginalPositionLeader
+m_vOriginalVIPPosition
 m_vOriginPosition
 m_vOriginQuaternion
 m_vPacifyRadii
@@ -25093,8 +25165,8 @@ masteryUnlock7
 masteryUnlock8
 masteryUnlock9
 MasteryUnlockLevel
-Mat
 mat
+Mat
 MATEOPEREZ
 material
 Material
@@ -25133,8 +25205,8 @@ MaxIntensity
 MaxIntensity_op
 MaxLength
 MaxLength_op
-MaxLifetime
 MaxLifeTime
+MaxLifetime
 maxMoves
 MaxOpacity
 MaxOpacity_op
@@ -25197,8 +25269,8 @@ MeetingScheduled
 melee
 mendola
 Menu
-MenuEntry
 menuEntry
+MenuEntry
 MenuInterval
 mercesDeposit
 mercesPayout
@@ -25296,8 +25368,8 @@ MinFoldValue_op
 Mingle_Table_01_Enabled
 Mingle_Table_02_Enabled
 Minimap
-Minimap_Children
 miniMap_Children
+Minimap_Children
 MinimapAttachRoot
 MiniMapRoot
 MinimumBuyIn
@@ -25331,8 +25403,8 @@ MIPSELECTRainTextures_op
 MIRANDAJAMISON_ET
 Mirror
 Mirror_Active
-Mirror_back
 Mirror_Back
+Mirror_back
 Mirror_Front
 Mirror_Visibility
 MirrorBack
@@ -34994,8 +35066,8 @@ OmniAngularAttenuation
 OmniAttenuation
 OmniCastsDynamicShadow
 OmniCastShadows
-OmniColor
 omnicolor
+OmniColor
 OmniEnabled
 OmniFarAttenuation
 OmniIntensity
@@ -35289,9 +35361,10 @@ PartnerEnabled
 PartnerWaypoint
 pathPoints
 PatientAvailable
+pAttacher
 PauseBeforeSpeaking
-payout
 Payout
+payout
 Payout_ID
 Payout_MildMission_05
 PayoutBasePerHit
@@ -35753,18 +35826,18 @@ QUEENSGUARD02
 QUEENSGUARD03
 QuestionIndex
 QuickActivate
-r
 R
+r
 rAccidentSetup
 raceCar
 RACEOFFICIAL08
 RACEOFFICIAL09
-RACETECH09
 RaceTech09
+RACETECH09
 RaceTechEs01
 Radiator_Visibility
-Radius
 radius
+Radius
 Radius0
 Radius1
 Radius2
@@ -35950,8 +36023,8 @@ RearDoubleDoors_Reinforced
 RearDoubleDoors_RequireActivation
 RearHatchTransform
 RearWheelTransform
-Reason
 reason
+Reason
 ReasonPlaceholder
 Receiving
 RecenterHintAngle
@@ -36021,12 +36094,12 @@ RepairInteractionSpatial
 RepairOn
 RepairPanelPoint
 RepeatCountLimits
-RepoID
 repoID
+RepoID
 Reporter
+repositoryId
 RepositoryID
 RepositoryId
-repositoryId
 RepulseMass
 RepulseRange
 RequireActivation
@@ -36034,10 +36107,10 @@ requireBothObjectives
 RequiredEntitlement
 RequiredKeyword
 RequiredKeywordForRotation
-RequiredMastery
 requiredMastery
-requiredMasteryLevel
+RequiredMastery
 RequiredMasteryLevel
+requiredMasteryLevel
 requirementLevelText
 Requirements_01
 Requirements_02
@@ -36070,8 +36143,8 @@ Restroom_Front
 Restroom_Sign_Back
 Restroom_Sign_Front
 RestValue
-result
 Result
+result
 ResumeLine
 ResumeText
 RetrieveRestorePreSubactionItems
@@ -36252,8 +36325,8 @@ Role 1 - civmale01
 Role 1 - civmale02
 Role 1 - civmale03
 Role 1 - civmale04
-Role 1 - civmale05
 Role 1 - CIVMALE05
+Role 1 - civmale05
 Role 1 - civmale06
 Role 1 - CIVMALECH02
 Role 1 - clark
@@ -36378,8 +36451,8 @@ routingPoint2
 routingPoint3
 routingPoint4
 routingPoint5
-ROW
 row
+ROW
 row_set
 Rows
 Rows_op
@@ -36549,6 +36622,7 @@ Scarfs_D
 Scarfs_D_02
 SciFiLampPositions
 sContainedItemName
+sContainedWeaponName
 sContractId
 sContractSessionId
 sContractTitle
@@ -36670,8 +36744,8 @@ SecurityOn
 SecurityOnEvaluation
 SecuritySystemEnabled
 seed
-Selected
 selected
+Selected
 selectedAgencyPickup
 selectedIndex
 SelectedTravelDestination
@@ -36702,8 +36776,8 @@ ServePromptConditions
 ServePromptText
 Server_Access_Back
 Server_Access_Front
-Server_notice_Back
 Server_Notice_Back
+Server_notice_Back
 Server_Notice_Front
 Server_Room_Back
 Server_Room_Front
@@ -36755,9 +36829,9 @@ SetMuleNumber
 setPickedID
 Setpiece
 Setpiece_InUse
+Setpiece_VOL
 Setpiece_Vol
 SetPiece_VOL
-Setpiece_VOL
 SetpieceActive
 SetpieceGlow
 setpieceHelper_metricvalue
@@ -36891,8 +36965,8 @@ ShotDamageThreshold
 shotgun
 ShotLimited
 ShotListener
-ShotListenerEnabled
 ShotlistenerEnabled
+ShotListenerEnabled
 ShotsThreshold
 ShotThresholdCatchFire
 ShotThresholdExplode
@@ -36934,8 +37008,8 @@ Show3dExitSpatial
 Show3DExitSpatial
 ShowButton
 Showdown_Winner_Index
-showdownActive
 ShowdownActive
+showdownActive
 ShowdownState
 showDuration
 ShowFirst
@@ -37017,8 +37091,8 @@ Sign_Frame_Color
 Sign_Front_Restricted_Access_A
 Sign_Galley_Rear_Visible
 sign_galley_visible
-sign_LockerRoom_Visible
 sign_lockerRoom_visible
+sign_LockerRoom_Visible
 sign_navigation_visible
 sign_private_visible
 sign_recreation_rear_visible
@@ -37106,8 +37180,8 @@ SizeAddEnd
 SizeAddMax
 SizeAddMin
 SizeAddStart
-sizecurve
 SizeCurve
+sizecurve
 SizeCurveMultiplier
 SizeCurveType
 SizeFactorCameraFadeDistanceSmoke
@@ -37182,6 +37256,7 @@ SmallElementsVisible
 SmallExplosions
 SmallGlassLifetime
 smallShards_fFixedEmissionCount
+smartVariance
 SMG
 sMissingToolText
 Smoke
@@ -37272,8 +37347,8 @@ SnowFX
 snowKillboxSize
 snowKillboxTransformation
 SnowParticlesPerSec
-social
 Social
+social
 socialAgenda
 SodaItemId
 Soders_Stable
@@ -37341,8 +37416,8 @@ Sound_HasClothes
 SOUND_HeroIsNear
 Sound_HeroIsNear
 Sound_heroIsNear
-Sound_HeroNear
 SOUND_HeroNear
+Sound_HeroNear
 Sound_IdleExpressionsOn
 Sound_Impact
 Sound_Logic_Enabled
@@ -37521,8 +37596,8 @@ SpecMultiplication_op
 specops01
 SPECOPS01
 specops02
-specular
 Specular
+specular
 Specular_01
 Specular_01_dest
 Specular_01_enab
@@ -37931,18 +38006,18 @@ SwingYMotion
 Switch_Off_SFX
 Switch_On_SFX
 SwitchTimer
-Swizzlegather_01_X
 SwizzleGather_01_X
+Swizzlegather_01_X
 Swizzlegather_01_X_op
 SwizzleGather_01_X_op
-SwizzleGather_01_Y
 Swizzlegather_01_Y
-SwizzleGather_01_Y_op
+SwizzleGather_01_Y
 Swizzlegather_01_Y_op
-Swizzlegather_01_Z
+SwizzleGather_01_Y_op
 SwizzleGather_01_Z
-Swizzlegather_01_Z_op
+Swizzlegather_01_Z
 SwizzleGather_01_Z_op
+Swizzlegather_01_Z_op
 SwizzleGather_02_X
 SwizzleGather_02_X_op
 SwizzleGather_02_Y
@@ -37995,8 +38070,8 @@ TargetDead_Enabled
 TargetDriver
 TargetEscaped
 TargetInVolume
-TargetKeyword
 targetKeyword
+TargetKeyword
 TargetLaserOrigin
 targetMustBeVisible
 TargetNPCs
@@ -38317,8 +38392,8 @@ Tiling_02
 Tiling_02_op
 TilingXYPlane
 TilingXYSpot
-Time
 time
+Time
 Time_active
 Time_Before_Bottle_Detach
 TimeBeforeDryEyes
@@ -38342,8 +38417,8 @@ TimeOfDayIntensity_02_IntensityNight_op
 TimeOfDayInvert
 TimeOfDayStart
 TimeOnFirstRound
-TimeOut
 Timeout
+TimeOut
 timeOutBookwormAct
 timeOutDrinkingAct
 timeOutDrugAct
@@ -38374,8 +38449,8 @@ TimeToShow
 TimeUntilExploding
 TIMOTHYYU
 TintColor
-title
 Title
+title
 toCoveredMarket
 toEntity
 Toggle
@@ -38410,8 +38485,8 @@ Top_Material_Swap
 Top_Screen_Intensity
 Top_Shutter_Scale
 top_trimPrimitiveScale
-top_trimTransform
 Top_trimTransform
+top_trimTransform
 TopCameraFishEye
 TopCameraFov
 TopCameraRotateAmount
@@ -38453,8 +38528,8 @@ TraitToTest
 Trans
 transferee
 TransferTarget
-transform
 Transform
+transform
 Transform Parent
 Transform_ceiling_anchor1
 Transform_Ceiling_Anchor2
@@ -38685,8 +38760,8 @@ Use_FlyIn_IntroCue
 Use_VisibiltyCondition
 Use_VolumeTrigger
 Use_Weight_As_Fading_RTPC
-UseAble
 Useable
+UseAble
 UseableConditions
 UseableKeywordReq_ToolA_A
 UseableKeywordReq_ToolA_B
@@ -38739,15 +38814,15 @@ UseSecondaryUseCondition
 UsesKey
 UsesLockpick
 UseSmokePillar
-useSoundEvent
 UseSoundEvent
+useSoundEvent
 UseSparkEffect
 UseTimerInsteadOfCueEnded
 UseUniqueHMLines
 UseVertexMovement
 UseWideShatter
-UV_Offset
 UV_offset
+UV_Offset
 UV_Tile
 UVSelectFrame_01_Frame
 UVSelectFrame_01_Frame_op
@@ -38990,8 +39065,8 @@ Wall_Top_A
 Wall_Top_B
 WallBottomColor
 WallLampsON
-WallMarkup
 Wallmarkup
+WallMarkup
 wallpaper
 Wallpaper
 Wallpaper_trees
@@ -39010,8 +39085,8 @@ Warning_Sign
 WarningLightColor
 WarningLightIntensity
 WarningLightVisible
-warningText
 WarningText
+warningText
 WarningTimeout
 WasMoveGood
 WasRigged
@@ -39325,8 +39400,8 @@ WrinkleOffset
 WrinkleOffset_op
 WrinkleTiling
 WrinkleTiling_op
-X
 x
+X
 XAxis
 Y
 y

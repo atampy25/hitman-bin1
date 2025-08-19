@@ -283,4 +283,4 @@ impl Variant for SEntityTemplateProperty {
 
 submit!(SEntityTemplateProperty);
 
-include!(concat!(env!("OUT_DIR"), "/h3.rs"));
+include!(concat!(env!("OUT_DIR"), "/h2.rs"));

@@ -5,15 +5,11 @@ use serde::{
 	Deserialize, Serialize,
 	de::{self, Visitor}
 };
-use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
 
 use crate::{
 	de::{Bin1Deserialize, Bin1Deserializer, DeserializeError},
-	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError},
-	types::variant::{DeserializeVariant, StaticVariant, Variant, VariantDeserializer, ZVariant}
+	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError}
 };
-
-use crate as hitman_bin1;
 
 #[static_init::dynamic]
 static PROPERTIES: BiMap<&'static str, u32> = include_str!("../../properties.txt")
@@ -139,39 +135,3 @@ impl<'de> Deserialize<'de> for PropertyID {
 		deserializer.deserialize_any(PropertyIDVisitor)
 	}
 }
-
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Bin1Serialize, Bin1Deserialize)]
-pub struct SEntityTemplateProperty {
-	#[serde(rename = "nPropertyID")]
-	pub property_id: PropertyID,
-
-	#[serde(rename = "value")]
-	#[bin1(pad = 4)]
-	pub value: ZVariant
-}
-
-impl StaticVariant for SEntityTemplateProperty {
-	const TYPE_ID: &'static str = "SEntityTemplateProperty";
-}
-
-impl StaticVariant for Vec<SEntityTemplateProperty> {
-	const TYPE_ID: &'static str = "TArray<SEntityTemplateProperty>";
-}
-
-impl StaticVariant for Vec<Vec<SEntityTemplateProperty>> {
-	const TYPE_ID: &'static str = "TArray<TArray<SEntityTemplateProperty>>";
-}
-
-impl Variant for SEntityTemplateProperty {
-	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
-		interner.get_or_intern_static(Self::TYPE_ID)
-	}
-
-	fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
-		serde_json::to_value(self)
-	}
-}
-
-inventory::submit!(&VariantDeserializer::<SEntityTemplateProperty>::new() as &dyn DeserializeVariant);
-inventory::submit!(&VariantDeserializer::<Vec<SEntityTemplateProperty>>::new() as &dyn DeserializeVariant);
-inventory::submit!(&VariantDeserializer::<Vec<Vec<SEntityTemplateProperty>>>::new() as &dyn DeserializeVariant);

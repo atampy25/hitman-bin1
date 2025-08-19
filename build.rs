@@ -386,6 +386,8 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.derive("Clone")
 			.derive("Copy")
 			.derive("PartialEq")
+			.derive("Eq")
+			.derive("Hash")
 			.derive("serde::Serialize")
 			.derive("serde::Deserialize")
 			.vis("pub");

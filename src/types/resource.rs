@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
+use string_interner::{backend::BucketBackend, DefaultSymbol, StringInterner};
 use tryvial::try_fn;
 
 use crate::{
@@ -11,10 +11,10 @@ use crate::{
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ZRuntimeResourceID {
 	#[serde(rename = "m_IDHigh")]
-	pub high: u32,
+	pub id_high: u32,
 
 	#[serde(rename = "m_IDLow")]
-	pub low: u32
+	pub id_low: u32
 }
 
 impl StaticVariant for ZRuntimeResourceID {
@@ -49,7 +49,7 @@ impl Bin1Serialize for ZRuntimeResourceID {
 	}
 
 	fn write(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
-		ser.write_runtime_resource_id(self.high, self.low);
+		ser.write_runtime_resource_id(self.id_high, self.id_low);
 
 		Ok(())
 	}
@@ -60,8 +60,8 @@ impl Bin1Deserialize for ZRuntimeResourceID {
 
 	#[try_fn]
 	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
-		let high = de.read()?;
-		let low = de.read()?;
-		Self { high, low }
+		let id_high = de.read()?;
+		let id_low = de.read()?;
+		Self { id_high, id_low }
 	}
 }

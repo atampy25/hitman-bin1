@@ -14,7 +14,15 @@ pub trait StaticVariant {
 #[dynex::dyn_trait]
 pub trait Variant: Bin1Serialize + Send + Sync + Debug + Clone + PartialEq {
 	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol;
+
+	/// Serialise this variant value into a serde_json Value. Does not include type information.
 	fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error>;
+
+	/// Attempt to downcast this value as a Vec of Variants (which will all be of the same element type), allowing for generic operations on individual elements where the main Vec<T> type is unimportant.
+	/// If this value is a Vec<T: Variant>, returns Some(Vec<&dyn Variant>), else returns None.
+	fn as_vec(&self) -> Option<Vec<&dyn Variant>> {
+		None
+	}
 }
 
 macro_rules! impl_primitive {
@@ -94,8 +102,9 @@ impl<
 	}
 }
 
-impl<T: Bin1Serialize + Aligned + Serialize + StaticVariant + Send + Sync + Clone + Debug + PartialEq + 'static> Variant
-	for Vec<T>
+impl<
+	T: Bin1Serialize + Aligned + Serialize + StaticVariant + Variant + Send + Sync + Clone + Debug + PartialEq + 'static
+> Variant for Vec<T>
 {
 	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
 		interner.get_or_intern(format!("TArray<{}>", T::TYPE_ID))
@@ -103,6 +112,10 @@ impl<T: Bin1Serialize + Aligned + Serialize + StaticVariant + Send + Sync + Clon
 
 	fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
 		serde_json::to_value(self)
+	}
+
+	fn as_vec(&self) -> Option<Vec<&dyn Variant>> {
+		Some(self.iter().map(|x| x as &dyn Variant).collect())
 	}
 }
 

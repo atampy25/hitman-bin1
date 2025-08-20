@@ -10,7 +10,7 @@ use ecow::EcoString;
 use thiserror::Error;
 use tryvial::try_fn;
 
-use crate::ser::Aligned;
+use crate::{ser::Aligned, types::variant::Variant};
 
 pub mod impls;
 
@@ -51,6 +51,7 @@ pub struct Bin1Deserializer<'a> {
 
 	parsed_strings: HashMap<u64, EcoString>,
 	parsed_pointers: HashMap<u64, Box<dyn Any>>,
+	parsed_variants: HashMap<u64, Arc<dyn Variant>>,
 
 	type_names: HashMap<u32, EcoString>
 }
@@ -74,6 +75,7 @@ impl<'a> Bin1Deserializer<'a> {
 			buffer: Cursor::new(data),
 			parsed_strings: HashMap::new(),
 			parsed_pointers: HashMap::new(),
+			parsed_variants: HashMap::new(),
 			type_names: HashMap::new()
 		}
 	}
@@ -264,6 +266,30 @@ impl<'a> Bin1Deserializer<'a> {
 			let result = Arc::new(result);
 			self.parsed_pointers
 				.insert(ptr, Box::new(result.clone()) as Box<dyn Any>);
+
+			result
+		}
+	}
+
+	#[try_fn]
+	pub fn read_variant_ptr(
+		&mut self,
+		parser: impl Fn(&mut Bin1Deserializer) -> Result<Arc<dyn Variant>, DeserializeError>
+	) -> Result<Arc<dyn Variant>, DeserializeError> {
+		self.align_to(8)?;
+
+		let ptr = self.buffer.read_u64::<LittleEndian>()?;
+
+		if let Some(parsed) = self.parsed_variants.get(&ptr) {
+			parsed.clone()
+		} else {
+			let pos = self.buffer.position();
+
+			self.buffer.seek(SeekFrom::Start(ptr + 0x10))?;
+			let result = parser(self)?;
+			self.buffer.seek(SeekFrom::Start(pos))?;
+
+			self.parsed_variants.insert(ptr, result.clone());
 
 			result
 		}

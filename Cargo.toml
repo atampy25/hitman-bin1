@@ -19,6 +19,7 @@ dynex = "0.1.1"
 dynex_core = "0.1.1"
 static_init = "1.0.4"
 bimap = "0.6.3"
+polonius-the-crab = "0.4.2"
 
 [build-dependencies]
 anyhow = "1.0.99"

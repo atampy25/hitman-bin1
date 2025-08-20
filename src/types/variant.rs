@@ -1,4 +1,4 @@
-use std::fmt::Debug;
+use std::{fmt::Debug, sync::Arc};
 
 use const_format::concatcp;
 use ecow::EcoString;
@@ -12,7 +12,7 @@ pub trait StaticVariant {
 }
 
 #[dynex::dyn_trait]
-pub trait Variant: Bin1Serialize + Send + Sync + Debug + Clone + PartialEq {
+pub trait Variant: VariantArc + Bin1Serialize + Send + Sync + Debug + Clone + PartialEq {
 	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol;
 
 	/// Serialise this variant value into a serde_json Value. Does not include type information.
@@ -22,6 +22,26 @@ pub trait Variant: Bin1Serialize + Send + Sync + Debug + Clone + PartialEq {
 	/// If this value is a Vec<T: Variant>, returns Some(Vec<&dyn Variant>), else returns None.
 	fn as_vec(&self) -> Option<Vec<&dyn Variant>> {
 		None
+	}
+}
+
+pub trait VariantArc {
+	fn into_inner_boxed_dyn(self: Arc<Self>) -> Option<Box<dyn Variant>>;
+	fn unwrap_or_clone_boxed_dyn(self: Arc<Self>) -> Box<dyn Variant>;
+	fn clone_underlying(&self) -> Arc<dyn Variant>;
+}
+
+impl<T: Variant + Clone> VariantArc for T {
+	fn into_inner_boxed_dyn(self: Arc<Self>) -> Option<Box<dyn Variant>> {
+		Arc::into_inner(self).map(|x| Box::new(x) as _)
+	}
+
+	fn unwrap_or_clone_boxed_dyn(self: Arc<Self>) -> Box<dyn Variant> {
+		Box::new(Arc::unwrap_or_clone(self))
+	}
+
+	fn clone_underlying(&self) -> Arc<dyn Variant> {
+		Arc::new(self.clone())
 	}
 }
 
@@ -43,6 +63,29 @@ impl dyn Variant {
 
 	pub fn into_unboxed<T: Variant>(self: Box<dyn Variant>) -> Option<T> {
 		self.as_any_box().downcast().ok().map(|x| *x)
+	}
+
+	/// The first Option is the result of obtaining exclusive access to the Arc. The second Option is the result of downcasting into T.
+	pub fn into_inner_boxed<T: Variant>(self: Arc<dyn Variant>) -> Option<Option<Box<T>>> {
+		self.into_inner_boxed_dyn().map(|x| x.as_any_box().downcast().ok())
+	}
+
+	/// The first Option is the result of obtaining exclusive access to the Arc. The second Option is the result of downcasting into T.
+	pub fn into_inner_unboxed<T: Variant>(self: Arc<dyn Variant>) -> Option<Option<T>> {
+		self.into_inner_boxed_dyn()
+			.map(|x| x.as_any_box().downcast().ok().map(|x| *x))
+	}
+
+	pub fn unwrap_or_clone_boxed<T: Variant>(self: Arc<dyn Variant>) -> Option<Box<T>> {
+		self.unwrap_or_clone_boxed_dyn().as_any_box().downcast().ok()
+	}
+
+	pub fn unwrap_or_clone_unboxed<T: Variant>(self: Arc<dyn Variant>) -> Option<T> {
+		self.unwrap_or_clone_boxed_dyn()
+			.as_any_box()
+			.downcast()
+			.ok()
+			.map(|x| *x)
 	}
 
 	pub fn as_ref<T: Variant>(&self) -> Option<&T> {

@@ -97,26 +97,16 @@ impl ZVariant {
 		Self { value: Box::new(value) }
 	}
 
-	pub fn variant_type(&self) -> String {
-		let mut interner = StringInterner::new();
-		let type_id = Variant::type_id(&*self.value, &mut interner);
-		interner.resolve(type_id).unwrap().to_owned()
-	}
-
-	pub fn is<T: Variant>(&self) -> bool {
-		self.value.as_any().is::<T>()
+	pub fn into_inner(self) -> Box<dyn Variant> {
+		self.value
 	}
 
 	pub fn into_boxed<T: Variant>(self) -> Option<Box<T>> {
 		self.value.as_any_box().downcast().ok()
 	}
 
-	pub fn as_ref<T: Variant>(&self) -> Option<&T> {
-		self.value.as_any().downcast_ref()
-	}
-
-	pub fn as_mut<T: Variant>(&mut self) -> Option<&mut T> {
-		self.value.as_any_mut().downcast_mut()
+	pub fn into_unboxed<T: Variant>(self) -> Option<T> {
+		self.value.as_any_box().downcast().ok().map(|x| *x)
 	}
 }
 

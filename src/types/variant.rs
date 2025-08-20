@@ -25,6 +25,35 @@ pub trait Variant: Bin1Serialize + Send + Sync + Debug + Clone + PartialEq {
 	}
 }
 
+impl dyn Variant {
+	/// Get the type ID of this variant as a string. Inefficient; for repeated use it is better to reuse your own StringInterner with the [Variant::type_id] trait method directly.
+	pub fn variant_type(&self) -> String {
+		let mut interner = StringInterner::new();
+		let type_id = Variant::type_id(self, &mut interner);
+		interner.resolve(type_id).unwrap().to_owned()
+	}
+
+	pub fn is<T: Variant>(&self) -> bool {
+		self.as_any().is::<T>()
+	}
+
+	pub fn into_boxed<T: Variant>(self: Box<dyn Variant>) -> Option<Box<T>> {
+		self.as_any_box().downcast().ok()
+	}
+
+	pub fn into_unboxed<T: Variant>(self: Box<dyn Variant>) -> Option<T> {
+		self.as_any_box().downcast().ok().map(|x| *x)
+	}
+
+	pub fn as_ref<T: Variant>(&self) -> Option<&T> {
+		self.as_any().downcast_ref()
+	}
+
+	pub fn as_mut<T: Variant>(&mut self) -> Option<&mut T> {
+		self.as_any_mut().downcast_mut()
+	}
+}
+
 macro_rules! impl_primitive {
 	($ty:ty, $type_id:literal) => {
 		impl StaticVariant for $ty {

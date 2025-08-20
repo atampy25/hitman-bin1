@@ -425,6 +425,47 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.associate_const("ALIGNMENT", "usize", size.to_string(), "");
 
 		scope
+			.new_impl("&'static str")
+			.impl_trait(format!("From<{name}>"))
+			.new_fn("from")
+			.arg("value", &name)
+			.ret("&'static str")
+			.push_block({
+				let mut block = Block::new("match value");
+				if members.is_empty() {
+					block.line(format!(r#"{name}::Value => """#));
+				} else {
+					for (variant_name, _) in &members {
+						block.line(format!(r#"{name}::{variant_name} => "{variant_name}","#));
+					}
+				}
+				block
+			});
+
+		scope
+			.new_impl(&name)
+			.impl_trait("TryFrom<&str>")
+			.associate_type("Error", "()")
+			.new_fn("try_from")
+			.arg("value", "&str")
+			.ret(format!("Result<{name}, ()>"))
+			.push_block({
+				if members.is_empty() {
+					let mut block = Block::new("");
+					block.line(r#"(value == "").then_some(Self::Value).ok_or(())"#);
+					block
+				} else {
+					let mut block = Block::new("Ok(match value");
+					for (variant_name, _) in &members {
+						block.line(format!(r#""{variant_name}" => Self::{variant_name},"#));
+					}
+					block.line("_ => return Err(())");
+					block.after(")");
+					block
+				}
+			});
+
+		scope
 			.new_impl(signed_size_ty)
 			.impl_trait(format!("From<{name}>"))
 			.new_fn("from")

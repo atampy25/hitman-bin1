@@ -96,6 +96,28 @@ impl ZVariant {
 	pub fn new<T: Variant>(value: T) -> Self {
 		Self { value: Box::new(value) }
 	}
+
+	pub fn variant_type(&self) -> String {
+		let mut interner = StringInterner::new();
+		let type_id = Variant::type_id(&*self.value, &mut interner);
+		interner.resolve(type_id).unwrap().to_owned()
+	}
+
+	pub fn is<T: Variant>(&self) -> bool {
+		self.value.as_any().is::<T>()
+	}
+
+	pub fn into_boxed<T: Variant>(self) -> Option<Box<T>> {
+		self.value.as_any_box().downcast().ok()
+	}
+
+	pub fn as_ref<T: Variant>(&self) -> Option<&T> {
+		self.value.as_any().downcast_ref()
+	}
+
+	pub fn as_mut<T: Variant>(&mut self) -> Option<&mut T> {
+		self.value.as_any_mut().downcast_mut()
+	}
 }
 
 impl Debug for ZVariant {
@@ -225,6 +247,28 @@ impl<'de> Deserialize<'de> for ZVariant {
 	}
 }
 
+impl StaticVariant for ZVariant {
+	const TYPE_ID: &'static str = "ZVariant";
+}
+
+impl Variant for ZVariant {
+	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
+		interner.get_or_intern_static(Self::TYPE_ID)
+	}
+
+	fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+		serde_json::to_value(self)
+	}
+}
+
+impl StaticVariant for Vec<ZVariant> {
+	const TYPE_ID: &'static str = "TArray<ZVariant>";
+}
+
+impl StaticVariant for Vec<Vec<ZVariant>> {
+	const TYPE_ID: &'static str = "TArray<TArray<ZVariant>>";
+}
+
 macro_rules! submit {
 	($ty:ty) => {
 		inventory::submit!(&VariantDeserializer::<$ty>::new() as &dyn DeserializeVariant);
@@ -232,6 +276,8 @@ macro_rules! submit {
 		inventory::submit!(&VariantDeserializer::<Vec<Vec<$ty>>>::new() as &dyn DeserializeVariant);
 	};
 }
+
+submit!(ZVariant);
 
 submit!(u8);
 submit!(u16);
@@ -282,5 +328,19 @@ impl Variant for SEntityTemplateProperty {
 }
 
 submit!(SEntityTemplateProperty);
+
+impl StaticVariant for (EcoString, ZVariant) {
+	const TYPE_ID: &'static str = "TPair<ZString,ZVariant>";
+}
+
+impl StaticVariant for Vec<(EcoString, ZVariant)> {
+	const TYPE_ID: &'static str = "TArray<TPair<ZString,ZVariant>>";
+}
+
+impl StaticVariant for Vec<Vec<(EcoString, ZVariant)>> {
+	const TYPE_ID: &'static str = "TArray<TArray<TPair<ZString,ZVariant>>>";
+}
+
+submit!((EcoString, ZVariant));
 
 include!(concat!(env!("OUT_DIR"), "/h3.rs"));

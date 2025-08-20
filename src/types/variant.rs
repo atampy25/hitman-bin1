@@ -80,6 +80,20 @@ impl Variant for () {
 	}
 }
 
+impl<
+	T: Bin1Serialize + Aligned + Serialize + StaticVariant + Send + Sync + Clone + Debug + PartialEq + 'static,
+	U: Bin1Serialize + Aligned + Serialize + StaticVariant + Send + Sync + Clone + Debug + PartialEq + 'static
+> Variant for (T, U)
+{
+	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
+		interner.get_or_intern(format!("TPair<{},{}>", T::TYPE_ID, U::TYPE_ID))
+	}
+
+	fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
+		serde_json::to_value(self)
+	}
+}
+
 impl<T: Bin1Serialize + Aligned + Serialize + StaticVariant + Send + Sync + Clone + Debug + PartialEq + 'static> Variant
 	for Vec<T>
 {

@@ -5,10 +5,10 @@ use std::{
 	sync::Arc
 };
 
+use polonius_the_crab::{polonius, polonius_return};
 use serde::{Deserialize, Serialize, de::DeserializeOwned, ser::SerializeStruct};
 use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
 use tryvial::try_fn;
-use polonius_the_crab::{polonius, polonius_return};
 
 use crate::types::{property::PropertyID, resource::ZRuntimeResourceID};
 
@@ -162,12 +162,12 @@ impl Bin1Deserialize for ZVariant {
 			Self::new(())
 		} else {
 			de.read_variant_ptr(|de| {
-				Ok(DESERIALIZERS
+				DESERIALIZERS
 					.get(type_id.as_str())
 					.ok_or_else(|| DeserializeError::UnknownType(type_id.to_string()))?
-					.deserialize_bin1(&type_id, de)?
-					.into())
-			})?.into()
+					.deserialize_bin1(&type_id, de)
+			})?
+			.into()
 		}
 	}
 }

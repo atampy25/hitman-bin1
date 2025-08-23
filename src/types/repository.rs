@@ -47,17 +47,17 @@ impl TryFrom<&str> for ZRepositoryID {
 				let mut data_4 = [0u8; 8];
 
 				let mut part = parts.next().ok_or(RepositoryIdError::NotEnoughParts)?.chars();
-				for i in 0..2 {
+				for item in data_4.iter_mut().take(2) {
 					let char1 = part.next().ok_or(RepositoryIdError::NotEnoughChars)?;
 					let char2 = part.next().ok_or(RepositoryIdError::NotEnoughChars)?;
-					data_4[i] = u8::from_str_radix(&[char1, char2].into_iter().collect::<String>(), 16)?;
+					*item = u8::from_str_radix(&[char1, char2].into_iter().collect::<String>(), 16)?;
 				}
 
 				let mut part = parts.next().ok_or(RepositoryIdError::NotEnoughParts)?.chars();
-				for i in 2..8 {
+				for item in data_4.iter_mut().skip(2) {
 					let char1 = part.next().ok_or(RepositoryIdError::NotEnoughChars)?;
 					let char2 = part.next().ok_or(RepositoryIdError::NotEnoughChars)?;
-					data_4[i] = u8::from_str_radix(&[char1, char2].into_iter().collect::<String>(), 16)?;
+					*item = u8::from_str_radix(&[char1, char2].into_iter().collect::<String>(), 16)?;
 				}
 
 				data_4

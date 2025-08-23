@@ -106,6 +106,13 @@ impl ZVariant {
 		Self { value: Arc::new(value) }
 	}
 
+	/// Determine whether the stored Variant value is valid for this game version.
+	pub fn is_valid(&self) -> bool {
+		let mut interner = StringInterner::new();
+		let type_id = Variant::type_id(self.value.deref(), &mut interner);
+		DESERIALIZERS.contains_key(interner.resolve(type_id).unwrap())
+	}
+
 	pub fn into_inner(self) -> Arc<dyn Variant> {
 		self.value
 	}

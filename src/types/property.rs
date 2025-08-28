@@ -1,6 +1,7 @@
 use std::fmt;
 
 use bimap::BiMap;
+use ecow::EcoString;
 use serde::{
 	Deserialize, Serialize,
 	de::{self, Visitor}
@@ -21,15 +22,24 @@ static PROPERTIES: BiMap<&'static str, u32> = include_str!("../../properties.txt
 	)
 	.collect();
 
+#[static_init::dynamic]
+static CUSTOM_PROPERTIES: papaya::HashMap<u32, EcoString> = papaya::HashMap::new();
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PropertyID(pub u32);
 
 impl PropertyID {
-	pub fn from_known(name: &str) -> Option<Self> {
-		PROPERTIES.get_by_left(name).map(|&x| x.into())
+	pub fn as_name(&self) -> Option<EcoString> {
+		if let Some(known) = PROPERTIES.get_by_right(&self.0).copied() {
+			Some(known.into())
+		} else if let Some(custom) = CUSTOM_PROPERTIES.pin().get(&self.0) {
+			Some(custom.to_owned())
+		} else {
+			None
+		}
 	}
 
-	pub fn as_name(&self) -> Option<&'static str> {
+	pub fn as_known(&self) -> Option<&'static str> {
 		PROPERTIES.get_by_right(&self.0).copied()
 	}
 }
@@ -68,13 +78,49 @@ impl From<PropertyID> for u32 {
 	}
 }
 
+impl From<EcoString> for PropertyID {
+	fn from(value: EcoString) -> Self {
+		if let Some(known) = PROPERTIES.get_by_left(value.as_str()).copied() {
+			Self(known)
+		} else {
+			let hash = crc32fast::hash(value.as_bytes());
+			CUSTOM_PROPERTIES.pin().get_or_insert(hash, value);
+			Self(hash)
+		}
+	}
+}
+
+impl From<&str> for PropertyID {
+	fn from(value: &str) -> Self {
+		if let Some(known) = PROPERTIES.get_by_left(value).copied() {
+			Self(known)
+		} else {
+			let hash = crc32fast::hash(value.as_bytes());
+			CUSTOM_PROPERTIES.pin().get_or_insert_with(hash, || value.into());
+			Self(hash)
+		}
+	}
+}
+
+impl fmt::Display for PropertyID {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		if let Some(known) = PROPERTIES.get_by_right(&self.0).copied() {
+			write!(f, "{known}")
+		} else if let Some(custom) = CUSTOM_PROPERTIES.pin().get(&self.0) {
+			write!(f, "{custom}")
+		} else {
+			write!(f, "{}", self.0)
+		}
+	}
+}
+
 impl Serialize for PropertyID {
 	fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
 	where
 		S: serde::Serializer
 	{
 		if let Some(name) = self.as_name() {
-			serializer.serialize_str(name)
+			serializer.serialize_str(&name)
 		} else {
 			serializer.serialize_u32(self.0)
 		}
@@ -92,14 +138,14 @@ impl<'de> Deserialize<'de> for PropertyID {
 			type Value = PropertyID;
 
 			fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
-				write!(f, "a property id as a string or integer")
+				write!(f, "a property ID as a string or integer")
 			}
 
 			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
 			where
 				E: de::Error
 			{
-				PropertyID::from_known(v).ok_or_else(|| E::custom("unknown property name"))
+				Ok(v.into())
 			}
 
 			fn visit_u32<E>(self, v: u32) -> Result<Self::Value, E>

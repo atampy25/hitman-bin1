@@ -157,6 +157,7 @@ impl Bin1Serializer {
 	}
 
 	#[try_fn]
+	#[cfg_attr(feature = "tracing", tracing::instrument(skip_all))]
 	pub fn finalise(mut self) -> Result<Vec<u8>, SerializeError> {
 		self.align_to(8);
 
@@ -246,6 +247,7 @@ impl Bin1Serializer {
 	}
 }
 
+#[cfg_attr(feature = "tracing", tracing::instrument(skip_all, fields(type = std::any::type_name::<T>())))]
 pub fn serialize<T: Bin1Serialize>(data: &T) -> Result<Vec<u8>, SerializeError> {
 	let mut serializer = Bin1Serializer::new();
 	data.write(&mut serializer)?;

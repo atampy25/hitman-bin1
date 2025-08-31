@@ -25,7 +25,7 @@ static PROPERTIES: BiMap<&'static str, u32> = include_str!("../../properties.txt
 #[static_init::dynamic]
 static CUSTOM_PROPERTIES: papaya::HashMap<u32, EcoString> = papaya::HashMap::new();
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PropertyID(pub u32);
 
 impl PropertyID {
@@ -111,6 +111,12 @@ impl fmt::Display for PropertyID {
 		} else {
 			write!(f, "{}", self.0)
 		}
+	}
+}
+
+impl fmt::Debug for PropertyID {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		write!(f, "{self}")
 	}
 }
 

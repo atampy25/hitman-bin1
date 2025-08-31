@@ -87,6 +87,7 @@ impl<'a> Bin1Deserializer<'a> {
 	}
 
 	#[try_fn]
+	#[cfg_attr(feature = "tracing", tracing::instrument(skip_all))]
 	pub fn init(&mut self) -> Result<(), DeserializeError> {
 		let mut magic = [0u8; 4];
 		self.buffer.read_exact(&mut magic)?;
@@ -296,6 +297,7 @@ impl<'a> Bin1Deserializer<'a> {
 	}
 }
 
+#[cfg_attr(feature = "tracing", tracing::instrument(skip_all, fields(type = std::any::type_name::<T>())))]
 pub fn deserialize<T: Bin1Deserialize>(data: &[u8]) -> Result<T, DeserializeError> {
 	let mut de = Bin1Deserializer::new(data);
 	de.init()?;

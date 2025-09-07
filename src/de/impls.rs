@@ -41,7 +41,10 @@ impl<T: Bin1Deserialize + 'static> Bin1Deserialize for Arc<T> {
 	const SIZE: usize = 8;
 
 	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
-		de.read_pointer(|de| de.read_aligned())
+		de.read_pointer(|de| {
+			de.align_to(T::ALIGNMENT)?;
+			T::read(de)
+		})
 	}
 }
 
@@ -57,7 +60,10 @@ impl<T: Bin1Deserialize + 'static> Bin1Deserialize for Option<Arc<T>> {
 		if ptr == u64::MAX {
 			None
 		} else {
-			Some(de.read_pointer(|de| de.read_aligned())?)
+			Some(de.read_pointer(|de| {
+				de.align_to(T::ALIGNMENT)?;
+				T::read(de)
+			})?)
 		}
 	}
 }
@@ -74,8 +80,10 @@ impl<T: Bin1Deserialize, U: Bin1Deserialize> Bin1Deserialize for (T, U) {
 	};
 
 	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
-		let first = de.read()?;
-		let second = de.read_aligned()?;
+		let first = T::read(de)?;
+		de.align_to(U::ALIGNMENT)?;
+		let second = U::read(de)?;
+		de.align_to(U::ALIGNMENT)?;
 		Ok((first, second))
 	}
 }

@@ -32,15 +32,17 @@ impl PropertyID {
 	pub fn as_name(&self) -> Option<EcoString> {
 		if let Some(known) = PROPERTIES.get_by_right(&self.0).copied() {
 			Some(known.into())
-		} else if let Some(custom) = CUSTOM_PROPERTIES.pin().get(&self.0) {
-			Some(custom.to_owned())
 		} else {
-			None
+			CUSTOM_PROPERTIES.pin().get(&self.0).map(|custom| custom.to_owned())
 		}
 	}
 
 	pub fn as_known(&self) -> Option<&'static str> {
 		PROPERTIES.get_by_right(&self.0).copied()
+	}
+
+	pub fn is_known(name: &str) -> bool {
+		PROPERTIES.contains_left(name)
 	}
 }
 

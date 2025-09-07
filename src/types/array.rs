@@ -7,39 +7,16 @@ use crate::{
 	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError}
 };
 
-impl<T: Bin1Serialize + Aligned> Aligned for &[T] {
+impl<T: Aligned> Aligned for [T] {
 	const ALIGNMENT: usize = T::ALIGNMENT;
-}
-
-/// Direct serialisation of slices as arrays with no length value.
-impl<T: Bin1Serialize + Aligned> Bin1Serialize for &[T] {
-	fn alignment(&self) -> usize {
-		Self::ALIGNMENT
-	}
-
-	fn write(&self, ser: &mut crate::ser::Bin1Serializer) -> Result<(), crate::ser::SerializeError> {
-		for item in *self {
-			item.write_aligned(ser)?;
-		}
-
-		Ok(())
-	}
-
-	fn resolve(&self, ser: &mut crate::ser::Bin1Serializer) -> Result<(), crate::ser::SerializeError> {
-		for item in *self {
-			item.resolve(ser)?;
-		}
-
-		Ok(())
-	}
 }
 
 impl<T: Aligned, const N: usize> Aligned for [T; N] {
 	const ALIGNMENT: usize = T::ALIGNMENT;
 }
 
-/// Serialisation of arrays as TFixedArray values (no length specified).
-impl<T: Bin1Serialize + Aligned, const N: usize> Bin1Serialize for [T; N] {
+/// Serialisation of arrays as TFixedArray values (elements directly written aligned, with no length specified).
+impl<T: Bin1Serialize + Aligned> Bin1Serialize for [T] {
 	fn alignment(&self) -> usize {
 		Self::ALIGNMENT
 	}
@@ -58,6 +35,20 @@ impl<T: Bin1Serialize + Aligned, const N: usize> Bin1Serialize for [T; N] {
 		}
 
 		Ok(())
+	}
+}
+
+impl<T: Bin1Serialize + Aligned, const N: usize> Bin1Serialize for [T; N] {
+	fn alignment(&self) -> usize {
+		(self as &[T]).alignment()
+	}
+
+	fn write(&self, ser: &mut crate::ser::Bin1Serializer) -> Result<(), crate::ser::SerializeError> {
+		(self as &[T]).write(ser)
+	}
+
+	fn resolve(&self, ser: &mut crate::ser::Bin1Serializer) -> Result<(), crate::ser::SerializeError> {
+		(self as &[T]).resolve(ser)
 	}
 }
 
@@ -68,7 +59,9 @@ impl<T: Bin1Deserialize, const N: usize> Bin1Deserialize for [T; N] {
 		let mut result = [const { MaybeUninit::uninit() }; N];
 
 		for elem in &mut result {
-			elem.write(de.read_aligned::<T>()?);
+			de.align_to(T::ALIGNMENT)?;
+			elem.write(T::read(de)?);
+			de.align_to(T::ALIGNMENT)?;
 		}
 
 		Ok(unsafe { std::mem::transmute_copy(&result) })
@@ -105,7 +98,7 @@ impl<T: Bin1Serialize + Aligned> Bin1Serialize for Vec<T> {
 		if !self.is_empty() {
 			let start_id = self.as_ptr() as u64 | 0xABCD000000000000;
 			let end_id = start_id | 0xCAFE000000000000;
-			ser.write_pointee(start_id, Some(end_id), &self.as_slice())?;
+			ser.write_pointee(start_id, Some(end_id), self.as_slice())?;
 		}
 
 		Ok(())
@@ -130,15 +123,14 @@ impl<T: Bin1Deserialize> Bin1Deserialize for Vec<T> {
 		let pos = de.position();
 
 		de.seek_from_start(start + 0x10)?;
-
 		let mut result = Vec::with_capacity(len);
 		for _ in 0..len {
-			result.push(de.read_aligned()?);
+			de.align_to(T::ALIGNMENT)?;
+			result.push(T::read(de)?);
 		}
 
 		// Seek past the allocation end pointer
-		de.seek_from_start(pos)?;
-		de.seek_relative(8)?;
+		de.seek_from_start(pos + 8)?;
 
 		result
 	}
@@ -186,7 +178,7 @@ pub mod TArrayRef {
 			if !self.0.is_empty() {
 				let start_id = self.0.as_ptr() as u64;
 				let end_id = self.0.as_ptr_range().end as u64;
-				ser.write_pointee(start_id, Some(end_id), &self.0)?;
+				ser.write_pointee(start_id, Some(end_id), self.0)?;
 			}
 
 			Ok(())
@@ -220,7 +212,8 @@ pub mod TArrayRef {
 
 			let mut result = Vec::with_capacity(len);
 			for _ in 0..len {
-				result.push(de.read_aligned::<T>()?);
+				de.align_to(T::ALIGNMENT)?;
+				result.push(T::read(de)?);
 			}
 
 			de.seek_from_start(pos)?;

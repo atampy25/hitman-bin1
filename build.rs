@@ -452,7 +452,7 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.push_block({
 				if members.is_empty() {
 					let mut block = Block::new("");
-					block.line(r#"(value == "").then_some(Self::Value).ok_or(())"#);
+					block.line(r#"value.is_empty().then_some(Self::Value).ok_or(())"#);
 					block
 				} else {
 					let mut block = Block::new("Ok(match value");

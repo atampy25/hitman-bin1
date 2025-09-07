@@ -54,7 +54,7 @@ impl<T: StaticVariant + Variant + Bin1Deserialize + DeserializeOwned + 'static +
 			});
 		}
 
-		de.read::<T>().map(|v| Arc::new(v) as Arc<dyn Variant>)
+		T::read(de).map(|v| Arc::new(v) as Arc<dyn Variant>)
 	}
 }
 

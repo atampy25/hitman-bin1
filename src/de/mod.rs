@@ -60,13 +60,6 @@ pub trait Bin1Deserialize: Sized + Aligned {
 	const SIZE: usize;
 
 	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError>;
-
-	fn read_aligned(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
-		de.align_to(Self::ALIGNMENT)?;
-		let result = Self::read(de)?;
-		de.align_to(Self::ALIGNMENT)?;
-		Ok(result)
-	}
 }
 
 impl<'a> Bin1Deserializer<'a> {
@@ -203,14 +196,6 @@ impl<'a> Bin1Deserializer<'a> {
 	#[try_fn]
 	pub fn seek_relative(&mut self, offset: i64) -> Result<(), DeserializeError> {
 		self.buffer.seek_relative(offset)?
-	}
-
-	pub fn read_aligned<T: Bin1Deserialize>(&mut self) -> Result<T, DeserializeError> {
-		T::read_aligned(self)
-	}
-
-	pub fn read<T: Bin1Deserialize>(&mut self) -> Result<T, DeserializeError> {
-		T::read(self)
 	}
 
 	#[try_fn]

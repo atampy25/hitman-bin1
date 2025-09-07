@@ -72,7 +72,8 @@ impl<T: Bin1Deserialize> Bin1Deserialize for Owned<T> {
 		let pos = de.position();
 
 		de.seek_from_start(ptr + 0x10)?;
-		let value = de.read_aligned()?;
+		de.align_to(T::ALIGNMENT)?;
+		let value = T::read(de)?;
 		de.seek_from_start(pos)?;
 
 		Self {

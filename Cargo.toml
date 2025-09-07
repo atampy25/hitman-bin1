@@ -35,3 +35,6 @@ rayon = "1.11.0"
 
 [features]
 tracing = ["dep:tracing"]
+
+[profile.dev]
+debug = false

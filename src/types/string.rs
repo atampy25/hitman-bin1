@@ -26,7 +26,7 @@ impl Bin1Serialize for EcoString {
 
 	fn resolve(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
 		let pointer_id = self.as_ptr() as u64;
-		ser.write_pointee(pointer_id, None, &self.as_bytes())?;
+		ser.write_pointee(pointer_id, None, self.as_bytes())?;
 		ser.write_unaligned(&[0]); // Null terminator
 
 		Ok(())

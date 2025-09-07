@@ -307,10 +307,11 @@ pub fn derive_deserialize(input: TokenStream) -> TokenStream {
 				#padding_end
 			}
 		} else {
+			let ty = &field_types[idx];
 			quote! {
 				#acc
 				#padding
-				let #field = de.read()?;
+				let #field = <#ty>::read(de)?;
 				#padding_end
 			}
 		}

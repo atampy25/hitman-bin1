@@ -15,16 +15,16 @@ use hitman_bin1::{
 };
 
 fn main() {
-	match env::args().nth(1).unwrap().as_ref() {
-		"HM2016" => match env::args().nth(2).unwrap().as_ref() {
-			"convert" => match env::args().nth(3).unwrap().as_ref() {
-				"TEMP" => {
+	match env::args().nth(1).as_deref() {
+		Some("HM2016") => match env::args().nth(2).as_deref() {
+			Some("convert") => match env::args().nth(3).as_deref() {
+				Some("TEMP") => {
 					let value: STemplateEntity = deserialize(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
 					fs::write(env::args().nth(5).unwrap(), serde_json::to_vec(&value).unwrap()).unwrap();
 				}
 
-				"TBLU" => {
+				Some("TBLU") => {
 					let value: H1STemplateEntityBlueprint =
 						deserialize(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
@@ -34,15 +34,15 @@ fn main() {
 				_ => panic!("3rd argument must be TEMP or TBLU")
 			},
 
-			"generate" => match env::args().nth(3).unwrap().as_ref() {
-				"TEMP" => {
+			Some("generate") => match env::args().nth(3).as_deref() {
+				Some("TEMP") => {
 					let value: STemplateEntity =
 						serde_json::from_slice(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
 					fs::write(env::args().nth(5).unwrap(), serialize(&value).unwrap()).unwrap();
 				}
 
-				"TBLU" => {
+				Some("TBLU") => {
 					let value: H1STemplateEntityBlueprint =
 						serde_json::from_slice(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
@@ -55,16 +55,16 @@ fn main() {
 			_ => panic!("2nd argument must be convert or generate")
 		},
 
-		"HM2" => match env::args().nth(2).unwrap().as_ref() {
-			"convert" => match env::args().nth(3).unwrap().as_ref() {
-				"TEMP" => {
+		Some("HM2") => match env::args().nth(2).as_deref() {
+			Some("convert") => match env::args().nth(3).as_deref() {
+				Some("TEMP") => {
 					let value: H2STemplateEntityFactory =
 						deserialize(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
 					fs::write(env::args().nth(5).unwrap(), serde_json::to_vec(&value).unwrap()).unwrap();
 				}
 
-				"TBLU" => {
+				Some("TBLU") => {
 					let value: H2STemplateEntityBlueprint =
 						deserialize(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
@@ -74,15 +74,15 @@ fn main() {
 				_ => panic!("3rd argument must be TEMP or TBLU")
 			},
 
-			"generate" => match env::args().nth(3).unwrap().as_ref() {
-				"TEMP" => {
+			Some("generate") => match env::args().nth(3).as_deref() {
+				Some("TEMP") => {
 					let value: H2STemplateEntityFactory =
 						serde_json::from_slice(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
 					fs::write(env::args().nth(5).unwrap(), serialize(&value).unwrap()).unwrap();
 				}
 
-				"TBLU" => {
+				Some("TBLU") => {
 					let value: H2STemplateEntityBlueprint =
 						serde_json::from_slice(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
@@ -95,16 +95,16 @@ fn main() {
 			_ => panic!("2nd argument must be convert or generate")
 		},
 
-		"HM3" => match env::args().nth(2).unwrap().as_ref() {
-			"convert" => match env::args().nth(3).unwrap().as_ref() {
-				"TEMP" => {
+		Some("HM3") => match env::args().nth(2).as_deref() {
+			Some("convert") => match env::args().nth(3).as_deref() {
+				Some("TEMP") => {
 					let value: H3STemplateEntityFactory =
 						deserialize(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
 					fs::write(env::args().nth(5).unwrap(), serde_json::to_vec(&value).unwrap()).unwrap();
 				}
 
-				"TBLU" => {
+				Some("TBLU") => {
 					let value: H3STemplateEntityBlueprint =
 						deserialize(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
@@ -114,15 +114,15 @@ fn main() {
 				_ => panic!("3rd argument must be TEMP or TBLU")
 			},
 
-			"generate" => match env::args().nth(3).unwrap().as_ref() {
-				"TEMP" => {
+			Some("generate") => match env::args().nth(3).as_deref() {
+				Some("TEMP") => {
 					let value: H3STemplateEntityFactory =
 						serde_json::from_slice(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 
 					fs::write(env::args().nth(5).unwrap(), serialize(&value).unwrap()).unwrap();
 				}
 
-				"TBLU" => {
+				Some("TBLU") => {
 					let value: H3STemplateEntityBlueprint =
 						serde_json::from_slice(&fs::read(env::args().nth(4).unwrap()).unwrap()).unwrap();
 

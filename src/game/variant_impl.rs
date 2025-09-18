@@ -58,15 +58,6 @@ impl<T: StaticVariant + Variant + Bin1Deserialize + DeserializeOwned + 'static +
 	}
 }
 
-inventory::collect!(&'static dyn DeserializeVariant);
-
-#[static_init::dynamic]
-static DESERIALIZERS: HashMap<&'static str, &'static dyn DeserializeVariant> =
-	inventory::iter::<&'static dyn DeserializeVariant>
-		.into_iter()
-		.map(|&x| (x.type_id(), x))
-		.collect();
-
 /// Reference-counted copy-on-write container for any Variant-implementing value.
 #[derive(Clone, dynex::PartialEqFix)]
 pub struct ZVariant {
@@ -258,14 +249,6 @@ impl StaticVariant for Vec<ZVariant> {
 
 impl StaticVariant for Vec<Vec<ZVariant>> {
 	const TYPE_ID: &'static str = "TArray<TArray<ZVariant>>";
-}
-
-macro_rules! submit {
-	($ty:ty) => {
-		inventory::submit!(&VariantDeserializer::<$ty>::new() as &dyn DeserializeVariant);
-		inventory::submit!(&VariantDeserializer::<Vec<$ty>>::new() as &dyn DeserializeVariant);
-		inventory::submit!(&VariantDeserializer::<Vec<Vec<$ty>>>::new() as &dyn DeserializeVariant);
-	};
 }
 
 submit!(ZVariant);

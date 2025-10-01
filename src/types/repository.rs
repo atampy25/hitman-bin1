@@ -11,7 +11,7 @@ use crate::{
 use crate as hitman_bin1;
 
 #[derive(
-	Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Bin1Serialize, Bin1Deserialize,
+	Serialize, Deserialize, Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Bin1Serialize, Bin1Deserialize,
 )]
 #[serde(try_from = "&str", into = "String")]
 pub struct ZRepositoryID {

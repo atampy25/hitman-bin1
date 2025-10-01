@@ -82,3 +82,82 @@ impl<T: Bin1Deserialize> Bin1Deserialize for Owned<T> {
 		}
 	}
 }
+
+#[allow(non_snake_case)]
+pub mod WithZeroNull {
+	use std::sync::Arc;
+
+	use crate::{
+		de::Bin1Deserialize,
+		ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError}
+	};
+
+	pub struct Ser<'a, T: Bin1Serialize>(pub &'a Option<Arc<T>>);
+
+	impl<'a, T: Bin1Serialize> From<&'a Option<Arc<T>>> for Ser<'a, T> {
+		fn from(value: &'a Option<Arc<T>>) -> Self {
+			Self(value)
+		}
+	}
+
+	impl<'a, T: Bin1Serialize> Aligned for Ser<'a, T> {
+		const ALIGNMENT: usize = 8;
+	}
+
+	impl<'a, T: Bin1Serialize + Aligned> Bin1Serialize for Ser<'a, T> {
+		fn alignment(&self) -> usize {
+			Self::ALIGNMENT
+		}
+
+		fn write(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
+			if let Some(value) = self.0.as_ref() {
+				value.write_aligned(ser)?;
+			} else {
+				ser.align_to(8);
+				ser.write_unaligned(&0u64.to_le_bytes());
+			}
+
+			Ok(())
+		}
+
+		fn resolve(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
+			if let Some(value) = self.0.as_ref() {
+				value.resolve(ser)?;
+			}
+
+			Ok(())
+		}
+	}
+
+	pub struct De<T: Bin1Deserialize>(Option<Arc<T>>);
+
+	impl<T: Bin1Deserialize> From<De<T>> for Option<Arc<T>> {
+		fn from(value: De<T>) -> Self {
+			value.0
+		}
+	}
+
+	impl<T: Bin1Deserialize> Aligned for De<T> {
+		const ALIGNMENT: usize = 8;
+	}
+
+	impl<T: Bin1Deserialize + 'static> Bin1Deserialize for De<T> {
+		const SIZE: usize = 8;
+
+		#[tryvial::try_fn]
+		fn read(de: &mut crate::de::Bin1Deserializer) -> Result<Self, crate::de::DeserializeError> {
+			de.align_to(8)?;
+			let ptr = de.read_u64()?;
+
+			if ptr == 0 {
+				De(None)
+			} else {
+				de.seek_relative(-8)?;
+				De(Some(de.read_pointer(|de| {
+					de.align_to(T::ALIGNMENT)?;
+					T::read(de)
+				})?))
+			}
+		}
+	}
+}

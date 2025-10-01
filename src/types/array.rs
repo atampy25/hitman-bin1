@@ -205,6 +205,11 @@ pub mod TArrayRef {
 			de.align_to(8)?;
 			let start = de.read_u64()?;
 			let end = de.read_u64()?;
+
+			if start == u64::MAX || end == u64::MAX {
+				return Ok(De(Vec::new()));
+			}
+
 			let len = (end as usize - start as usize) / T::SIZE;
 			let pos = de.position();
 

@@ -26,7 +26,7 @@ linkme = "0.3.33"
 mident = "0.0.1"
 
 [build-dependencies]
-anyhow = "1.0.99"
+anyhow = "1.0.100"
 codegen = "0.2.0"
 Inflector = "0.11.4"
 lazy-regex = "3.4.1"
@@ -36,6 +36,7 @@ rayon = "1.11.0"
 
 [features]
 tracing = ["dep:tracing"]
+entity = []
 
 [profile.dev]
 debug = false

@@ -229,38 +229,42 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 
 	let mut class_queue = VecDeque::new();
 
-	for ty in [
-		"STemplateEntity",
-		"STemplateEntityFactory",
-		"STemplateEntityBlueprint",
-		"SColorRGB",
-		"SColorRGBA",
-		"ZGuid",
-		"ZGameTime",
-		"SVector2",
-		"SVector3",
-		"SVector4",
-		"SMatrix43",
-		"SWorldSpaceSettings",
-		"S25DProjectionSettings",
-		"SBodyPartDamageMultipliers",
-		"SCCEffectSet",
-		"SSCCuriousConfiguration",
-		"ZCurve",
-		"SMapMarkerData",
-		"ZHUDOccluderTriggerEntity_SBoneTestSetup",
-		"SGaitTransitionEntry",
-		"SClothVertex",
-		"ZSharedSensorDef_SVisibilitySetting",
-		"SFontLibraryDefinition",
-		"SCamBone",
-		"SConversationPart",
-		"AI_SFirePattern01",
-		"STargetableBoneConfiguration",
-		"ZSecuritySystemCameraConfiguration_SHitmanVisibleEscalationRule",
-		"AI_SFirePattern02",
-		"ZSecuritySystemCameraConfiguration_SDeadBodyVisibleEscalationRule"
-	] {
+	let to_generate: [&[&str]; _] = [
+		#[cfg(feature = "entity")]
+		[
+			"STemplateEntity",
+			"STemplateEntityFactory",
+			"SColorRGB",
+			"SColorRGBA",
+			"ZGuid",
+			"ZGameTime",
+			"SVector2",
+			"SVector3",
+			"SVector4",
+			"SMatrix43",
+			"SWorldSpaceSettings",
+			"S25DProjectionSettings",
+			"SBodyPartDamageMultipliers",
+			"SCCEffectSet",
+			"SSCCuriousConfiguration",
+			"ZCurve",
+			"SMapMarkerData",
+			"ZHUDOccluderTriggerEntity_SBoneTestSetup",
+			"SGaitTransitionEntry",
+			"SClothVertex",
+			"ZSharedSensorDef_SVisibilitySetting",
+			"SFontLibraryDefinition",
+			"SCamBone",
+			"SConversationPart",
+			"AI_SFirePattern01",
+			"STargetableBoneConfiguration",
+			"ZSecuritySystemCameraConfiguration_SHitmanVisibleEscalationRule",
+			"AI_SFirePattern02",
+			"ZSecuritySystemCameraConfiguration_SDeadBodyVisibleEscalationRule"
+		]
+	];
+
+	for ty in to_generate.concat() {
 		if let Some(pos) = classes.iter().position(|x| x.0 == ty) {
 			class_queue.push_back(classes.remove(pos));
 		}

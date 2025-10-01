@@ -55,11 +55,11 @@ impl<T: Bin1Deserialize + 'static> Bin1Deserialize for Option<Arc<T>> {
 	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
 		de.align_to(8)?;
 		let ptr = de.read_u64()?;
-		de.seek_relative(-8)?;
 
 		if ptr == u64::MAX {
 			None
 		} else {
+			de.seek_relative(-8)?;
 			Some(de.read_pointer(|de| {
 				de.align_to(T::ALIGNMENT)?;
 				T::read(de)

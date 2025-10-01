@@ -94,8 +94,6 @@ impl<T: Bin1Serialize> Bin1Serialize for Option<Arc<T>> {
 	fn resolve(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
 		if let Some(value) = self {
 			value.resolve(ser)?;
-		} else {
-			ser.write_pointer(u64::MAX);
 		}
 
 		Ok(())

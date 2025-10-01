@@ -5,6 +5,7 @@ use std::{
 	sync::Arc
 };
 
+use ecow::EcoString;
 use polonius_the_crab::{polonius, polonius_return};
 use serde::{Deserialize, Serialize, de::DeserializeOwned, ser::SerializeStruct};
 use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};

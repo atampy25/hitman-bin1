@@ -125,14 +125,14 @@ pub fn derive_serialize(input: TokenStream) -> TokenStream {
 			quote! {
 				#acc
 				#padding
-				#as_type::from(self.#field.as_ref()).write(ser)?;
+				#as_type::from(self.#field.as_ref()).write_aligned(ser)?;
 				#padding_end
 			}
 		} else {
 			quote! {
 				#acc
 				#padding
-				self.#field.write(ser)?;
+				self.#field.write_aligned(ser)?;
 				#padding_end
 			}
 		}
@@ -263,10 +263,10 @@ pub fn derive_deserialize(input: TokenStream) -> TokenStream {
 		});
 
 		let iter = field_types.iter().map(|ty| {
-			quote! { <#ty as hitman_bin1::de::Bin1Deserialize>::SIZE }
+			quote! { + <#ty as hitman_bin1::de::Bin1Deserialize>::SIZE }
 		});
 
-		quote! { #(#iter)+* + #total_padding }
+		quote! { #total_padding #(#iter)* }
 	};
 
 	let read_fields = data.fields.iter().enumerate().fold(quote! {}, |acc, (idx, f)| {
@@ -303,6 +303,7 @@ pub fn derive_deserialize(input: TokenStream) -> TokenStream {
 			quote! {
 				#acc
 				#padding
+				de.align_to(<#as_type as hitman_bin1::ser::Aligned>::ALIGNMENT)?;
 				let #field = #as_type::read(de)?.into();
 				#padding_end
 			}
@@ -311,6 +312,7 @@ pub fn derive_deserialize(input: TokenStream) -> TokenStream {
 			quote! {
 				#acc
 				#padding
+				de.align_to(<#ty as hitman_bin1::ser::Aligned>::ALIGNMENT)?;
 				let #field = <#ty>::read(de)?;
 				#padding_end
 			}

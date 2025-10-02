@@ -260,7 +260,8 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			"STargetableBoneConfiguration",
 			"ZSecuritySystemCameraConfiguration_SHitmanVisibleEscalationRule",
 			"AI_SFirePattern02",
-			"ZSecuritySystemCameraConfiguration_SDeadBodyVisibleEscalationRule"
+			"ZSecuritySystemCameraConfiguration_SDeadBodyVisibleEscalationRule",
+			"ZOverlayControllerEntity_SInputData"
 		]
 	];
 

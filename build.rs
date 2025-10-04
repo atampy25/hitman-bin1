@@ -231,9 +231,10 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 
 	let to_generate: [&[&str]; _] = [
 		#[cfg(feature = "entity")]
-		[
+		&[
 			"STemplateEntity",
 			"STemplateEntityFactory",
+			"STemplateEntityBlueprint",
 			"SColorRGB",
 			"SColorRGBA",
 			"ZGuid",
@@ -274,9 +275,7 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 	while let Some((name, type_id, members)) = class_queue.pop_front() {
 		for member in &members {
 			if let Member::Field(_, _, ty) = member {
-				if ty == "EcoString" {
-					scope.import("ecow", "EcoString");
-				} else if ty == "ZRuntimeResourceID" {
+				if ty == "ZRuntimeResourceID" {
 					scope.import("crate::types::resource", "ZRuntimeResourceID");
 				} else {
 					let mut tys = vec![ty.trim_start_matches("Vec<").trim_end_matches(">")];

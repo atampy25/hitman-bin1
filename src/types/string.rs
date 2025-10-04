@@ -15,7 +15,7 @@ impl Bin1Serialize for EcoString {
 	}
 
 	fn write(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
-		let length = (self.len() as i32) | 0x40000000;
+		let length = (self.len() as u32) | 0x40000000;
 		let pointer_id = self.as_ptr() as u64;
 
 		length.write_aligned(ser)?;
@@ -34,7 +34,7 @@ impl Bin1Serialize for EcoString {
 }
 
 impl Bin1Deserialize for EcoString {
-	// i32 + alignment padding + u64
+	// u32 (len) + alignment padding + u64 (pointer)
 	const SIZE: usize = 16;
 
 	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {

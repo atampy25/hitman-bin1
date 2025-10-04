@@ -1,11 +1,19 @@
-use std::{fmt::Debug, sync::Arc};
+use std::{
+	fmt::Debug,
+	ops::{Deref, DerefMut},
+	sync::Arc
+};
 
 use const_format::concatcp;
 use ecow::EcoString;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
+use tryvial::try_fn;
 
-use crate::ser::{Aligned, Bin1Serialize};
+use crate::{
+	de::{Bin1Deserialize, Bin1Deserializer, DeserializeError},
+	ser::{Aligned, Bin1Serialize, Bin1Serializer, SerializeError}
+};
 
 pub trait StaticVariant {
 	const TYPE_ID: &'static str;
@@ -210,5 +218,48 @@ impl Variant for EcoString {
 
 	fn to_serde(&self) -> Result<serde_json::Value, serde_json::Error> {
 		Ok(serde_json::Value::String(self.as_str().into()))
+	}
+}
+
+/// An arbitrary string, serialised and deserialised as a BIN1 type ID.
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub struct TypeID(pub EcoString);
+
+impl Deref for TypeID {
+	type Target = EcoString;
+
+	fn deref(&self) -> &Self::Target {
+		&self.0
+	}
+}
+
+impl DerefMut for TypeID {
+	fn deref_mut(&mut self) -> &mut Self::Target {
+		&mut self.0
+	}
+}
+
+impl Aligned for TypeID {
+	const ALIGNMENT: usize = 8;
+}
+
+impl Bin1Serialize for TypeID {
+	fn alignment(&self) -> usize {
+		Self::ALIGNMENT
+	}
+
+	#[try_fn]
+	fn write(&self, ser: &mut Bin1Serializer) -> Result<(), SerializeError> {
+		let type_id = ser.interner().get_or_intern(self.as_str());
+		ser.write_type(type_id);
+	}
+}
+
+impl Bin1Deserialize for TypeID {
+	const SIZE: usize = 8;
+
+	#[try_fn]
+	fn read(de: &mut Bin1Deserializer) -> Result<Self, DeserializeError> {
+		Self(de.read_type()?)
 	}
 }

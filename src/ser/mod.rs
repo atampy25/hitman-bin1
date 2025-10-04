@@ -53,6 +53,9 @@ pub struct Bin1Serializer {
 	/// Offsets to ZRuntimeResourceIDs
 	runtime_resource_ids: Vec<u32>,
 
+	/// Offsets to TResourcePtrs
+	resource_ptrs: Vec<u32>,
+
 	/// Offsets to STypeIDs
 	type_ids: Vec<u32>,
 	type_names: Vec<DefaultSymbol>,
@@ -67,6 +70,7 @@ impl Default for Bin1Serializer {
 			offsets: HashMap::new(),
 			pointers: vec![],
 			runtime_resource_ids: vec![],
+			resource_ptrs: vec![],
 			type_ids: vec![],
 			type_names: vec![],
 			interner: StringInterner::new()
@@ -156,6 +160,12 @@ impl Bin1Serializer {
 		self.write_unaligned(&low.to_le_bytes());
 	}
 
+	pub fn write_resource_ptr(&mut self, high: u32, low: u32) {
+		self.resource_ptrs.push(self.buffer.len() as u32);
+		self.write_unaligned(&high.to_le_bytes());
+		self.write_unaligned(&low.to_le_bytes());
+	}
+
 	#[try_fn]
 	#[cfg_attr(feature = "tracing", tracing::instrument(skip_all))]
 	pub fn finalise(mut self) -> Result<Vec<u8>, SerializeError> {
@@ -213,6 +223,17 @@ impl Bin1Serializer {
 			}
 
 			segments.push((0x578FBCEE, segment));
+		}
+
+		// ResourcePtrs segment
+		if !self.resource_ptrs.is_empty() {
+			let mut segment = (self.resource_ptrs.len() as u32).to_le_bytes().to_vec();
+
+			for offset in self.resource_ptrs {
+				segment.extend_from_slice(&offset.to_le_bytes());
+			}
+
+			segments.push((0x64603664, segment));
 		}
 
 		for offset in self.pointers.drain(..) {

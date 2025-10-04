@@ -1,4 +1,6 @@
-use serde::{Deserialize, Serialize};
+use std::{fmt::Display, str::FromStr};
+
+use serde_with::{DeserializeFromStr, SerializeDisplay};
 use string_interner::{DefaultSymbol, StringInterner, backend::BucketBackend};
 use thiserror::Error;
 
@@ -10,8 +12,9 @@ use crate::{
 
 use crate as hitman_bin1;
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Bin1Serialize, Bin1Deserialize)]
-#[serde(try_from = "&str", into = "String")]
+#[derive(
+	SerializeDisplay, DeserializeFromStr, Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Bin1Serialize, Bin1Deserialize,
+)]
 pub struct ZRepositoryID {
 	pub data_1: u32,
 	pub data_2: u16,
@@ -31,10 +34,30 @@ pub enum RepositoryIdError {
 	NotEnoughChars
 }
 
-impl TryFrom<&str> for ZRepositoryID {
-	type Error = RepositoryIdError;
+impl Display for ZRepositoryID {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		write!(
+			f,
+			"{:08X}-{:04X}-{:04X}-{:02X}{:02X}-{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}",
+			self.data_1,
+			self.data_2,
+			self.data_3,
+			self.data_4[0],
+			self.data_4[1],
+			self.data_4[2],
+			self.data_4[3],
+			self.data_4[4],
+			self.data_4[5],
+			self.data_4[6],
+			self.data_4[7],
+		)
+	}
+}
 
-	fn try_from(value: &str) -> Result<Self, Self::Error> {
+impl FromStr for ZRepositoryID {
+	type Err = RepositoryIdError;
+
+	fn from_str(value: &str) -> Result<Self, Self::Err> {
 		let mut parts = value.split('-');
 
 		Ok(Self {
@@ -61,25 +84,6 @@ impl TryFrom<&str> for ZRepositoryID {
 				data_4
 			}
 		})
-	}
-}
-
-impl From<ZRepositoryID> for String {
-	fn from(value: ZRepositoryID) -> Self {
-		format!(
-			"{:08X}-{:04X}-{:04X}-{:02X}{:02X}-{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}",
-			value.data_1,
-			value.data_2,
-			value.data_3,
-			value.data_4[0],
-			value.data_4[1],
-			value.data_4[2],
-			value.data_4[3],
-			value.data_4[4],
-			value.data_4[5],
-			value.data_4[6],
-			value.data_4[7],
-		)
 	}
 }
 

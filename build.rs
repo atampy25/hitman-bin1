@@ -70,141 +70,142 @@ fn parse_classes(classes: &str, types: &str) -> Vec<(String, String, Vec<Member>
 		.map(|(_, x, y)| (x, y))
 		.collect::<HashMap<_, _>>();
 
-	let classes = classes.replace('\r', "");
+	let classes = classes.replace('\r', "").replace("#pragma pack(pop)", "");
 	let classes = classes.split_once("#pragma pack(push, 1)\n\n").unwrap().1;
 	classes
 		.split("};\n\n")
-		.filter(|section| section.starts_with("// Size:"))
-		.filter_map(|section| {
-			let section = section
+		.map(|section| {
+			section
 				.split('\n')
-				.filter(|x| !x.is_empty() && !x.trim_start().starts_with("//"))
+				.map(|x| x.trim())
+				.filter(|x| !x.is_empty() && !x.starts_with("//"))
 				.collect::<Vec<_>>()
-				.join("\n");
+				.join("\n")
+		})
+		.filter(|section| section.starts_with("class"))
+		.map(|section| {
+			let (name, members) = section.split_once("\n{\npublic:\n").unwrap();
 
-			if section.starts_with("class") {
-				let (name, members) = section.split_once("\n{\npublic:\n").unwrap();
+			let name = name.trim_start_matches("class ");
+			let name = regex_replace!(r" */\*.*?\*/ *", name, "").into_owned();
 
-				let name = name.trim_start_matches("class ");
-				let name = regex_replace!(r" */\*.*?\*/ *", name, "").into_owned();
+			let members = members
+				.lines()
+				.filter(|x| !x.starts_with("static") && !x.starts_with("bool operator"))
+				.map(|member| {
+					if let Some((_, amount)) = regex_captures!(r"uint8_t _pad\w+\[(\d+)\] \{\};", member) {
+						Member::Padding(amount.parse().unwrap())
+					} else {
+						let (_, type_name, field_name) = regex_captures!(r"^(.+) (.+);.*$", member).unwrap();
 
-				let members = members
-					.lines()
-					.map(|x| x.trim())
-					.filter(|x| !x.is_empty() && !x.starts_with("static") && !x.starts_with("bool operator"))
-					.map(|member| {
-						if let Some((_, amount)) = regex_captures!(r"uint8_t _pad\w+\[(\d+)\] \{\};", member) {
-							Member::Padding(amount.parse().unwrap())
+						let original_field_name = field_name;
+
+						let field_name = if (field_name.len() != 2 && !regex_is_match!(r"m\d+", field_name))
+							|| field_name.chars().next().unwrap().is_uppercase()
+						{
+							field_name.to_snake_case()
 						} else {
-							let (_, type_name, field_name) = regex_captures!(r"^(.+) (.+);.*$", member).unwrap();
+							field_name.into()
+						};
 
-							let original_field_name = field_name;
+						let field_name = if let Some((start, rest)) = field_name.split_once('_')
+							&& start.len() == 1 && !["x", "y", "z"].contains(&start)
+							&& !rest.is_empty()
+						{
+							rest.into()
+						} else {
+							field_name
+						};
 
-							let field_name = if field_name.len() != 2 && !regex_is_match!(r"m\d+", field_name) {
-								field_name.to_snake_case()
-							} else {
-								field_name.into()
-							};
+						let field_name = if let Some((start, rest)) = field_name.split_once('_')
+							&& start.len() == 1 && !["x", "y", "z"].contains(&start)
+							&& !rest.is_empty()
+						{
+							rest.into()
+						} else {
+							field_name
+						};
 
-							let field_name = if let Some((start, rest)) = field_name.split_once('_')
-								&& start.len() == 1 && !["x", "y", "z"].contains(&start)
-								&& !rest.is_empty()
-							{
-								rest.into()
-							} else {
-								field_name
-							};
+						let field_name = match field_name.as_str() {
+							"type" => "r#type",
+							"ref" => "reference",
+							"move" => "r#move",
+							x => x
+						};
 
-							let field_name = if let Some((start, rest)) = field_name.split_once('_')
-								&& start.len() == 1 && !["x", "y", "z"].contains(&start)
-								&& !rest.is_empty()
-							{
-								rest.into()
-							} else {
-								field_name
-							};
+						fn process_type_name(type_name: &str) -> String {
+							match type_name {
+								"int8" | "int8_t" => "i8".into(),
+								"int16" => "i16".into(),
+								"int32" => "i32".into(),
+								"int64" => "i64".into(),
 
-							let field_name = match field_name.as_str() {
-								"type" => "r#type",
-								"ref" => "reference",
-								"move" => "r#move",
-								x => x
-							};
+								"char" | "uint8" | "uint8_t" => "u8".into(),
+								"uint16" => "u16".into(),
+								"uint32" | "uint32_t" => "u32".into(),
+								"size_t" | "uint64" => "u64".into(),
 
-							fn process_type_name(type_name: &str) -> String {
-								match type_name {
-									"int8_t" => "i8".into(),
-									"int16" => "i16".into(),
-									"int32" => "i32".into(),
-									"int64" => "i64".into(),
+								"float32" => "f32".into(),
+								"float64" => "f64".into(),
 
-									"char" => "u8".into(),
-									"uint8" => "u8".into(),
-									"uint8_t" => "u8".into(),
-									"uint16" => "u16".into(),
-									"uint32" => "u32".into(),
-									"uint64" => "u64".into(),
+								"bool" => "bool".into(),
 
-									"float32" => "f32".into(),
-									"float64" => "f64".into(),
+								"ZString" => "EcoString".into(),
 
-									"bool" => "bool".into(),
+								x if x.starts_with("TArray<") => format!(
+									"Vec<{}>",
+									process_type_name(
+										&x.trim_prefix("TArray<")
+											.chars()
+											.rev()
+											.skip(1)
+											.collect::<Vec<_>>()
+											.into_iter()
+											.rev()
+											.collect::<String>()
+									)
+								),
 
-									"ZString" => "EcoString".into(),
+								x if x.starts_with("TFixedArray<") => format!(
+									"[{}; {}]",
+									process_type_name(regex_captures!(r"TFixedArray<(.*), *(.*)>", x).unwrap().1),
+									regex_captures!(r"TFixedArray<(.*), *(.*)>", x)
+										.unwrap()
+										.2
+										.parse::<usize>()
+										.unwrap()
+								),
 
-									x if x.starts_with("TArray<") => format!(
-										"Vec<{}>",
-										process_type_name(
-											&x.trim_prefix("TArray<")
-												.chars()
-												.rev()
-												.skip(1)
-												.collect::<Vec<_>>()
-												.into_iter()
-												.rev()
-												.collect::<String>()
-										)
-									),
+								x if x.starts_with("TPair<") => format!(
+									"({}, {})",
+									process_type_name(regex_captures!(r"TPair<(.*), *(.*)>", x).unwrap().1),
+									process_type_name(regex_captures!(r"TPair<(.*), *(.*)>", x).unwrap().2)
+								),
 
-									x if x.starts_with("TFixedArray<") => format!(
-										"[{}; {}]",
-										process_type_name(regex_captures!(r"TFixedArray<(.*), *(.*)>", x).unwrap().1),
-										regex_captures!(r"TFixedArray<(.*), *(.*)>", x)
-											.unwrap()
-											.2
-											.parse::<usize>()
-											.unwrap()
-									),
+								// TODO: Should be its own type (as alternate serialiser for Vec<u8>)
+								// Pointer then length, otherwise very similar to ZString (including unused prepended length)
+								x if x.starts_with("ZHMPtr<") => "u64".into(),
 
-									x if x.starts_with("TPair<") => format!(
-										"({}, {})",
-										process_type_name(regex_captures!(r"TPair<(.*), *(.*)>", x).unwrap().1),
-										process_type_name(regex_captures!(r"TPair<(.*), *(.*)>", x).unwrap().2)
-									),
-
-									x => x.into()
-								}
+								x => x.into()
 							}
-
-							let type_name = process_type_name(type_name);
-
-							Member::Field(
-								original_field_name.to_owned(),
-								field_name.to_owned(),
-								type_name.to_owned()
-							)
 						}
-					})
-					.collect::<Vec<_>>();
 
-				Some((
-					name.to_owned(),
-					(*types.get(name.as_str()).unwrap()).to_owned(),
-					members
-				))
-			} else {
-				None
-			}
+						let type_name = process_type_name(type_name);
+
+						Member::Field(
+							original_field_name.to_owned(),
+							field_name.to_owned(),
+							type_name.to_owned()
+						)
+					}
+				})
+				.collect::<Vec<_>>();
+
+			(
+				name.to_owned(),
+				types.get(name.as_str()).map_or(name.as_str(), |v| v).to_owned(),
+				members
+			)
 		})
 		.collect()
 }
@@ -221,7 +222,10 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 	scope.import("crate::types::variant", "Variant");
 	scope.raw("use crate as hitman_bin1;");
 
-	let mut classes = parse_classes(classes_code, types_code);
+	let mut classes = parse_classes(
+		&format!("{}\n\n{}", classes_code, fs::read_to_string("custom.txt").unwrap()),
+		types_code
+	);
 
 	// Special cased
 	classes.remove(classes.iter().position(|x| x.0 == "ZRuntimeResourceID").unwrap());
@@ -230,40 +234,79 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 	let mut class_queue = VecDeque::new();
 
 	let to_generate: [&[&str]; _] = [
-		#[cfg(feature = "entity")]
+		#[cfg(feature = "TEMP")]
+		&["STemplateEntity", "STemplateEntityFactory"],
+		#[cfg(feature = "TBLU")]
+		&["STemplateEntityBlueprint"],
+		#[cfg(feature = "AIRG")]
+		&["SReasoningGrid"],
+		#[cfg(feature = "ASVA")]
+		&["SPackedAnimSetEntry"],
+		#[cfg(feature = "ATMD")]
+		&["ZAMDTake"],
+		#[cfg(feature = "VIDB")]
+		&["SVideoDatabaseData"],
+		#[cfg(feature = "UICB")]
+		&["SControlTypeInfo"],
+		#[cfg(feature = "CBLU")]
+		&["SCppEntityBlueprint"],
+		#[cfg(feature = "CPPT")]
+		&["SCppEntity"],
+		#[cfg(feature = "CRMD")]
+		&["SCrowdMapData"],
+		#[cfg(feature = "WSWB")]
+		&["SAudioSwitchGroupData"],
+		#[cfg(feature = "GFXF")]
+		&["SGFxMovieResource"],
+		#[cfg(feature = "GIDX")]
+		&["SResourceIndex"],
+		#[cfg(feature = "WSGB")]
+		&["SAudioStateGroupData"],
+		#[cfg(feature = "ECPB")]
+		&["SExtendedCppEntityBlueprint"],
+		#[cfg(feature = "ENUM")]
+		&["SEnumType"],
+		#[cfg(feature = "ORES")]
 		&[
-			"STemplateEntity",
-			"STemplateEntityFactory",
-			"STemplateEntityBlueprint",
-			"SColorRGB",
-			"SColorRGBA",
-			"ZGuid",
-			"ZGameTime",
-			"SVector2",
-			"SVector3",
-			"SVector4",
-			"SMatrix43",
-			"SWorldSpaceSettings",
-			"S25DProjectionSettings",
-			"SBodyPartDamageMultipliers",
-			"SCCEffectSet",
-			"SSCCuriousConfiguration",
-			"ZCurve",
-			"SMapMarkerData",
-			"ZHUDOccluderTriggerEntity_SBoneTestSetup",
-			"SGaitTransitionEntry",
-			"SClothVertex",
-			"ZSharedSensorDef_SVisibilitySetting",
-			"SFontLibraryDefinition",
-			"SCamBone",
-			"SConversationPart",
-			"AI_SFirePattern01",
-			"STargetableBoneConfiguration",
-			"ZSecuritySystemCameraConfiguration_SHitmanVisibleEscalationRule",
-			"AI_SFirePattern02",
-			"ZSecuritySystemCameraConfiguration_SDeadBodyVisibleEscalationRule",
-			"ZOverlayControllerEntity_SInputData"
-		]
+			"SActivities",
+			"SBlobsConfigResourceEntry",
+			"SContractConfigResourceEntry",
+			"SEnvironmentConfigResource"
+		],
+		#[cfg(feature = "AIBB")]
+		&["SBehaviorTreeInfo"]
+	];
+
+	// Types known to be used as ZVariant
+	const KNOWN_VARIANTS: &[&str] = &[
+		"SColorRGB",
+		"SColorRGBA",
+		"ZGuid",
+		"ZGameTime",
+		"SVector2",
+		"SVector3",
+		"SVector4",
+		"SMatrix43",
+		"SWorldSpaceSettings",
+		"S25DProjectionSettings",
+		"SBodyPartDamageMultipliers",
+		"SCCEffectSet",
+		"SSCCuriousConfiguration",
+		"ZCurve",
+		"SMapMarkerData",
+		"ZHUDOccluderTriggerEntity_SBoneTestSetup",
+		"SGaitTransitionEntry",
+		"SClothVertex",
+		"ZSharedSensorDef_SVisibilitySetting",
+		"SFontLibraryDefinition",
+		"SCamBone",
+		"SConversationPart",
+		"AI_SFirePattern01",
+		"STargetableBoneConfiguration",
+		"ZSecuritySystemCameraConfiguration_SHitmanVisibleEscalationRule",
+		"AI_SFirePattern02",
+		"ZSecuritySystemCameraConfiguration_SDeadBodyVisibleEscalationRule",
+		"ZOverlayControllerEntity_SInputData"
 	];
 
 	for ty in to_generate.concat() {
@@ -275,27 +318,35 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 	while let Some((name, type_id, members)) = class_queue.pop_front() {
 		for member in &members {
 			if let Member::Field(_, _, ty) = member {
-				if ty == "ZRuntimeResourceID" {
-					scope.import("crate::types::resource", "ZRuntimeResourceID");
-				} else {
-					let mut tys = vec![ty.trim_start_matches("Vec<").trim_end_matches(">")];
-					for ty in tys.clone() {
-						if ty.starts_with('(') {
-							let (first, second) = ty
-								.trim_start_matches('(')
-								.trim_end_matches(')')
-								.split_once(',')
-								.unwrap();
+				let mut tys = vec![ty.trim_start_matches("Vec<").trim_end_matches(">")];
+				for ty in tys.clone() {
+					if ty.starts_with('(') {
+						let (first, second) = ty
+							.trim_start_matches('(')
+							.trim_end_matches(')')
+							.split_once(',')
+							.unwrap();
 
-							tys.push(first.trim());
-							tys.push(second.trim());
-						}
+						tys.push(first.trim());
+						tys.push(second.trim());
 					}
+				}
 
-					for ty in tys {
-						if let Some(pos) = classes.iter().position(|x| x.0 == *ty) {
-							class_queue.push_back(classes.remove(pos));
+				for ty in tys {
+					if ty == "ZVariant" {
+						for ty in KNOWN_VARIANTS {
+							if let Some(pos) = classes.iter().position(|x| x.0 == *ty) {
+								class_queue.push_back(classes.remove(pos));
+							}
 						}
+					} else if ty == "TResourcePtr" {
+						scope.import("crate::types::resource", "TResourcePtr");
+					} else if ty == "TypeID" {
+						scope.import("crate::types::variant", "TypeID");
+					} else if ty.ends_with("]") {
+						scope.import("serde_with", "serde_as");
+					} else if let Some(pos) = classes.iter().position(|x| x.0 == *ty) {
+						class_queue.push_back(classes.remove(pos));
 					}
 				}
 			}
@@ -308,9 +359,17 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.derive("PartialEq")
 			.derive("Bin1Serialize")
 			.derive("Bin1Deserialize")
-			.derive("serde::Serialize")
-			.derive("serde::Deserialize")
 			.vis("pub");
+
+		if members
+			.iter()
+			.any(|x| matches!(x, Member::Field(_, _, ty) if ty.ends_with(']')))
+		{
+			cls.r#macro("#[serde_as]");
+		}
+
+		// Need to use macro instead of derive to ensure serde derives are under serde_as
+		cls.r#macro("#[derive(serde::Serialize, serde::Deserialize)]");
 
 		let mut padding = 0;
 
@@ -325,9 +384,16 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 				Member::Field(orig_name, field_name, type_name) => {
 					last_field = Some({
 						let field = cls
-							.new_field(field_name, type_name)
+							.new_field(field_name, &type_name)
 							.vis("pub")
-							.annotation(format!("#[serde(rename = \"{}\")]", orig_name));
+							.annotation(format!(r#"#[serde(rename = "{orig_name}")]"#));
+
+						if type_name.ends_with("]") {
+							field.annotation(format!(
+								r#"#[serde_as(as = "{}")]"#,
+								regex_replace!(r"\[.*; (\d+)\]", &type_name, "[_; $1]")
+							));
+						}
 
 						if padding != 0 {
 							field.annotation(format!("#[bin1(pad = {padding})]"));
@@ -591,50 +657,64 @@ pub fn main() -> Result<()> {
 			.join("\n")
 	)?;
 
-	let mut h1 = Scope::new();
-
-	generate(
-		&mut h1,
-		&fs::read_to_string("h1.txt")?,
-		&fs::read_to_string("h1-enums.txt")?,
-		&fs::read_to_string("h1-types.txt")?
-	);
-
-	fs::write(out_dir.join("h1.rs"), h1.to_string())?;
-
-	let mut h2 = Scope::new();
-
-	generate(
-		&mut h2,
-		&fs::read_to_string("h2.txt")?,
-		&fs::read_to_string("h2-enums.txt")?,
-		&fs::read_to_string("h2-types.txt")?
-	);
-
-	fs::write(out_dir.join("h2.rs"), h2.to_string())?;
-
-	let mut h3 = Scope::new();
-
-	generate(
-		&mut h3,
-		&fs::read_to_string("h3.txt")?,
-		&fs::read_to_string("h3-enums.txt")?,
-		&fs::read_to_string("h3-types.txt")?
-	);
-
-	fs::write(out_dir.join("h3.rs"), h3.to_string())?;
-
 	println!("cargo::rerun-if-changed=build.rs");
-	println!("cargo::rerun-if-changed=h1.txt");
-	println!("cargo::rerun-if-changed=h1-enums.txt");
-	println!("cargo::rerun-if-changed=h1-types.txt");
-	println!("cargo::rerun-if-changed=h2.txt");
-	println!("cargo::rerun-if-changed=h2-enums.txt");
-	println!("cargo::rerun-if-changed=h2-types.txt");
-	println!("cargo::rerun-if-changed=h3.txt");
-	println!("cargo::rerun-if-changed=h3-enums.txt");
-	println!("cargo::rerun-if-changed=h3-types.txt");
 	println!("cargo::rerun-if-changed=properties.txt");
+
+	#[cfg(feature = "h1")]
+	{
+		let mut h1 = Scope::new();
+
+		generate(
+			&mut h1,
+			&fs::read_to_string("h1.txt")?,
+			&fs::read_to_string("h1-enums.txt")?,
+			&fs::read_to_string("h1-types.txt")?
+		);
+
+		fs::write(out_dir.join("h1.rs"), h1.to_string())?;
+
+		println!("cargo::rerun-if-changed=h1.txt");
+		println!("cargo::rerun-if-changed=h1-enums.txt");
+		println!("cargo::rerun-if-changed=h1-types.txt");
+	}
+
+	#[cfg(feature = "h2")]
+	{
+		let mut h2 = Scope::new();
+
+		generate(
+			&mut h2,
+			&fs::read_to_string("h2.txt")?,
+			&fs::read_to_string("h2-enums.txt")?,
+			&fs::read_to_string("h2-types.txt")?
+		);
+
+		fs::write(out_dir.join("h2.rs"), h2.to_string())?;
+
+		println!("cargo::rerun-if-changed=h2.txt");
+		println!("cargo::rerun-if-changed=h2-enums.txt");
+		println!("cargo::rerun-if-changed=h2-types.txt");
+	}
+
+	#[cfg(feature = "h3")]
+	{
+		let mut h3 = Scope::new();
+
+		generate(
+			&mut h3,
+			&fs::read_to_string("h3.txt")?,
+			&fs::read_to_string("h3-enums.txt")?,
+			&fs::read_to_string("h3-types.txt")?
+		);
+
+		fs::write(out_dir.join("h3.rs"), h3.to_string())?;
+
+		println!("cargo::rerun-if-changed=h3.txt");
+		println!("cargo::rerun-if-changed=h3-enums.txt");
+		println!("cargo::rerun-if-changed=h3-types.txt");
+	}
+
+	println!("cargo::rerun-if-changed=custom.txt");
 
 	Ok(())
 }

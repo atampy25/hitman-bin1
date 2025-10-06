@@ -17,6 +17,19 @@ pub struct ZRuntimeResourceID {
 	pub id_low: u32
 }
 
+impl ZRuntimeResourceID {
+	pub fn from_u64(id: u64) -> Self {
+		Self {
+			id_high: (id >> 32) as u32,
+			id_low: (id & 0xFFFFFFFF) as u32
+		}
+	}
+
+	pub fn as_u64(&self) -> u64 {
+		((self.id_high as u64) << 32) | (self.id_low as u64)
+	}
+}
+
 impl StaticVariant for ZRuntimeResourceID {
 	const TYPE_ID: &'static str = "ZRuntimeResourceID";
 }
@@ -73,6 +86,19 @@ pub struct TResourcePtr {
 
 	#[serde(rename = "m_IDLow")]
 	pub id_low: u32
+}
+
+impl TResourcePtr {
+	pub fn from_u64(id: u64) -> Self {
+		Self {
+			id_high: (id >> 32) as u32,
+			id_low: (id & 0xFFFFFFFF) as u32
+		}
+	}
+
+	pub fn as_u64(&self) -> u64 {
+		((self.id_high as u64) << 32) | (self.id_low as u64)
+	}
 }
 
 impl StaticVariant for TResourcePtr {

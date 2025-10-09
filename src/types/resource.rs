@@ -38,10 +38,6 @@ impl StaticVariant for Vec<ZRuntimeResourceID> {
 	const TYPE_ID: &'static str = "TArray<ZRuntimeResourceID>";
 }
 
-impl StaticVariant for Vec<Vec<ZRuntimeResourceID>> {
-	const TYPE_ID: &'static str = "TArray<TArray<ZRuntimeResourceID>>";
-}
-
 impl Variant for ZRuntimeResourceID {
 	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
 		interner.get_or_intern_static(Self::TYPE_ID)

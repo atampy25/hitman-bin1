@@ -17,10 +17,6 @@ macro_rules! submit {
 			#[linkme::distributed_slice(VARIANT_DESERIALIZERS_H3)]
 			static #concat(#flatten($ty) _Vec_De): &'static dyn DeserializeVariant
 				= &VariantDeserializer::<Vec<$ty>>::new() as &dyn DeserializeVariant;
-
-			#[linkme::distributed_slice(VARIANT_DESERIALIZERS_H3)]
-			static #concat(#flatten($ty) _Vec_Vec_De): &'static dyn DeserializeVariant
-				= &VariantDeserializer::<Vec<Vec<$ty>>>::new() as &dyn DeserializeVariant;
 		}
 	};
 }

@@ -124,10 +124,6 @@ macro_rules! impl_primitive {
 		impl StaticVariant for Vec<$ty> {
 			const TYPE_ID: &'static str = concatcp!("TArray<", $type_id, ">");
 		}
-
-		impl StaticVariant for Vec<Vec<$ty>> {
-			const TYPE_ID: &'static str = concatcp!("TArray<TArray<", $type_id, ">>");
-		}
 	};
 }
 
@@ -152,10 +148,6 @@ impl StaticVariant for () {
 
 impl StaticVariant for Vec<()> {
 	const TYPE_ID: &'static str = "TArray<void>";
-}
-
-impl StaticVariant for Vec<Vec<()>> {
-	const TYPE_ID: &'static str = "TArray<TArray<void>>";
 }
 
 impl Variant for () {
@@ -205,10 +197,6 @@ impl StaticVariant for EcoString {
 
 impl StaticVariant for Vec<EcoString> {
 	const TYPE_ID: &'static str = "TArray<ZString>";
-}
-
-impl StaticVariant for Vec<Vec<EcoString>> {
-	const TYPE_ID: &'static str = "TArray<TArray<ZString>>";
 }
 
 impl Variant for EcoString {

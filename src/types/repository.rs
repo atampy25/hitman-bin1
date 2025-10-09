@@ -95,10 +95,6 @@ impl StaticVariant for Vec<ZRepositoryID> {
 	const TYPE_ID: &'static str = "TArray<ZRepositoryID>";
 }
 
-impl StaticVariant for Vec<Vec<ZRepositoryID>> {
-	const TYPE_ID: &'static str = "TArray<TArray<ZRepositoryID>>";
-}
-
 impl Variant for ZRepositoryID {
 	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
 		interner.get_or_intern_static(Self::TYPE_ID)

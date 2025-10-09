@@ -248,10 +248,6 @@ impl StaticVariant for Vec<ZVariant> {
 	const TYPE_ID: &'static str = "TArray<ZVariant>";
 }
 
-impl StaticVariant for Vec<Vec<ZVariant>> {
-	const TYPE_ID: &'static str = "TArray<TArray<ZVariant>>";
-}
-
 submit!(ZVariant);
 
 submit!(u8);
@@ -287,10 +283,6 @@ impl StaticVariant for Vec<SEntityTemplateProperty> {
 	const TYPE_ID: &'static str = "TArray<SEntityTemplateProperty>";
 }
 
-impl StaticVariant for Vec<Vec<SEntityTemplateProperty>> {
-	const TYPE_ID: &'static str = "TArray<TArray<SEntityTemplateProperty>>";
-}
-
 impl Variant for SEntityTemplateProperty {
 	fn type_id(&self, interner: &mut StringInterner<BucketBackend>) -> DefaultSymbol {
 		interner.get_or_intern_static(Self::TYPE_ID)
@@ -309,10 +301,6 @@ impl StaticVariant for (EcoString, ZVariant) {
 
 impl StaticVariant for Vec<(EcoString, ZVariant)> {
 	const TYPE_ID: &'static str = "TArray<TPair<ZString,ZVariant>>";
-}
-
-impl StaticVariant for Vec<Vec<(EcoString, ZVariant)>> {
-	const TYPE_ID: &'static str = "TArray<TArray<TPair<ZString,ZVariant>>>";
 }
 
 submit!((EcoString, ZVariant));

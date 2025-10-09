@@ -220,6 +220,7 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 	scope.import("crate::de", "DeserializeError");
 	scope.import("crate::types::variant", "StaticVariant");
 	scope.import("crate::types::variant", "Variant");
+	scope.import("std::str", "FromStr");
 	scope.raw("use crate as hitman_bin1;");
 
 	let mut classes = parse_classes(
@@ -423,11 +424,6 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 			.impl_trait("StaticVariant")
 			.associate_const("TYPE_ID", "&str", format!(r#""TArray<{type_id}>""#), "");
 
-		scope
-			.new_impl(&format!("Vec<Vec<{name}>>"))
-			.impl_trait("StaticVariant")
-			.associate_const("TYPE_ID", "&str", format!(r#""TArray<TArray<{type_id}>>""#), "");
-
 		let variant_impl = scope.new_impl(&name).impl_trait("Variant");
 
 		variant_impl
@@ -514,9 +510,9 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 
 		scope
 			.new_impl(&name)
-			.impl_trait("TryFrom<&str>")
-			.associate_type("Error", "()")
-			.new_fn("try_from")
+			.impl_trait("FromStr")
+			.associate_type("Err", "()")
+			.new_fn("from_str")
 			.arg("value", "&str")
 			.ret(format!("Result<{name}, ()>"))
 			.push_block({
@@ -617,11 +613,6 @@ value.try_into().map_err(|_| DeserializeError::InvalidEnumValue(value as i64))"
 			.new_impl(&format!("Vec<{name}>"))
 			.impl_trait("StaticVariant")
 			.associate_const("TYPE_ID", "&str", format!(r#""TArray<{type_id}>""#), "");
-
-		scope
-			.new_impl(&format!("Vec<Vec<{name}>>"))
-			.impl_trait("StaticVariant")
-			.associate_const("TYPE_ID", "&str", format!(r#""TArray<TArray<{type_id}>>""#), "");
 
 		let variant_impl = scope.new_impl(&name).impl_trait("Variant");
 

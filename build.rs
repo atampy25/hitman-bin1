@@ -221,6 +221,7 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 	scope.import("crate::types::variant", "StaticVariant");
 	scope.import("crate::types::variant", "Variant");
 	scope.import("std::str", "FromStr");
+	scope.import("facet", "Facet");
 	scope.raw("use crate as hitman_bin1;");
 
 	let mut classes = parse_classes(
@@ -445,14 +446,18 @@ fn generate(scope: &mut Scope, classes_code: &str, enums_code: &str, types_code:
 		scope.raw(format!("submit!({name});"));
 	}
 
+	let mut enums = vec![];
 	for (name, type_id, size, members) in parse_enums(classes_code, enums_code) {
 		let item = scope
 			.new_enum(&name)
+			.derive("Facet")
 			.derive("Debug")
 			.derive("Clone")
 			.derive("Copy")
 			.derive("PartialEq")
 			.derive("Eq")
+			.derive("PartialOrd")
+			.derive("Ord")
 			.derive("Hash")
 			.derive("serde::Serialize")
 			.derive("serde::Deserialize")
@@ -633,7 +638,19 @@ value.try_into().map_err(|_| DeserializeError::InvalidEnumValue(value as i64))"
 			.line("serde_json::to_value(self)");
 
 		scope.raw(format!("submit!({name});"));
+
+		enums.push(name);
 	}
+
+	scope.raw(format!(
+		"pub static ENUMS: [&facet::Shape; {}] = [{}];",
+		enums.len(),
+		enums
+			.into_iter()
+			.map(|x| format!("{x}::SHAPE"))
+			.collect::<Vec<_>>()
+			.join(", ")
+	));
 }
 
 pub fn main() -> Result<()> {

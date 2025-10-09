@@ -3,13 +3,13 @@ use std::{env, fs};
 use ecow::EcoString;
 use hitman_bin1::{de::deserialize, ser::serialize};
 
-#[cfg(all(feature = "h1"))]
+#[cfg(feature = "h1")]
 use hitman_bin1::game::h1;
 
-#[cfg(all(feature = "h2"))]
+#[cfg(feature = "h2")]
 use hitman_bin1::game::h2;
 
-#[cfg(all(feature = "h3"))]
+#[cfg(feature = "h3")]
 use hitman_bin1::game::h3;
 
 macro_rules! impl_convert {

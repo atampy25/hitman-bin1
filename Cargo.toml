@@ -25,6 +25,7 @@ tracing = { version = "0.1.41", optional = true }
 linkme = "0.3.33"
 mident = "0.0.1"
 serde_with = "3.15.0"
+facet = "0.29.1"
 
 [build-dependencies]
 anyhow = "1.0.100"

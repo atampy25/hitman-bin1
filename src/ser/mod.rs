@@ -60,7 +60,9 @@ pub struct Bin1Serializer {
 	type_ids: Vec<u32>,
 	type_names: Vec<DefaultSymbol>,
 
-	interner: StringInterner<BucketBackend>
+	interner: StringInterner<BucketBackend>,
+
+	rrids_segment: bool
 }
 
 impl Default for Bin1Serializer {
@@ -73,7 +75,8 @@ impl Default for Bin1Serializer {
 			resource_ptrs: vec![],
 			type_ids: vec![],
 			type_names: vec![],
-			interner: StringInterner::new()
+			interner: StringInterner::new(),
+			rrids_segment: true
 		}
 	}
 }
@@ -81,6 +84,11 @@ impl Default for Bin1Serializer {
 impl Bin1Serializer {
 	pub fn new() -> Self {
 		Default::default()
+	}
+
+	pub fn with_rrids_segment(mut self, enabled: bool) -> Self {
+		self.rrids_segment = enabled;
+		self
 	}
 
 	pub fn interner(&mut self) -> &mut StringInterner<BucketBackend> {
@@ -215,7 +223,7 @@ impl Bin1Serializer {
 		}
 
 		// RuntimeResourceIDs segment
-		if !self.runtime_resource_ids.is_empty() {
+		if self.rrids_segment && !self.runtime_resource_ids.is_empty() {
 			let mut segment = (self.runtime_resource_ids.len() as u32).to_le_bytes().to_vec();
 
 			for offset in self.runtime_resource_ids {
@@ -266,12 +274,10 @@ impl Bin1Serializer {
 
 		data
 	}
-}
 
-#[cfg_attr(feature = "tracing", tracing::instrument(skip_all, fields(type = std::any::type_name::<T>())))]
-pub fn serialize<T: Bin1Serialize>(data: &T) -> Result<Vec<u8>, SerializeError> {
-	let mut serializer = Bin1Serializer::new();
-	data.write(&mut serializer)?;
-	data.resolve(&mut serializer)?;
-	serializer.finalise()
+	pub fn serialize(mut self, value: &impl Bin1Serialize) -> Result<Vec<u8>, SerializeError> {
+		value.write(&mut self)?;
+		value.resolve(&mut self)?;
+		self.finalise()
+	}
 }

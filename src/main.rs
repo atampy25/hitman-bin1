@@ -1,7 +1,7 @@
 use std::{env, fs};
 
 use ecow::EcoString;
-use hitman_bin1::{de::deserialize, ser::serialize};
+use hitman_bin1::{deserialize, serialize};
 
 #[cfg(feature = "h1")]
 use hitman_bin1::game::h1;

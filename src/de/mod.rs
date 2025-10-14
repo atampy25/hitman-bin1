@@ -281,10 +281,3 @@ impl<'a> Bin1Deserializer<'a> {
 		}
 	}
 }
-
-#[cfg_attr(feature = "tracing", tracing::instrument(skip_all, fields(type = std::any::type_name::<T>())))]
-pub fn deserialize<T: Bin1Deserialize>(data: &[u8]) -> Result<T, DeserializeError> {
-	let mut de = Bin1Deserializer::new(data);
-	de.init()?;
-	T::read(&mut de)
-}

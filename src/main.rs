@@ -1,7 +1,7 @@
 use std::{env, fs};
 
 use ecow::EcoString;
-use hitman_bin1::{deserialize, serialize};
+use hitman_bin1::{deserialize, ser::Bin1Serializer, serialize};
 
 #[cfg(feature = "h1")]
 use hitman_bin1::game::h1;
@@ -76,30 +76,70 @@ macro_rules! impl_generate {
 	};
 }
 
+macro_rules! impl_generate_norrids {
+	($resource_type:ident, $feature:literal, $ty:literal, $res:ty) => {
+		#[cfg(feature = $feature)]
+		if $resource_type == $ty {
+			let value: $res = serde_json::from_slice(
+				&fs::read(env::args().nth(4).expect("4th argument must be input path")).unwrap()
+			)
+			.unwrap();
+
+			fs::write(
+				env::args().nth(5).expect("4th argument must be output path"),
+				Bin1Serializer::new()
+					.with_rrids_segment(false)
+					.serialize(&value)
+					.unwrap()
+			)
+			.unwrap();
+		}
+	};
+
+	($resource_type:ident, $ty:literal, $res:ty) => {
+		#[cfg(feature = $ty)]
+		if $resource_type == $ty {
+			let value: $res = serde_json::from_slice(
+				&fs::read(env::args().nth(4).expect("4th argument must be input path")).unwrap()
+			)
+			.unwrap();
+
+			fs::write(
+				env::args().nth(5).expect("4th argument must be output path"),
+				Bin1Serializer::new()
+					.with_rrids_segment(false)
+					.serialize(&value)
+					.unwrap()
+			)
+			.unwrap();
+		}
+	};
+}
+
 macro_rules! impl_all {
-	($resource_type:ident, h1, $impl:ident) => {
-		impl_all!(generic, $resource_type, h1, $impl);
+	($resource_type:ident, h1, $impl:ident, $impl_ores:ident) => {
+		impl_all!(generic, $resource_type, h1, $impl, $impl_ores);
 
 		$impl!($resource_type, "TEMP", h1::STemplateEntity);
 	};
 
-	($resource_type:ident, h2, $impl:ident) => {
-		impl_all!(generic, $resource_type, h2, $impl);
+	($resource_type:ident, h2, $impl:ident, $impl_ores:ident) => {
+		impl_all!(generic, $resource_type, h2, $impl, $impl_ores);
 
 		$impl!($resource_type, "TEMP", h2::STemplateEntityFactory);
 		$impl!($resource_type, "ECPB", h2::SExtendedCppEntityBlueprint);
 	};
 
-	($resource_type:ident, h3, $impl:ident) => {
-		impl_all!(generic, $resource_type, h3, $impl);
+	($resource_type:ident, h3, $impl:ident, $impl_ores:ident) => {
+		impl_all!(generic, $resource_type, h3, $impl, $impl_ores);
 
 		$impl!($resource_type, "TEMP", h3::STemplateEntityFactory);
 		$impl!($resource_type, "ECPB", h3::SExtendedCppEntityBlueprint);
 
-		$impl!($resource_type, "ORES", "ORES-activities", h3::SActivities);
+		$impl_ores!($resource_type, "ORES", "ORES-activities", h3::SActivities);
 	};
 
-	(generic, $resource_type:ident, $game:ident, $impl:ident) => {
+	(generic, $resource_type:ident, $game:ident, $impl:ident, $impl_ores:ident) => {
 		$impl!($resource_type, "AIBB", $game::SBehaviorTreeInfo);
 		$impl!($resource_type, "AIRG", $game::SReasoningGrid);
 		$impl!($resource_type, "ASVA", Vec<$game::SPackedAnimSetEntry>);
@@ -117,20 +157,20 @@ macro_rules! impl_all {
 		$impl!($resource_type, "WSGB", $game::SAudioStateGroupData);
 		$impl!($resource_type, "WSWB", $game::SAudioSwitchGroupData);
 
-		$impl!(
+		$impl_ores!(
 			$resource_type,
 			"ORES",
 			"ORES-blobs",
 			Vec<$game::SBlobsConfigResourceEntry>
 		);
-		$impl!(
+		$impl_ores!(
 			$resource_type,
 			"ORES",
 			"ORES-contracts",
 			Vec<$game::SContractConfigResourceEntry>
 		);
-		$impl!($resource_type, "ORES", "ORES-unlockables", EcoString);
-		$impl!(
+		$impl_ores!($resource_type, "ORES", "ORES-unlockables", EcoString);
+		$impl_ores!(
 			$resource_type,
 			"ORES",
 			"ORES-environment",
@@ -148,7 +188,7 @@ fn main() {
 					panic!("3rd argument (resource type) missing or unsupported");
 				};
 
-				impl_all!(resource_type, h1, impl_convert);
+				impl_all!(resource_type, h1, impl_convert, impl_convert);
 			}
 
 			Some("generate") => {
@@ -156,7 +196,7 @@ fn main() {
 					panic!("3rd argument (resource type) missing or unsupported");
 				};
 
-				impl_all!(resource_type, h1, impl_generate);
+				impl_all!(resource_type, h1, impl_generate, impl_generate_norrids);
 			}
 
 			_ => panic!("2nd argument must be convert or generate")
@@ -169,7 +209,7 @@ fn main() {
 					panic!("3rd argument (resource type) missing or unsupported");
 				};
 
-				impl_all!(resource_type, h2, impl_convert);
+				impl_all!(resource_type, h2, impl_convert, impl_convert);
 			}
 
 			Some("generate") => {
@@ -177,7 +217,7 @@ fn main() {
 					panic!("3rd argument (resource type) missing or unsupported");
 				};
 
-				impl_all!(resource_type, h2, impl_generate);
+				impl_all!(resource_type, h2, impl_generate, impl_generate_norrids);
 			}
 
 			_ => panic!("2nd argument must be convert or generate")
@@ -190,7 +230,7 @@ fn main() {
 					panic!("3rd argument (resource type) missing or unsupported");
 				};
 
-				impl_all!(resource_type, h3, impl_convert);
+				impl_all!(resource_type, h3, impl_convert, impl_convert);
 			}
 
 			Some("generate") => {
@@ -198,7 +238,7 @@ fn main() {
 					panic!("3rd argument (resource type) missing or unsupported");
 				};
 
-				impl_all!(resource_type, h3, impl_generate);
+				impl_all!(resource_type, h3, impl_generate, impl_generate_norrids);
 			}
 
 			_ => panic!("2nd argument must be convert or generate")

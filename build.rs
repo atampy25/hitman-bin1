@@ -44,7 +44,7 @@ fn parse_enums(classes: &str, enums: &str) -> Vec<(String, String, usize, Vec<(S
 			if section.starts_with("enum class") {
 				let (name, _) = section.split_once("\n{").unwrap();
 
-				let name = name.trim_start_matches("enum class ").trim();
+				let name = regex_captures!("enum class (.*?)(?: : .*)?$", &name).unwrap().1;
 
 				let enum_entry = enums.par_iter().min_by_key(|x| edit_distance(name, &x[1])).unwrap();
 

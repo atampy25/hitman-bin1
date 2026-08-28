@@ -140,6 +140,7 @@ VIDB = [
     "glacier-bin1-h2?/VIDB",
     "glacier-bin1-h3?/VIDB",
 ]
+VOXL = ["glacier-bin1-h3?/VOXL"]
 WSGB = [
     "glacier-bin1-h1?/WSGB",
     "glacier-bin1-h2?/WSGB",
@@ -182,6 +183,7 @@ all-types = [
     "TEMP",
     "UICB",
     "VIDB",
+    "VOXL",
     "WSGB",
     "WSWB",
     "CLRP",

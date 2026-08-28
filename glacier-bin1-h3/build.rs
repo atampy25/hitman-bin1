@@ -42,6 +42,8 @@ pub fn main() -> Result<()> {
 			&["SGFxMovieResource"],
 			#[cfg(feature = "GIDX")]
 			&["SResourceIndex"],
+			#[cfg(feature = "VOXL")]
+			&["SVoxelSpaceData"],
 			#[cfg(feature = "WSGB")]
 			&["SAudioStateGroupData"],
 			#[cfg(feature = "ECPB")]

@@ -139,6 +139,7 @@ macro_rules! impl_all {
 
 		$impl!($resource_type, "TEMP", h3::STemplateEntityFactory);
 		$impl!($resource_type, "ECPB", h3::SExtendedCppEntityBlueprint);
+		$impl!($resource_type, "VOXL", h3::SVoxelSpaceData);
 
 		$impl!($resource_type, "ORES", "ORES-activities", h3::SActivities);
 	};
@@ -272,6 +273,8 @@ fn main() {
 		"UICB",
 		#[cfg(feature = "VIDB")]
 		"VIDB",
+		#[cfg(feature = "VOXL")]
+		"VOXL",
 		#[cfg(feature = "WSGB")]
 		"WSGB",
 		#[cfg(feature = "WSWB")]

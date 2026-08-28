@@ -49,6 +49,7 @@ TBLU = []
 TEMP = []
 UICB = []
 VIDB = []
+VOXL = []
 WSGB = []
 WSWB = []
 enums = []
@@ -70,6 +71,7 @@ all-types = [
     "TEMP",
     "UICB",
     "VIDB",
+    "VOXL",
     "WSGB",
     "WSWB",
     "enums",

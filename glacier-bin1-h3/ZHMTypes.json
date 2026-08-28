@@ -22870,7 +22870,7 @@
 				{ "name": "m_aSVONodes", "type": "TArray<SVoxelSVONode>", "offset": 16 },
 				{ "name": "m_aLeaves", "type": "TArray<SVoxelSVONavLeaf>", "offset": 40 },
 				{ "name": "m_aNeighbourBits", "type": "TArray<uint64>", "offset": 64 },
-				{ "name": "m_nNeighbourBits", "type": "uint32", "offset": 88 },
+				{ "name": "m_n_nNeighbourBits", "type": "uint32", "offset": 88 },
 				{ "name": "m_nNeighbourCount", "type": "uint32", "offset": 92 },
 				{ "name": "m_aNeighbourClearance", "type": "TArray<uint16>", "offset": 96 }
 			]
